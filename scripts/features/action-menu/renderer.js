@@ -529,7 +529,15 @@ export const buildListItems = (ActionMenu, items) => {
 				}
 			}
 
-			if (item.oneLineLayout || item.isAbilityRoll) {
+			const usesHtml = itemUses
+				? `<span class="nah-item-uses" style="font-size:0.82em; font-weight:normal; white-space:nowrap; margin-right:4px; flex-shrink:0;">${itemUses}</span>`
+				: "";
+
+			const ritualBadge = item.isUnpreparedRitual
+				? `<span class="nah-unprepared-ritual-badge" data-tooltip="${escapeHtml(loc("Tooltips.RitualSpell", "Ritual Only (Unprepared)"))}" data-tooltip-direction="UP"><i class="fas fa-book-open"></i></span>`
+				: "";
+
+			if (item.isAbilityRoll) {
 				const profHtml = item.profIndicatorHtml || "";
 				const modHtml = item.rollModifierStr
 					? `<span class="nah-roll-mod font-bold">${item.rollModifierStr}</span>`
@@ -560,23 +568,57 @@ export const buildListItems = (ActionMenu, items) => {
 				`;
 			}
 
+			const isFeatureItem =
+				item.isFeature === true ||
+				((ActionMenu?.activeCategory === "feature" || ActionMenu?.activeCategory === "features") && !item.isAbilityRoll);
+
+			const hasDamageFormula = Boolean(
+				item.hasDamage ||
+				item.hasDamageFormula ||
+				(item.isFeature && (item.displayHtml || (typeof item.cost === "string" && item.cost.includes("nah-info-sub")))) ||
+				((ActionMenu?.activeCategory === "feature" || ActionMenu?.activeCategory === "features") && typeof item.cost === "string" && item.cost.includes("nah-info-sub"))
+			);
+
+			if ((isFeatureItem || item.oneLineLayout) && !hasDamageFormula) {
+				let actIconHtml = item.activationIcon ?? "";
+				if (!actIconHtml && typeof item.cost === "string" && item.cost.includes("nah-act-icon")) {
+					const match = item.cost.match(/<span class="nah-act-icon[^"]*"[^>]*>[\s\S]*?<\/span>/);
+					if (match) actIconHtml = match[0];
+				}
+
+				return `
+					<div class="nah-list-item nah-one-line-item nah-feature-item ${item.isUnpreparedRitual ? "nah-unprepared-ritual" : ""}" 
+						 style="${rowStyle}" 
+						 onclick="${item.isExhausted ? "" : `ActionHUD.actionMenu.useItem('${item.id}', event)`}"
+						 ${rightClickAttr}
+						 onmouseenter="ActionHUD.actionMenu.showTooltip('${item.id}', event)"
+						 onmouseleave="ActionHUD.actionMenu.hideTooltip()">
+						<div class="nah-item-content nah-one-line-content">
+							<div class="nah-one-line-main flex items-center" style="display:flex; align-items:center; gap:8px; min-width:0; flex:1; overflow:hidden;">
+								${actIconHtml}
+								${item.img ? `<img src="${item.img}" width="22" height="22" style="border:1px solid #333; border-radius: 2px; flex-shrink:0;">` : ""}
+								<span class="nah-font-hero text-xl" style="font-size: 1.1em; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; ${nameStyle}">
+									${item.isSignature ? '<i class="fas fa-star" style="color: #f1c40f; font-size: 0.7em; margin-right: 3px;" title="Signature Spell"></i>' : ""}${ritualBadge}${itemName}
+								</span>
+							</div>
+							<div class="nah-one-line-meta" style="display:flex; align-items:center; gap:6px; margin-left:auto; flex-shrink:0; white-space:nowrap;">
+								${usesHtml}
+								${favBtnHtml}
+							</div>
+						</div>
+					</div>
+				`;
+			}
+
 			const costHtml = item.cost
 				? item.hasInlineControls
 					? `<div class="nah-item-inline-controls" style="display:flex; align-items:flex-start; min-width:0;">${item.cost}</div>`
 					: `<span class="text-sm font-bold" style="color: #666; font-size: 0.8em; display:inline-flex; align-items:center; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:100%;">${item.cost}</span>`
 				: "";
 
-			const usesHtml = itemUses
-				? `<span class="nah-item-uses" style="font-size:0.82em; font-weight:normal; white-space:nowrap; margin-right:4px; flex-shrink:0;">${itemUses}</span>`
-				: "";
-
 			const subLineAlign = item.hasInlineControls
 				? "display:flex; align-items:flex-start; justify-content:space-between; width:100%; min-width:0; gap:8px;"
 				: "display:flex; align-items:center; justify-content:space-between; width:100%; min-width:0; gap:8px;";
-
-			const ritualBadge = item.isUnpreparedRitual
-				? `<span class="nah-unprepared-ritual-badge" data-tooltip="${escapeHtml(loc("Tooltips.RitualSpell", "Ritual Only (Unprepared)"))}" data-tooltip-direction="UP"><i class="fas fa-book-open"></i></span>`
-				: "";
 
 			return `
 				<div class="nah-list-item ${item.isUnpreparedRitual ? "nah-unprepared-ritual" : ""}" 

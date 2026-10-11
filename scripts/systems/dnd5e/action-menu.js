@@ -790,7 +790,11 @@ export function _getFeatureData(actor) {
 					img: "icons/svg/light.svg",
 					favoritable: false,
 					cost: "",
+					activationIcon: "",
+					displayHtml: "",
 					description: game.i18n.localize("NAH.Dnd5e.ResourceTracked"),
+					oneLineLayout: true,
+					isFeature: true,
 				});
 			}
 		});
@@ -831,15 +835,22 @@ export function _getFeatureData(actor) {
                 `;
 			}
 
+			const hasDamage = Boolean(damageText);
+
 			const itemData = {
 				id: i.id,
 				name: i.name,
 				uses: resolved.usesBracket || "",
 				img: i.img,
 				cost: costHtml,
+				activationIcon: activationIcon || "",
+				displayHtml: displayHtml || "",
+				hasDamage: hasDamage,
 				description: i.system.description?.value || "",
 				isExhausted: isExhausted,
 				_activationType: activationType,
+				oneLineLayout: !hasDamage,
+				isFeature: true,
 			};
 
 			if (hasAction || resolved.hasUses || resolved.hasRecharge) {

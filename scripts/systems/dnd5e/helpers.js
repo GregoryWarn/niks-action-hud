@@ -1236,6 +1236,8 @@ export function _getFeatures(actor) {
 					img: "icons/svg/light.svg",
 					favoritable: false,
 					cost: "",
+					oneLineLayout: true,
+					isFeature: true,
 					description: "Resource Tracked",
 				});
 			}
@@ -1253,6 +1255,8 @@ export function _getFeatures(actor) {
 					name: displayName,
 					img: i.img,
 					cost: "",
+					oneLineLayout: true,
+					isFeature: true,
 					description: i.system.description?.value || "",
 				});
 			}

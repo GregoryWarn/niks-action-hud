@@ -73,7 +73,7 @@ Organized, flyout drawers designed for fast combat decision-making:
 
 - **Attacks**: Equipped weapons with calculated attack bonuses, split multi-type damage formulas and active effect bonuses (e.g. radiant, fire), reach/range indicators, and ammunition tracking.
 - **Spells**: Spellbook categorized by level with real-time spell slot counters (`LV 1 (4/4)`), cantrips, at-will spells, shortened duration indicators (`1m`, `10m`, `1h`, `8h`), and ritual spell indicators for unprepared wizard rituals.
-- **Features**: Class features, species traits, and feats categorized by action type (Action, Bonus Action, Reaction, Passive) with limited use tracking and recharge dice states.
+- **Features**: Class features, species traits, feats, and tracked resources presented in a sleek single-line layout (`[Action Type] [Icon] [Name] [Uses] [Favorite Star]`) with limited use tracking and recharge states.
 - **Legendary**: Automatically surfaces for legendary creatures, grouping Legendary Resistance at the top and tracking legendary action points in real time.
 - **Abilities**: Single-line layout for ability checks, saving throws, skill proficiencies, initiative, and rests with signed modifiers and advantage shortcuts.
 - **Items**: Inventory organized into Weapons, Gear, Consumables, Tools, Loot, and Containers with quick equip toggles and quantity badges.

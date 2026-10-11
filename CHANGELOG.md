@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [14.11.1] - 2026-10-11
+
+### Changed
+- **Single-Line Layout for Features Menu**: Streamlined the layout of items in the Features menu to a single, compact row (`[Action Type] [Icon] [Feature Name] [Uses] [Favorite Star]`). This eliminates empty secondary lines and presents actions, class features, species traits, and resources in a clean, unified format.
+- **Two-Line Layout for Damage Features**: Features that contain a damage formula (e.g. Breath Weapon, Sneak Attack) retain the informative two-line layout used in Attacks and Spells, displaying damage formulas, damage type badges, and range clearly on the subline.
+- **Clean Alignment for Passive Traits**: Features without an action activation cost (such as passive traits and reaction triggers without standard action badges) omit the action badge for a seamless visual flow while preserving icon artwork, limited use tracking, and favoriting.
+
 ## [14.11.0] - 2026-10-10
 
 ### Added

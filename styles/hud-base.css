@@ -750,6 +750,30 @@
   white-space: nowrap;
 }
 
+.nah-act-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	box-sizing: border-box;
+	vertical-align: middle;
+	flex-shrink: 0;
+	line-height: 1;
+}
+
+.nah-list-item.nah-feature-item .nah-one-line-main {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	min-width: 0;
+	flex: 1;
+	overflow: hidden;
+}
+
+.nah-list-item.nah-feature-item .nah-act-icon {
+	flex-shrink: 0;
+	margin-right: 0;
+}
+
 .nah-roll-prof {
   display: inline-flex;
   align-items: center;

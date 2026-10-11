@@ -12,6 +12,7 @@ import {
 	bindInputLiveListeners,
 	bindFilePickers,
 	bindDragDrop,
+	bindSettingsLocksListeners,
 } from "./config/listeners.js";
 import {
 	onSave,
@@ -186,6 +187,7 @@ export class ActionHUDConfig extends HandlebarsApplicationMixin(ApplicationV2) {
 		bindInputLiveListeners(this);
 		bindFilePickers(this);
 		bindDragDrop(this);
+		bindSettingsLocksListeners(this);
 
 		this._switchTab(this.activeTab, false);
 		triggerPreview(this);

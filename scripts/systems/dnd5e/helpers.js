@@ -166,13 +166,13 @@ export const DAMAGE_TYPE_COLORS = Object.freeze({
  */
 export function getDamageTypeDisplayMode() {
 	try {
-		const config = game.settings.get("niks-action-hud", "configuration");
-		if (config?.dnd5eDamageTypeDisplay) return config.dnd5eDamageTypeDisplay;
-	} catch {}
-	try {
-		if (game.settings.settings.has("niks-action-hud.dnd5eDamageTypeDisplay")) {
+		if (game.settings?.settings?.has("niks-action-hud.dnd5eDamageTypeDisplay")) {
 			return game.settings.get("niks-action-hud", "dnd5eDamageTypeDisplay") ?? "icons";
 		}
+	} catch {}
+	try {
+		const config = game.settings?.get?.("niks-action-hud", "configuration");
+		if (config?.dnd5eDamageTypeDisplay) return config.dnd5eDamageTypeDisplay;
 	} catch {}
 	return "icons";
 }
@@ -1523,6 +1523,167 @@ export function _formatRange(item) {
 	if (range.long) return `${range.value}/${range.long} ${u}`;
 	return `${range.value} ${u}`;
 }
+
+/**
+ * Return a shortened version of the spell's duration for display in the subline.
+ * Instantaneous spells return an empty string.
+ * Examples:
+ * - 1 minute -> "1m"
+ * - 10 minutes -> "10m"
+ * - 1 hour -> "1h"
+ * - 8 hours -> "8h"
+ * - 1 day -> "1d"
+ * - 1 round -> "1 rnd"
+ * - Instantaneous -> ""
+ *
+ * @param {Item} item
+ * @param {Activity|null} [activity=null]
+ * @returns {string}
+ */
+export function _formatDuration(item, activity = null) {
+	if (!item) return "";
+
+	const duration =
+		(activity?.duration?.override ? activity.duration : null) ||
+		item.system?.duration ||
+		null;
+
+	const units = String(duration?.units || "").toLowerCase().trim();
+	const rawValue = duration?.value;
+	const value = (rawValue !== null && rawValue !== undefined && rawValue !== "")
+		? String(rawValue).trim()
+		: "";
+
+	// Instantaneous spells: return empty string (do not add anything)
+	if (units === "inst" || units === "instant" || units === "instantaneous") {
+		return "";
+	}
+
+	if (units) {
+		switch (units) {
+			case "minute":
+			case "minutes":
+			case "m":
+				return `${value || "1"}m`;
+
+			case "hour":
+			case "hours":
+			case "h":
+				return `${value || "1"}h`;
+
+			case "day":
+			case "days":
+			case "d":
+				return `${value || "1"}d`;
+
+			case "round":
+			case "rounds":
+			case "rnd":
+				return `${value || "1"} rnd`;
+
+			case "turn":
+			case "turns":
+			case "trn":
+				return `${value || "1"} turn`;
+
+			case "second":
+			case "seconds":
+			case "sec":
+			case "s":
+				return `${value || "6"}s`;
+
+			case "month":
+			case "months":
+			case "mo":
+				return `${value || "1"} mo`;
+
+			case "year":
+			case "years":
+			case "yr":
+			case "y":
+				return `${value || "1"}y`;
+
+			case "perm":
+			case "permanent":
+				return "Perm";
+
+			case "disp":
+				return "Disp";
+
+			case "dstr":
+				return "Disp/Trig";
+
+			case "spec":
+			case "special":
+				return duration?.special || "Special";
+		}
+	}
+
+	// Fallback to labels if units was missing or not matched
+	const label = String(item.labels?.duration || "").trim();
+	if (!label) return "";
+
+	if (/^instant(?:aneous)?$/i.test(label)) return "";
+
+	const matchMinutes = label.match(/^(\d+)\s*min(?:ute)?s?$/i);
+	if (matchMinutes) return `${matchMinutes[1]}m`;
+
+	const matchHours = label.match(/^(\d+)\s*hour?s?$/i);
+	if (matchHours) return `${matchHours[1]}h`;
+
+	const matchDays = label.match(/^(\d+)\s*day?s?$/i);
+	if (matchDays) return `${matchDays[1]}d`;
+
+	const matchRounds = label.match(/^(\d+)\s*round?s?$/i);
+	if (matchRounds) return `${matchRounds[1]} rnd`;
+
+	const matchTurns = label.match(/^(\d+)\s*turn?s?$/i);
+	if (matchTurns) return `${matchTurns[1]} turn`;
+
+	const matchSeconds = label.match(/^(\d+)\s*sec(?:ond)?s?$/i);
+	if (matchSeconds) return `${matchSeconds[1]}s`;
+
+	const matchMonths = label.match(/^(\d+)\s*month?s?$/i);
+	if (matchMonths) return `${matchMonths[1]} mo`;
+
+	const matchYears = label.match(/^(\d+)\s*year?s?$/i);
+	if (matchYears) return `${matchYears[1]}y`;
+
+	if (/until dispelled or triggered/i.test(label)) return "Disp/Trig";
+	if (/until dispelled/i.test(label)) return "Disp";
+	if (/permanent/i.test(label)) return "Perm";
+	if (/special/i.test(label)) return "Special";
+
+	return "";
+}
+
+/**
+ * Return a human-readable duration label for tooltips.
+ * @param {Item} item
+ * @param {Activity|null} [activity=null]
+ * @returns {string}
+ */
+export function _getDurationLabel(item, activity = null) {
+	if (!item) return "";
+	const duration =
+		(activity?.duration?.override ? activity.duration : null) ||
+		item?.system?.duration ||
+		null;
+
+	const units = String(duration?.units || "").toLowerCase().trim();
+	if (units === "inst" || units === "instant" || units === "instantaneous") return "";
+
+	if (item.labels?.duration && !/^instant(?:aneous)?$/i.test(item.labels.duration)) {
+		return item.labels.duration;
+	}
+
+	if (!units) return "";
+
+	const val = duration.value ?? 1;
+	const periodLabel = globalThis.CONFIG?.DND5E?.timePeriods?.[units] || units;
+	return `${val ? `${val} ` : ""}${periodLabel}`;
+}
+
 
 export function _buildDnd5eAmmoHtml(weapon) {
 	// [V14 Compatible Only]: In DnD5e v6+ (Foundry V14), weapon.system.properties is strictly a Set<string>

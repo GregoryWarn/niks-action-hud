@@ -482,6 +482,97 @@
 	flex-shrink: 0;
 }
 
+/* ── Scope Badges & Lock Icons ──────────────────────────── */
+
+.hud-scope-badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	padding: 1px 6px;
+	border-radius: 4px;
+	font-size: 0.65rem;
+	font-weight: 700;
+	letter-spacing: 0.4px;
+	text-transform: uppercase;
+	line-height: 1.25;
+	vertical-align: middle;
+	margin-left: 6px;
+	user-select: none;
+}
+
+.hud-scope-badge i {
+	font-size: 0.65rem;
+}
+
+.hud-scope-badge.client {
+	background: rgba(56, 189, 248, 0.12);
+	color: #38bdf8;
+	border: 1px solid rgba(56, 189, 248, 0.28);
+}
+
+.hud-scope-badge.world {
+	background: rgba(168, 85, 247, 0.12);
+	color: #c084fc;
+	border: 1px solid rgba(168, 85, 247, 0.28);
+}
+
+.hud-lock-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 18px;
+	height: 18px;
+	margin-right: 4px;
+	border-radius: 3px;
+	cursor: pointer;
+	vertical-align: middle;
+	transition: transform 0.15s ease, color 0.15s ease, opacity 0.15s ease;
+	text-decoration: none;
+	flex-shrink: 0;
+}
+
+.hud-lock-icon:hover {
+	transform: scale(1.15);
+}
+
+.hud-lock-icon i {
+	font-size: 0.78rem;
+}
+
+.hud-lock-icon.unlocked {
+	color: #888;
+	opacity: 0.45;
+}
+
+.hud-lock-icon.unlocked:hover {
+	opacity: 1;
+	color: #ddd;
+}
+
+.hud-lock-icon.soft {
+	color: #f0c040;
+	opacity: 1;
+}
+
+.hud-lock-icon.soft:hover {
+	color: #ffd866;
+}
+
+.hud-lock-icon.hard {
+	color: #f06060;
+	opacity: 1;
+}
+
+.hud-lock-icon.hard:hover {
+	color: #ff8080;
+}
+
+.hud-setting-row.hard-locked .hud-setting-control {
+	pointer-events: none;
+	opacity: 0.55;
+	filter: grayscale(0.4);
+}
+
 /* ── Modern Switches ────────────────────────────────────── */
 
 .hud-switch {

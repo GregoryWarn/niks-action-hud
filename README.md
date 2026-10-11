@@ -72,7 +72,7 @@ Twelve handcrafted visual themes with zero external dependencies:
 Organized, flyout drawers designed for fast combat decision-making:
 
 - **Attacks**: Equipped weapons with calculated attack bonuses, split multi-type damage formulas and active effect bonuses (e.g. radiant, fire), reach/range indicators, and ammunition tracking.
-- **Spells**: Spellbook categorized by level with real-time spell slot counters (`LV 1 (4/4)`), cantrips, at-will spells, and ritual spell indicators for unprepared wizard rituals.
+- **Spells**: Spellbook categorized by level with real-time spell slot counters (`LV 1 (4/4)`), cantrips, at-will spells, shortened duration indicators (`1m`, `10m`, `1h`, `8h`), and ritual spell indicators for unprepared wizard rituals.
 - **Features**: Class features, species traits, and feats categorized by action type (Action, Bonus Action, Reaction, Passive) with limited use tracking and recharge dice states.
 - **Legendary**: Automatically surfaces for legendary creatures, grouping Legendary Resistance at the top and tracking legendary action points in real time.
 - **Abilities**: Single-line layout for ability checks, saving throws, skill proficiencies, initiative, and rests with signed modifiers and advantage shortcuts.
@@ -95,7 +95,9 @@ Organized, flyout drawers designed for fast combat decision-making:
 - **Visual Category Builder**: Reorder, rename, or customize menu icons, button scaling, and visibility conditions.
 - **Excluded Actor Types**: Simple toggle chips to prevent the HUD from showing on specific actor types (`encounter`, `group`, and `vehicle` excluded by default).
 - **Presets & Backups**: Export and import complete HUD setups as JSON presets with modular section resets.
-- **Client Damage Display Preferences**: Choose between **Icons Only**, **Icons + Text**, or **Text Only** to tune visual density to your table's preference.
+- **Client Damage Display Preferences**: Choose between **Icons Only**, **Icons + Text**, or **Text Only** in the Action HUD Configuration panel to tune visual density to your table's preference.
+- **World vs. Client Scope Badges**: Setting rows clearly distinguish shared table rules (🌐 **World**) from local user preferences (👤 **Client**).
+- **Nik's Settings Locks Integration**: Seamlessly integrates with [Nik's Settings Locks](https://github.com/nschoenwald/niks-settings-locks), enabling GMs to toggle soft-locks (🟡) or hard-locks (🔴) on client settings directly within the configuration UI.
 - **Core Foundry Permissions**: Access to the visual configuration app is governed directly by Foundry's core **Modify Configuration Settings** (`SETTINGS_MODIFY`) permission. Players without this permission can cleanly toggle the HUD off for their user account using the client setting.
 
 ---

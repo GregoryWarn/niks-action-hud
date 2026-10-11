@@ -15,6 +15,7 @@ import {
 	exportHudConfig,
 	loadHudConfig,
 } from "./schema.js";
+import { getLockState } from "./settings-locks.js";
 
 const resolveMenuPreviewActor = (app, targetActors, menuActors) => {
 	const explicitActor = app.menuPreviewActorId
@@ -405,5 +406,15 @@ export const prepareContext = async (app, options = {}) => {
 		// Presets
 		configPresets: Object.keys(game.settings.get(MODULE_ID, "configurationPresets") || {}),
 		actionMenuPresets: Object.keys(game.settings.get(MODULE_ID, "actionMenuPresets") || {}),
+
+		// Setting locks integration (niks-settings-locks)
+		settingLocks: {
+			hideEmptySubmenus: getLockState("hideEmptySubmenus"),
+			fadeWhenIdle: getLockState("fadeWhenIdle"),
+			actionMenuSubmenuSide: getLockState("actionMenuSubmenuSide"),
+			tooltipPosition: getLockState("tooltipPosition"),
+			dnd5eShowUnpreparedRituals: getLockState("dnd5eShowUnpreparedRituals"),
+			dnd5eDamageTypeDisplay: getLockState("dnd5eDamageTypeDisplay"),
+		},
 	};
 };

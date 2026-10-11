@@ -7,6 +7,8 @@ import {
 	_getItemActivityData,
 	_getActivationIcon,
 	_formatRange,
+	_formatDuration,
+	_getDurationLabel,
 	_buildDnd5eAmmoHtml,
 	_isLegendaryResistanceItem,
 	_isLegendaryActionItem,
@@ -572,10 +574,35 @@ export function _getSpellData(actor) {
 		const rangeText = _formatRange(i);
 		const showRange = rangeText && !rangeText.startsWith("5 ");
 		const { damageText, damageHtml } = _getItemDamage(i, actor);
+		const durationText = _formatDuration(i, linkedActivity);
+		const durationLabel = _getDurationLabel(i, linkedActivity);
 
-		const subInfoHtml = damageText
-			? `<span class="nah-info-sub" title="${escapeHtml(damageText)}" style="font-size:0.78em; letter-spacing:0.5px; margin-left:4px; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:100%;">${damageHtml || damageText}${showRange ? ` · ${rangeText}` : ""}</span>`
-			: (rangeText ? `<span style="font-size:0.8em; color:#888; margin-left:4px;">${rangeText}</span>` : "");
+		const infoParts = [];
+		const tooltipParts = [];
+
+		if (damageText) {
+			infoParts.push(damageHtml || damageText);
+			tooltipParts.push(damageText);
+			if (showRange) {
+				infoParts.push(rangeText);
+				tooltipParts.push(rangeText);
+			}
+		} else if (rangeText) {
+			infoParts.push(rangeText);
+			tooltipParts.push(rangeText);
+		}
+
+		if (durationText) {
+			const durHtml = durationLabel
+				? `<span class="nah-spell-duration" title="${escapeHtml(durationLabel)}">${durationText}</span>`
+				: `<span class="nah-spell-duration">${durationText}</span>`;
+			infoParts.push(durHtml);
+			tooltipParts.push(durationLabel || durationText);
+		}
+
+		const subInfoHtml = infoParts.length
+			? `<span class="nah-info-sub" title="${escapeHtml(tooltipParts.join(" · "))}" style="font-size:0.78em; letter-spacing:0.5px; margin-left:4px; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:100%;${damageText ? "" : " color:#888;"}">${infoParts.join(" · ")}</span>`
+			: "";
 
 		items[key]["all"].push({
 			id: i.id,
@@ -584,6 +611,7 @@ export function _getSpellData(actor) {
 			img: i.img,
 			isUnpreparedRitual,
 			isExhausted,
+			duration: durationText,
 			cost: `
                     <div class="nah-cost-wrapper" style="display:inline-flex; align-items:center; gap:4px; white-space:nowrap;">
                         ${actIcon}

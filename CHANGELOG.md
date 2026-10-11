@@ -7,11 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [14.11.0] - 2026-10-10
+
+### Added
+- **Shortened Spell Duration in Sublines**: Spells in the Spells menu now display a clean, concise duration in their subline next to range and damage info (e.g. `1m` for 1 minute, `10m` for 10 minutes, `1h` for 1 hour, `8h`, `1d`, `1 rnd`). Instantaneous spells remain clean without any duration clutter. Hovering over the duration displays the full duration label tooltip.
+- **Client & World Scope Badges in Configuration**: Settings in the General & Behavior configuration panel now display clear visual scope badges indicating whether a setting applies to the local user account (👤 **Client**, cyan) or table-wide across all connected players (🌐 **World**, violet/purple), complete with hover tooltips explaining the scope.
+- **Nik's Settings Locks Integration**: Integrated first-class support for the `niks-settings-locks` module. When enabled, GMs can toggle soft-locks (🟡) and hard-locks (🔴) directly on client-scoped settings within the Action HUD Configuration interface via left/right click, immediately syncing restrictions to connected players and disabling locked controls.
+
+### Changed
+- **Damage Type Display Setting Exclusivity**: Ensured the Damage Type Display setting is configured exclusively through the Action HUD Configuration panel under General Behavior (`config: false`), keeping Foundry's core module settings list clean and focused.
+- **Client Setting Precedence**: Prioritized client-level preferences for damage type display over world configuration fallback values.
+
 ## [14.10.0] - 2026-10-10
 
 ### Added
 - **Damage Type Display Icons & Color Tinting**: Action HUD badges now display subtle, beautifully tinted damage type icons alongside or in place of verbose damage type names (e.g. bludgeoning, radiant, necrotic, fire). Each damage type features a curated luminous hue tailored for high legibility on dark HUD surfaces and utilizes DnD5e's native SVG assets via CSS masking.
-- **Client Damage Type Display Setting**: Added a client-level configuration toggle (**Icons Only**, **Icons + Text**, or **Text Only**) accessible in both Foundry's module settings and the Action HUD Configuration panel under General Behavior. Each player can customize their preferred display mode without affecting others.
+- **Client Damage Type Display Setting**: Added a client-level configuration toggle (**Icons Only**, **Icons + Text**, or **Text Only**) accessible in the Action HUD Configuration panel under General Behavior. Each player can customize their preferred display mode without affecting others.
 
 ## [14.9.1] - 2026-10-10
 

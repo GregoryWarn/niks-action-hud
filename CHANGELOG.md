@@ -2,6 +2,11 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** will be documented in this file.
 
+## [14.11.4] - 2026-10-13
+
+### Changed
+- **Full Opacity for Depleted Favorite Icons**: Favorite quick slot icons now retain their full brightness and color vibrancy even when remaining uses reach zero, ensuring icons remain clearly visible without dimming or desaturating. Depleted status is communicated cleanly through the red-highlighted uses badge.
+
 ## [14.11.3] - 2026-10-13
 
 ### Added

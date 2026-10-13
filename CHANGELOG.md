@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- **Activity Choice Dialog for Multi-Activity Actions**: Fixed an issue where clicking spells, features, or items with multiple activities (such as *Hunter's Mark*, which contains casting, moving the mark, and bonus damage activities) directly executed a damage or attack activity instead of prompting the activity choice dialog. The HUD now cleanly prompts DnD5e's native Activity Choice dialog whenever an action offers multiple usable activities, while single-activity items continue to roll immediately without extra prompts.
+
 ## [14.11.1] - 2026-10-11
 
 ### Changed

@@ -42,6 +42,7 @@ A sleek, canvas-docked Action HUD for **Foundry VTT (v14)** and **D&D 5e (6.x)**
 - **Automatic Empty Menu Hiding**: Automatically hides category buttons that have no actions for the selected actor (e.g. hiding the Spells button for characters without magic).
 - **Subtly Tinted Damage Type Icons**: Renders intuitive, beautifully colored vector damage type icons (e.g. fire, radiant, bludgeoning) directly on action badges using DnD5e's native SVG assets, with client customization for **Icons Only**, **Both (Icon + Text)**, or **Text Only**.
 - **Core Interface Fading**: Seamlessly integrates with Foundry's core interface fading, dimming when idle and restoring full brightness on hover or interaction.
+- **Native Activity Choice Dialogs**: Spells, items, and features containing multiple activities (such as *Hunter's Mark* with spell slot casting, moving the mark, and bonus damage) automatically trigger DnD5e's native Activity Choice dialog on click.
 - **Direct Sheet Navigation**: Right-click any action, spell, or item to jump directly to its sheet.
 
 ---

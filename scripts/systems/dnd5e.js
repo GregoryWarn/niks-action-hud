@@ -376,6 +376,21 @@ export class DnD5eAdapter extends BaseSystemAdapter {
 			return;
 		}
 
+		// Activity invocation if a specific activity is targeted
+		if (itemId.startsWith("activity:")) {
+			const parts = itemId.split(":");
+			const actItemId = parts[1];
+			const actId = parts[2];
+			const actItem = actor.items.get(actItemId);
+			const activity = actItem?.system?.activities?.get(actId);
+			if (activity && typeof activity.use === "function") {
+				return activity.use(config, dialogOptions);
+			}
+			if (actItem && typeof actItem.use === "function") {
+				return actItem.use(config, dialogOptions);
+			}
+		}
+
 		let item = actor.items.get(itemId);
 		if (!item && this.findSyntheticItem) item = this.findSyntheticItem(actor, itemId);
 		if (!item) {
@@ -388,30 +403,13 @@ export class DnD5eAdapter extends BaseSystemAdapter {
 			return item.consume();
 		}
 
-		// DnD5e 6.x Activity invocation
-		const activities = item.system?.activities;
-		if (activities && activities.size > 0) {
-			const attackActivity = activities.find((a) => a.type === "attack" && a.canUse !== false)
-				|| activities.find((a) => a.type === "attack");
-			if (attackActivity && typeof attackActivity.use === "function") {
-				return attackActivity.use(config, dialogOptions);
-			}
-
-			const damageActivity = activities.find((a) => a.type === "damage" && a.canUse !== false)
-				|| activities.find((a) => a.type === "damage");
-			if (damageActivity && typeof damageActivity.use === "function") {
-				return damageActivity.use(config, dialogOptions);
-			}
-
-			const firstActivity = activities.find((a) => a.canUse !== false)
-				|| (activities.contents ? activities.contents[0] : Array.from(activities.values())[0]);
-			if (firstActivity && typeof firstActivity.use === "function") {
-				return firstActivity.use(config, dialogOptions);
-			}
+		// Standard item use via DnD5e 6.x item.use (prompts ActivityChoiceDialog when multiple usable activities exist)
+		if (typeof item.use === "function") {
+			return item.use(config, dialogOptions);
 		}
-
-		// Standard item use via DnD5e 6.x item.use
-		return item.use(config, dialogOptions);
+		if (typeof item.roll === "function") {
+			return item.roll(config, dialogOptions);
+		}
 	}
 
 	async _toggleItemEquip(actor, itemId) {

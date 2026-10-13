@@ -1,0 +1,281 @@
+{
+  "NAH": {
+    "Title": "Nik's Action HUD",
+    "Categories": {
+      "Attacks": "Attacchi",
+      "Attack": "Attacco",
+      "Spells": "Incantesimi",
+      "Magic": "Magia",
+      "Features": "Privilegi",
+      "Feature": "Privilegio",
+      "Legendary": "Leggendari",
+      "Abilities": "Caratteristiche",
+      "Utility": "Utility",
+      "Items": "Oggetti",
+      "Inventory": "Inventario"
+    },
+    "Tabs": {
+      "All": "Tutto",
+      "Cantrips": "Trucchetti",
+      "Level": "Livello {level}",
+      "Actions": "Azioni",
+      "BonusActions": "Azioni Bonus",
+      "Reactions": "Reazioni",
+      "Legendary": "Azioni leggendarie",
+      "Other": "Altro",
+      "Checks": "Prove",
+      "Saves": "Tiri Salvezza",
+      "Skills": "Abilità",
+      "Rests": "Riposi",
+      "Initiative": "Iniziativa",
+      "Spells": "Incantesimi"
+    },
+    "Titles": {
+      "Attacks": "Attacchi",
+      "Spells": "Incantesimi",
+      "Features": "Privilegi",
+      "Legendary": "Leggendari",
+      "Utility": "Utility",
+      "Abilities": "Caratteristiche",
+      "Items": "Oggetti"
+    },
+    "UI": {
+      "SelectedActor": "Personaggio attivo",
+      "EndTurn": "Termina turno",
+      "Settings": "Impostazioni HUD Azioni",
+      "SearchPlaceholder": "Cerca azioni, incantesimi, oggetti...",
+      "Collapse": "Comprimi HUD",
+      "Expand": "Espandi HUD",
+      "NoEntries": "Nessuna voce disponibile.",
+      "Empty": "Vuoto",
+      "NoFavoritesInView": "Nessun preferito nella visualizzazione corrente.",
+      "AddFavorite": "Aggiungi ai preferiti",
+      "RemoveFavorite": "Rimuovi dai preferiti",
+      "SortFavoritesFirst": "Mostra prima i preferiti",
+      "ShowFavoritesOnly": "Mostra solo i preferiti",
+      "NoPermission": "Non disponi dell'autorizzazione necessaria per eseguire questa azione.",
+      "OpenSheetHint": "Clic con il tasto destro per visualizzare la scheda oggetto",
+      "DragHint": "Trascina per riordinare i preferiti",
+      "LivePreview": "Anteprima in tempo reale attiva",
+      "Save": "Salva",
+      "Cancel": "Annulla",
+      "Delete": "Elimina",
+      "Reset": "Ripristina impostazioni predefinite",
+      "Apply": "Applica",
+      "All": "Tutto",
+      "AllSpells": "Tutti",
+      "AllFeatures": "Tutti",
+      "AllItems": "Tutti",
+      "AllAbilities": "Tutte",
+      "DragMacrosHere": "Trascina qui le macro",
+      "DropMacro": "Rilascia macro",
+      "RightClickRemove": "Clic con il tasto destro per rimuovere"
+    },
+    "Tooltips": {
+      "AddFavorite": "Aggiungi ai preferiti",
+      "RemoveFavorite": "Rimuovi dai preferiti",
+      "FavoriteOptions": "Opzioni dei preferiti",
+      "OpenItemSheet": "Apri la scheda dell'oggetto",
+      "RitualSpell": "Rituale conosciuto (non preparato)",
+      "SpellDC": "CD Tiri Salvezza Incantesimi",
+      "SpellAttack": "Modificatore tiri per colpire con incantesimi",
+      "LegendaryResistance": "Resistenza leggendaria",
+      "ReorderFavorites": "Trascina per riordinare i preferiti",
+      "Advantage": "Vantaggio",
+      "Disadvantage": "Svantaggio",
+      "Normal": "Normale",
+      "Initiative": "Determina l'ordine dei turni in combattimento.",
+      "SaveDescriptions": {
+        "str": "Resistere fisicamente a una forza diretta.",
+        "dex": "Evitare il pericolo schivandolo.",
+        "con": "Resistere a una sostanza tossica, a un veleno o a una malattia, oppure mantenere la concentrazione su un incantesimo quando si subiscono danni.",
+        "int": "Riconoscere un'illusione come falsa oppure resistere a effetti psionici e psichici che colpiscono l'intelletto e la capacità di ragionamento.",
+        "wis": "Resistere a un attacco mentale.",
+        "cha": "Affermare la propria identità."
+      },
+      "CheckDescriptions": {
+        "str": "Sollevare, spingere, tirare o rompere qualcosa.",
+        "dex": "Muoversi con agilità, rapidità o furtività.",
+        "con": "Spingere il proprio corpo oltre i limiti normali.",
+        "int": "Ragionare o ricordare.",
+        "wis": "Notare elementi dell'ambiente o del comportamento delle creature.",
+        "cha": "Influenzare, intrattenere o ingannare."
+      },
+      "SkillDescriptions": {
+        "acr": "Mantenere l'equilibrio in una situazione difficile oppure eseguire un'acrobazia.",
+        "ani": "Calmare o addestrare un animale, oppure indurlo a comportarsi in un determinato modo.",
+        "arc": "Ricordare conoscenze relative a incantesimi, oggetti magici e piani di esistenza.",
+        "ath": "Saltare più lontano del normale, mantenersi a galla in acque agitate oppure rompere qualcosa.",
+        "dec": "Raccontare una bugia convincente oppure indossare un travestimento credibile.",
+        "his": "Ricordare conoscenze relative a eventi storici, personaggi, nazioni e culture.",
+        "ins": "Comprendere l'umore e le intenzioni di una persona.",
+        "itm": "Suscitare timore reverenziale o minacciare qualcuno per indurlo a fare ciò che si desidera.",
+        "inv": "Trovare informazioni difficili da reperire nei libri oppure dedurre come funziona qualcosa.",
+        "med": "Diagnosticare una malattia oppure determinare la causa della morte di una creatura appena deceduta.",
+        "nat": "Ricordare conoscenze relative a terreni, piante, animali e condizioni meteorologiche.",
+        "prc": "Notare qualcosa che potrebbe facilmente sfuggire, utilizzando una combinazione dei sensi.",
+        "prf": "Recitare, raccontare una storia, eseguire musica o ballare.",
+        "per": "Convincere qualcuno in modo sincero e garbato.",
+        "rel": "Ricordare conoscenze relative a divinità, rituali religiosi e simboli sacri.",
+        "slt": "Borseggiare, nascondere un oggetto tenuto in mano oppure eseguire giochi di prestigio.",
+        "ste": "Evitare di essere notati muovendosi silenziosamente e nascondendosi dietro gli oggetti.",
+        "sur": "Seguire tracce, raccogliere provviste in natura, trovare un percorso oppure evitare pericoli naturali."
+      }
+    },
+    "Config": {
+      "Title": "Configurazione Nik's Action HUD",
+      "Saved": "Configurazione Nik's Action HUD salvata.",
+      "ResetConfirmTitle": "Ripristina configurazione",
+      "ResetConfirmMessage": "Vuoi davvero ripristinare le impostazioni di {scope} ai valori predefiniti?",
+      "FontDefault": "Carattere predefinito"
+    },
+    "Presets": {
+      "SystemMismatchTitle": "Sistema incompatibile",
+      "SystemMismatchContent": "Questa configurazione preimpostata è stata progettata per {presetSystem}, mentre il sistema attuale è {currentSystem}. Vuoi continuare con l'importazione?"
+    },
+    "Dnd5e": {
+      "Saves": "TIRI SALVEZZA",
+      "Skills": "ABILITÀ",
+      "Checks": "PROVE",
+      "Rest": "RIPOSO",
+      "Macros": "MACRO",
+      "ShortRest": "Riposo Breve",
+      "LongRest": "Riposo Lungo",
+      "ShortRestDesc": "Recupera risorse e spendi Dadi Vita",
+      "LongRestDesc": "Recupera tutti i PF, gli incantesimi e le risorse",
+      "Initiative": "Iniziativa",
+      "RollInit": "Tira Iniziativa",
+      "InvWeapons": "ARMI",
+      "InvWeaponsDesc": "Armi (non impugnate)",
+      "InvGear": "EQUIPAGGIAMENTO",
+      "InvGearDesc": "Equipaggiamento e armature",
+      "InvConsum": "CONSUMABILI",
+      "InvConsumDesc": "Oggetti consumabili",
+      "InvTools": "STRUMENTI",
+      "InvToolsDesc": "Strumenti",
+      "InvLoot": "BOTTINO",
+      "InvLootDesc": "Bottino",
+      "InvContainer": "CONTENITORI",
+      "InvContainerDesc": "Contenitori",
+      "ActionEquip": "Equipaggia",
+      "ActionUnequip": "Disequipaggia",
+      "ResourceValue": "Valore Risorsa",
+      "ResourceTracked": "Risorsa monitorata",
+      "Ready": "Pronto",
+      "Recharge": "Ricarica {val}+",
+      "Cantrip": "TRUCCHETTO",
+      "CantripsDesc": "Trucchetti (a volontà)",
+      "Pact": "PATTO",
+      "PactDesc": "Magia del Patto (livello {level})",
+      "Innate": "INNATO",
+      "InnateDesc": "Incantesimi innati",
+      "AtWill": "A VOLONTÀ",
+      "AtWillDesc": "Incantesimi utilizzabili a volontà",
+      "Level": "LIV. {level}",
+      "LevelDesc": "Incantesimi di livello {level}",
+      "ItemSpells": "OGGETTO",
+      "ItemSpellsDesc": "Incantesimi provenienti dagli oggetti",
+      "Uses": "{current} / {max}"
+    },
+    "Spells": {
+      "UnpreparedRitualTitle": "Solo rituale (non preparato)",
+      "UnpreparedRitualHint": "Rituale non preparato",
+      "RitualTag": "Rituale"
+    },
+    "Favorites": {
+      "OpenSheet": "Apri la scheda dell'oggetto",
+      "DeleteFavorite": "Elimina dai preferiti",
+      "DialogSubtitle": "Azione preferita"
+    },
+    "Damage": {
+      "Any": "qualsiasi"
+    },
+    "Notifications": {
+      "MacroPermissionFailed": "Impossibile ottenere dal GM i permessi per eseguire la macro.",
+      "MacroDeleted": "Macro rimossa dall'HUD Azioni.",
+      "UpdateFailed": "Impossibile aggiornare i dati del personaggio.",
+      "PresetExportSuccess": "Configurazione preimpostata esportata correttamente.",
+      "PresetImportSuccess": "Configurazione preimpostata importata correttamente.",
+      "PresetImportError": "Impossibile importare la configurazione preimpostata: formato JSON non valido.",
+      "SectionReset": "Impostazioni della sezione ripristinate ai valori predefiniti."
+    },
+    "Settings": {
+      "DisableHud": {
+        "Name": "Disabilita HUD delle Azioni",
+        "Hint": "Disabilita completamente e nasconde l'HUD delle Azioni per il tuo account utente."
+      },
+      "ConfigMenu": {
+        "Name": "Configurazione HUD Azioni",
+        "Label": "Configura HUD Azioni",
+        "Hint": "Apri il pannello di configurazione visiva per personalizzare temi, disposizione, regole e categorie dell'HUD Azioni."
+      },
+      "SubmenuSide": {
+        "Name": "Direzione di apertura dei sottomenu",
+        "Hint": "I sottomenu si aprono nella direzione selezionata rispetto al pannello. La modalità automatica rileva dinamicamente i bordi dello schermo.",
+        "Auto": "Automatica",
+        "Left": "Sinistra",
+        "Right": "Destra"
+      },
+      "TooltipPosition": {
+        "Name": "Posizione delle descrizioni contestuali",
+        "Hint": "Scegli come posizionare le descrizioni contestuali avanzate.",
+        "Anchor": "Ancorate al pannello",
+        "Cursor": "Segui il cursore"
+      },
+      "InterfaceFading": {
+        "Name": "Attenua quando inattivo (dissolvenza dell'interfaccia)",
+        "Hint": "Attenua l'HUD Azioni quando è inattivo, rispettando le impostazioni di Foundry relative all'opacità dell'interfaccia inattiva e alla velocità di dissolvenza. Ripristina l'opacità completa al passaggio del puntatore, quando l'HUD riceve il focus o quando è aperto un sottomenu."
+      },
+      "HideEmptySubmenus": {
+        "Name": "Nascondi i sottomenu vuoti",
+        "Hint": "Nasconde i pulsanti delle azioni e i sottomenu che non contengono voci per il personaggio attivo, ad esempio il pulsante degli incantesimi per i personaggi che non sono incantatori."
+      },
+      "WizardRituals": {
+        "Name": "Mostra i rituali da mago non preparati",
+        "Hint": "Mostra nel libro degli incantesimi dei maghi gli incantesimi non preparati con il tag rituale, consentendo di lanciarli direttamente dal libro degli incantesimi."
+      },
+      "DamageTypeDisplay": {
+        "Name": "Visualizzazione dei tipi di danno",
+        "Hint": "Scegli come visualizzare i tipi di danno sui pulsanti delle azioni: icone compatte con colori discreti, icone accompagnate da testo oppure solo testo.",
+        "Icons": "Solo icone",
+        "Both": "Icone e testo",
+        "Text": "Solo testo"
+      },
+      "AutoFavoriteNpc": {
+        "Name": "Aggiungi automaticamente ai preferiti le azioni dei PNG",
+        "Hint": "Aggiunge automaticamente ai preferiti le attività di attacco, danno e tiro salvezza, ordinate per tempo d'azione, quando viene collocato sulla scena un token PNG privo di preferiti."
+      },
+      "AutoFavoriteNpcMax": {
+        "Name": "Numero massimo di privilegi da aggiungere automaticamente",
+        "Hint": "Numero massimo di oggetti o privilegi idonei, dotati di attività di attacco, danno o tiro salvezza, che un PNG può avere per attivare l'aggiunta automatica ai preferiti (valore predefinito: 5)."
+      }
+    },
+    "Themes": {
+      "Carolingian": "Carolingian UI",
+      "Arcanum": "Arcanum",
+      "Obsidian": "Obsidian",
+      "Grimoire": "Grimoire",
+      "Eldritch": "Eldritch",
+      "Valiant": "Valiant",
+      "Sylvan": "Sylvan",
+      "Infernal": "Infernal",
+      "Frostborn": "Frostborn",
+      "Clockwork": "Clockwork",
+      "Radiant": "Radiant",
+      "Ossuary": "Ossuary",
+      "ExportPartialWarning": "Esportazione completata con {count} avvisi.",
+      "ExportSuccess": "Tema esportato correttamente.",
+      "ImportNoJsonError": "L'archivio caricato non contiene una configurazione del tema valida."
+    },
+    "Keybindings": {
+      "ToggleHUD": {
+        "Name": "Attiva/disattiva HUD Azioni",
+        "Hint": "Mostra o nasconde l'HUD."
+      },
+      "ToggleActionMenuVisibility": {
+        "Name": "Attiva/disattiva visibilità del menu",
+        "Hint": "Mostra o nasconde il menu delle azioni."
+      }
+    }
+  }
+}

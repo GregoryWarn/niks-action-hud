@@ -18,6 +18,7 @@ import {
 	_getWeaponDamage,
 	_getPrimaryAttackActivity,
 	_getPrimaryDamageActivity,
+	actorHasAvailableSpellSlots,
 	escapeHtml,
 } from "./helpers.js";
 
@@ -566,6 +567,13 @@ export function _getSpellData(actor) {
 
 			if (hasValidMax && remaining === 0) {
 				isExhausted = true;
+			}
+		}
+
+		if (isExhausted) {
+			const spellLevel = linkedActivity?.spell?.level ?? lvl ?? (parseInt(key, 10) || 1);
+			if (actorHasAvailableSpellSlots(actor, spellLevel)) {
+				isExhausted = false;
 			}
 		}
 

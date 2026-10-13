@@ -2,6 +2,11 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** will be documented in this file.
 
+## [14.12.1] - 2026-10-13
+
+### Fixed
+- **Spell Usability with Expended Free Uses**: Spells with limited item or activity uses (such as racial spells or feat spells like *Fey Touched* and *Shadow Touched*) are no longer marked as dimmed out or unusable when their free daily uses reach zero, provided the character still has spell slots of sufficient level available to cast them.
+
 ## [14.12.0] - 2026-10-13
 
 ### Added

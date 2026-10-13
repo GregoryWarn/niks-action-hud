@@ -149,10 +149,10 @@ export class DnD5eAdapter extends BaseSystemAdapter {
 			targetItem = actor.items?.get(actItemId) || targetItem;
 			targetActivity = targetItem?.system?.activities?.get(actId) || null;
 			if (targetActivity && Helpers._activityHasUses(targetActivity)) {
-				return this._formatFavoriteUses(targetActivity.uses, targetActivity, targetItem);
+				return this._formatFavoriteUses(targetActivity.uses, targetActivity, targetItem, actor);
 			}
 			if (targetItem && Helpers._hasItemUses(targetItem)) {
-				return this._formatFavoriteUses(targetItem.system?.uses, null, targetItem);
+				return this._formatFavoriteUses(targetItem.system?.uses, null, targetItem, actor);
 			}
 		}
 
@@ -228,19 +228,19 @@ export class DnD5eAdapter extends BaseSystemAdapter {
 
 		// 5. Item-level limited uses attached directly to the item
 		if (Helpers._hasItemUses(targetItem)) {
-			return this._formatFavoriteUses(targetItem.system.uses, null, targetItem);
+			return this._formatFavoriteUses(targetItem.system.uses, null, targetItem, actor);
 		}
 
 		// 6. Exactly one activity with activity uses on the item
 		const singleActivity = Helpers._getSingleActivityUses(targetItem);
 		if (singleActivity && Helpers._activityHasUses(singleActivity)) {
-			return this._formatFavoriteUses(singleActivity.uses, singleActivity, targetItem);
+			return this._formatFavoriteUses(singleActivity.uses, singleActivity, targetItem, actor);
 		}
 
 		return null;
 	}
 
-	_formatFavoriteUses(uses, activity = null, targetItem = null) {
+	_formatFavoriteUses(uses, activity = null, targetItem = null, actor = null) {
 		if (!uses) return null;
 
 		// Recharge check (item recharge or activity recharge)
@@ -256,11 +256,21 @@ export class DnD5eAdapter extends BaseSystemAdapter {
 				!activity?.isOnCooldown &&
 				!targetItem?.isOnCooldown;
 			const value = isCharged ? 1 : 0;
+			let isExhausted = !isCharged;
+			if (isExhausted && actor) {
+				const isSpell = targetItem?.type === "spell" || activity?.type === "cast";
+				if (isSpell) {
+					const spellLevel = targetItem?.system?.level ?? activity?.spell?.level ?? 1;
+					if (Helpers.actorHasAvailableSpellSlots(actor, spellLevel)) {
+						isExhausted = false;
+					}
+				}
+			}
 			return {
 				value,
 				max: 1,
 				label: isCharged ? "1/1" : "0/1",
-				isExhausted: !isCharged,
+				isExhausted,
 				hasRecharge: true,
 			};
 		}
@@ -282,7 +292,16 @@ export class DnD5eAdapter extends BaseSystemAdapter {
 		if (!hasValidMax && value <= 0) return null;
 
 		const label = hasValidMax ? `${value}/${maxNum}` : `${value}`;
-		const isExhausted = hasValidMax ? value <= 0 : false;
+		let isExhausted = hasValidMax ? value <= 0 : false;
+		if (isExhausted && actor) {
+			const isSpell = targetItem?.type === "spell" || activity?.type === "cast";
+			if (isSpell) {
+				const spellLevel = targetItem?.system?.level ?? activity?.spell?.level ?? 1;
+				if (Helpers.actorHasAvailableSpellSlots(actor, spellLevel)) {
+					isExhausted = false;
+				}
+			}
+		}
 
 		return {
 			value,

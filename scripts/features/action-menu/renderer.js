@@ -310,6 +310,21 @@ export const buildQuickSlotsHtml = (ActionMenu) => {
 				img = "icons/svg/dice-target.svg";
 				name = "Macro";
 			}
+		} else if (itemId.startsWith("activity:")) {
+			const parts = itemId.split(":");
+			const actItemId = parts[1];
+			const actId = parts[2];
+			const actItem = actor.items?.get(actItemId);
+			const act = actItem?.system?.activities?.get(actId);
+			if (act) {
+				item = actItem;
+				img = act.img || actItem.img;
+				name = act.name || actItem.name;
+			} else if (actItem) {
+				item = actItem;
+				img = actItem.img;
+				name = actItem.name;
+			}
 		} else {
 			item = actor.items?.get(itemId);
 			if (item) {
@@ -326,14 +341,24 @@ export const buildQuickSlotsHtml = (ActionMenu) => {
 		}
 
 		if (item) {
+			const usesData = ActionMenu.adapter?.getFavoriteUses
+				? ActionMenu.adapter.getFavoriteUses(actor, itemId, item)
+				: null;
+
+			const usesHtml = usesData
+				? `<span class="nah-quick-slot-uses${usesData.isExhausted ? " is-exhausted" : ""}" aria-label="${escapeHtml(usesData.label)} uses">${escapeHtml(usesData.label)}</span>`
+				: "";
+			const exhaustedClass = usesData?.isExhausted ? " is-exhausted" : "";
+
 			slots += `
-				<div class="nah-quick-slot" draggable="true"
+				<div class="nah-quick-slot${exhaustedClass}" draggable="true"
 					 data-favorite-id="${escapeHtml(itemId)}"
 					 aria-label="${escapeHtml(name)}"
 					 onmouseenter="ActionHUD.actionMenu.showTooltip('${escapeHtml(itemId)}', event)"
 					 onmouseleave="ActionHUD.actionMenu.hideTooltip()">
 					<img src="${escapeHtml(img || 'icons/svg/item-bag.svg')}" alt="${escapeHtml(name)}" draggable="false"
 						 onerror="this.onerror=null; this.src='icons/svg/item-bag.svg';">
+					${usesHtml}
 				</div>
 			`;
 		}

@@ -2,6 +2,11 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** will be documented in this file.
 
+## [14.11.3] - 2026-10-13
+
+### Added
+- **Uses Display on Favorite Icons**: Favorite quick slot icons now display a compact, high-contrast uses badge in their bottom-right corner for any favorited action or item with limited uses (e.g. `3/3`, `1/2`, `0/1`). This tracks items with item-level limited uses (such as charges, wands, and magic items) and items with a single activity that has activity uses (such as *Second Wind*, *Action Surge*, or *Channel Divinity*), as well as legendary resistance and resources. When all uses are expended, the badge highlights in red and the icon subtly dims so resource availability is instantly clear at a glance.
+
 ## [14.11.2] - 2026-10-13
 
 ### Fixed

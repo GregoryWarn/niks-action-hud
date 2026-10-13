@@ -84,6 +84,7 @@ Organized, flyout drawers designed for fast combat decision-making:
 ## ⭐ Favorites Dock & Quick Slots
 
 - **Canvas Quick Slots**: Pin your favorite attacks, spells, items, or macros to a dedicated dock for instant one-click execution.
+- **Uses Tracking on Favorite Icons**: Quick slot icons dynamically display remaining uses (e.g. `3/3`, `1/2`, `0/1`) for items with item-level limited uses or single activities with activity uses, complete with real-time updates and an exhausted visual state when fully spent.
 - **Drag-to-Reorder**: Rearrange quick slots smoothly via drag-and-drop.
 - **Rich Hover Tooltips**: View item artwork, full descriptions, activation costs, and roll details on hover.
 - **Auto-Favorites for NPCs**: Automatically populates default attack and action favorites when placing NPC tokens on the scene.

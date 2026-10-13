@@ -126,6 +126,172 @@ export class DnD5eAdapter extends BaseSystemAdapter {
 		return null;
 	}
 
+	/**
+	 * Retrieve uses data for a favorited action or item (DnD5e 6.x).
+	 * Checks item-level limited uses first, then single activity uses,
+	 * as well as explicit activity IDs, linked item macros, and system resources.
+	 * @param {Actor} actor
+	 * @param {string} itemId
+	 * @param {Item|Object|null} [item=null]
+	 * @returns {{ value: number, max: number|null, label: string, isExhausted: boolean }|null}
+	 */
+	getFavoriteUses(actor, itemId, item = null) {
+		if (!actor || !itemId) return null;
+
+		let targetItem = item;
+		let targetActivity = null;
+
+		// 1. Explicit activity composite ID: activity:<itemId>:<activityId>
+		if (itemId.startsWith("activity:")) {
+			const parts = itemId.split(":");
+			const actItemId = parts[1];
+			const actId = parts[2];
+			targetItem = actor.items?.get(actItemId) || targetItem;
+			targetActivity = targetItem?.system?.activities?.get(actId) || null;
+			if (targetActivity && Helpers._activityHasUses(targetActivity)) {
+				return this._formatFavoriteUses(targetActivity.uses, targetActivity, targetItem);
+			}
+			if (targetItem && Helpers._hasItemUses(targetItem)) {
+				return this._formatFavoriteUses(targetItem.system?.uses, null, targetItem);
+			}
+		}
+
+		// 2. Custom macros linked to an actor item via sourceId flag
+		if (itemId.startsWith("macro-")) {
+			const realId = itemId.replace("macro-", "");
+			const macro =
+				(typeof fromUuidSync === "function" ? fromUuidSync(realId) : null) ||
+				game.macros?.get(realId);
+			if (macro?.flags?.[MODULE_ID]?.sourceId) {
+				try {
+					const linked = (typeof fromUuidSync === "function" ? fromUuidSync(macro.flags[MODULE_ID].sourceId) : null);
+					if (linked && linked.actor?.id === actor.id) {
+						targetItem = linked;
+					}
+				} catch (_e) {}
+			}
+		}
+
+		// 3. System resources (Legendary Resistance, Legendary Actions, Class Resources)
+		if (itemId === "res-legres") {
+			const legres = actor.system?.resources?.legres;
+			const max = Number(legres?.max) || 0;
+			if (max > 0) {
+				const current = Number(legres.value ?? (max - (legres.spent ?? 0))) || 0;
+				const value = Math.max(0, current);
+				return {
+					value,
+					max,
+					label: `${value}/${max}`,
+					isExhausted: value <= 0,
+				};
+			}
+		}
+
+		if (itemId === "res-legact") {
+			const legact = actor.system?.resources?.legact;
+			const max = Number(legact?.max) || 0;
+			if (max > 0) {
+				const current = Number(legact.value ?? (max - (legact.spent ?? 0))) || 0;
+				const value = Math.max(0, current);
+				return {
+					value,
+					max,
+					label: `${value}/${max}`,
+					isExhausted: value <= 0,
+				};
+			}
+		}
+
+		if (itemId.startsWith("res-")) {
+			const resKey = itemId.replace("res-", "");
+			const resource = actor.system?.resources?.[resKey];
+			const max = Number(resource?.max) || 0;
+			if (max > 0) {
+				const current = Number(resource.value ?? (max - (resource.spent ?? 0))) || 0;
+				const value = Math.max(0, current);
+				return {
+					value,
+					max,
+					label: `${value}/${max}`,
+					isExhausted: value <= 0,
+				};
+			}
+		}
+
+		// 4. Resolve standard actor item
+		if (!targetItem || !targetItem.system) {
+			targetItem = actor.items?.get(itemId);
+		}
+
+		if (!targetItem || !targetItem.system) return null;
+
+		// 5. Item-level limited uses attached directly to the item
+		if (Helpers._hasItemUses(targetItem)) {
+			return this._formatFavoriteUses(targetItem.system.uses, null, targetItem);
+		}
+
+		// 6. Exactly one activity with activity uses on the item
+		const singleActivity = Helpers._getSingleActivityUses(targetItem);
+		if (singleActivity && Helpers._activityHasUses(singleActivity)) {
+			return this._formatFavoriteUses(singleActivity.uses, singleActivity, targetItem);
+		}
+
+		return null;
+	}
+
+	_formatFavoriteUses(uses, activity = null, targetItem = null) {
+		if (!uses) return null;
+
+		// Recharge check (item recharge or activity recharge)
+		const hasRecharge = Boolean(
+			activity?.hasRecharge ||
+			targetItem?.hasRecharge ||
+			targetItem?.system?.recharge?.value ||
+			uses.recovery?.some?.((r) => r.period === "recharge")
+		);
+
+		if (hasRecharge) {
+			const isCharged = (Number(uses.value) >= 1 || uses.value === undefined) &&
+				!activity?.isOnCooldown &&
+				!targetItem?.isOnCooldown;
+			const value = isCharged ? 1 : 0;
+			return {
+				value,
+				max: 1,
+				label: isCharged ? "1/1" : "0/1",
+				isExhausted: !isCharged,
+				hasRecharge: true,
+			};
+		}
+
+		const rawMax = uses.max;
+		const maxNum = Number(rawMax);
+		const hasValidMax = Number.isFinite(maxNum) && maxNum > 0;
+
+		let val = uses.value;
+		if (val === undefined || val === null) {
+			if (hasValidMax && uses.spent !== undefined) {
+				val = Math.max(0, maxNum - Number(uses.spent || 0));
+			} else {
+				val = 0;
+			}
+		}
+		const value = Math.max(0, Number(val) || 0);
+
+		if (!hasValidMax && value <= 0) return null;
+
+		const label = hasValidMax ? `${value}/${maxNum}` : `${value}`;
+		const isExhausted = hasValidMax ? value <= 0 : false;
+
+		return {
+			value,
+			max: hasValidMax ? maxNum : null,
+			label,
+			isExhausted,
+		};
+	}
+
 	/* =========================================
 	   ITEM USE & ACTIVITY EXECUTION
 	   ========================================= */

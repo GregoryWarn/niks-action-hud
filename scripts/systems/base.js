@@ -357,6 +357,18 @@ export class BaseSystemAdapter {
 	async executeAction(actor, actionId) {}
 
 	/**
+	 * Retrieve uses data for a favorited item or action.
+	 * Overridden by system adapters.
+	 * @param {Actor} actor
+	 * @param {string} itemId
+	 * @param {Item|Object|null} [item=null]
+	 * @returns {{ value: number, max: number|null, label: string, isExhausted: boolean }|null}
+	 */
+	getFavoriteUses(actor, itemId, item = null) {
+		return null;
+	}
+
+	/**
 	 * Trigger use or roll of an item by ID.
 	 */
 	async useItem(actor, itemId, event = null) {

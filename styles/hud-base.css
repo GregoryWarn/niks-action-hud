@@ -297,7 +297,19 @@
 }
 
 .nah-quick-slot {
+	position: relative;
 	flex-shrink: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.nah-quick-slot img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-radius: inherit;
+	display: block;
 }
 
 #nah-dock .nah-quick-slot[draggable="true"] {
@@ -309,6 +321,44 @@
 #nah-dock .nah-quick-slot.is-dragging {
 	opacity: 0.42;
 	cursor: grabbing;
+}
+
+.nah-quick-slot-uses {
+	position: absolute;
+	bottom: 2px;
+	right: 2px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+	font-size: 9px;
+	font-weight: 700;
+	line-height: 1;
+	letter-spacing: -0.2px;
+	padding: 1.5px 3.5px;
+	border-radius: 3px;
+	background: var(--nah-quick-slot-uses-bg, rgba(10, 14, 20, 0.88));
+	color: var(--nah-quick-slot-uses-color, #e6ebf0);
+	border: 1px solid var(--nah-quick-slot-uses-border, rgba(255, 255, 255, 0.2));
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+	backdrop-filter: blur(2px);
+	-webkit-backdrop-filter: blur(2px);
+	white-space: nowrap;
+	pointer-events: none;
+	z-index: 2;
+	user-select: none;
+}
+
+.nah-quick-slot-uses.is-exhausted {
+	background: var(--nah-quick-slot-exhausted-bg, rgba(45, 10, 14, 0.92));
+	color: var(--nah-quick-slot-exhausted-color, #ff7b7b);
+	border-color: var(--nah-quick-slot-exhausted-border, rgba(255, 90, 90, 0.45));
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.8), 0 0 4px rgba(255, 80, 80, 0.35);
+}
+
+#nah-dock .nah-quick-slot.is-exhausted img {
+	opacity: 0.55;
+	filter: grayscale(80%);
 }
 
 #nah-dock .nah-quick-slot.drop-before::before,

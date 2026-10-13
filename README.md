@@ -28,6 +28,7 @@ A sleek, canvas-docked Action HUD for **Foundry VTT (v14)** and **D&D 5e (6.x)**
 - [⚔️ Action Submenus](#️-action-submenus)
 - [⭐ Favorites Dock & Quick Slots](#-favorites-dock--quick-slots)
 - [⚙️ Configuration Suite](#️-configuration-suite)
+- [🌐 Supported Languages](#-supported-languages)
 - [🛠️ Compatibility](#️-compatibility)
 - [📦 Installation](#-installation)
 
@@ -44,6 +45,7 @@ A sleek, canvas-docked Action HUD for **Foundry VTT (v14)** and **D&D 5e (6.x)**
 - **Core Interface Fading**: Seamlessly integrates with Foundry's core interface fading, dimming when idle and restoring full brightness on hover or interaction.
 - **Native Activity Choice Dialogs**: Spells, items, and features containing multiple activities (such as *Hunter's Mark* with spell slot casting, moving the mark, and bonus damage) automatically trigger DnD5e's native Activity Choice dialog on click.
 - **Direct Sheet Navigation**: Right-click any action, spell, or item to jump directly to its sheet.
+- **Multi-Language Support**: Fully localized out of the box in English, German (Deutsch), French (Français), Spanish (Español), and Italian (Italiano, contributed by [@GregoryWarn](https://github.com/GregoryWarn)).
 
 ---
 
@@ -101,6 +103,17 @@ Organized, flyout drawers designed for fast combat decision-making:
 - **World vs. Client Scope Badges**: Setting rows clearly distinguish shared table rules (🌐 **World**) from local user preferences (👤 **Client**).
 - **Nik's Settings Locks Integration**: Seamlessly integrates with [Nik's Settings Locks](https://github.com/nschoenwald/niks-settings-locks), enabling GMs to toggle soft-locks (🟡) or hard-locks (🔴) on client settings directly within the configuration UI.
 - **Core Foundry Permissions**: Access to the visual configuration app is governed directly by Foundry's core **Modify Configuration Settings** (`SETTINGS_MODIFY`) permission. Players without this permission can cleanly toggle the HUD off for their user account using the client setting.
+
+---
+
+## 🌐 Supported Languages
+
+Nik's Action HUD provides out-of-the-box localizations for:
+- 🇬🇧 **English** (`en`)
+- 🇮🇹 **Italiano** (`it`) — contributed by [@GregoryWarn](https://github.com/GregoryWarn)
+- 🇩🇪 **Deutsch** (`de`)
+- 🇫🇷 **Français** (`fr`)
+- 🇪🇸 **Español** (`es`)
 
 ---
 

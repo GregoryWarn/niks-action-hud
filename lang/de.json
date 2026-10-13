@@ -1,0 +1,281 @@
+{
+  "NAH": {
+    "Title": "Nik's Action HUD",
+    "Categories": {
+      "Attacks": "Angriffe",
+      "Attack": "Angriff",
+      "Spells": "Zauber",
+      "Magic": "Magie",
+      "Features": "Merkmale",
+      "Feature": "Merkmal",
+      "Legendary": "Legendär",
+      "Abilities": "Attribute",
+      "Utility": "Nützliches",
+      "Items": "Gegenstände",
+      "Inventory": "Inventar"
+    },
+    "Tabs": {
+      "All": "Alle",
+      "Cantrips": "Zaubertricks",
+      "Level": "Grad {level}",
+      "Actions": "Aktionen",
+      "BonusActions": "Bonusaktionen",
+      "Reactions": "Reaktionen",
+      "Legendary": "Legendäre Aktionen",
+      "Other": "Sonstiges",
+      "Checks": "Attributswürfe",
+      "Saves": "Rettungswürfe",
+      "Skills": "Fertigkeiten",
+      "Rests": "Rasten",
+      "Initiative": "Initiative",
+      "Spells": "Zauber"
+    },
+    "Titles": {
+      "Attacks": "Angriffe",
+      "Spells": "Zauber",
+      "Features": "Merkmale",
+      "Legendary": "Legendär",
+      "Utility": "Nützliches",
+      "Abilities": "Attribute",
+      "Items": "Gegenstände"
+    },
+    "UI": {
+      "SelectedActor": "Aktiver Akteur",
+      "EndTurn": "Zug beenden",
+      "Settings": "Action HUD Einstellungen",
+      "SearchPlaceholder": "Aktionen, Zauber, Gegenstände suchen...",
+      "Collapse": "HUD einklappen",
+      "Expand": "HUD ausklappen",
+      "NoEntries": "Keine Einträge verfügbar.",
+      "Empty": "Leer",
+      "NoFavoritesInView": "Keine Favoriten in der aktuellen Ansicht.",
+      "AddFavorite": "Zu Favoriten hinzufügen",
+      "RemoveFavorite": "Aus Favoriten entfernen",
+      "SortFavoritesFirst": "Favoriten zuerst sortieren",
+      "ShowFavoritesOnly": "Nur Favoriten anzeigen",
+      "NoPermission": "Du hast keine Berechtigung, diese Aktion auszuführen.",
+      "OpenSheetHint": "Rechtsklick, um den Gegenstandsbogen zu öffnen",
+      "DragHint": "Ziehen, um Favoriten neu anzuordnen",
+      "LivePreview": "Live-Vorschau aktiv",
+      "Save": "Speichern",
+      "Cancel": "Abbrechen",
+      "Delete": "Löschen",
+      "Reset": "Auf Standardwerte zurücksetzen",
+      "Apply": "Anwenden",
+      "All": "Alle",
+      "AllSpells": "Alle",
+      "AllFeatures": "Alle",
+      "AllItems": "Alle",
+      "AllAbilities": "Alle",
+      "DragMacrosHere": "Makros hierher ziehen & ablegen",
+      "DropMacro": "Makro ablegen",
+      "RightClickRemove": "Rechtsklick zum Entfernen"
+    },
+    "Tooltips": {
+      "AddFavorite": "Zu Favoriten hinzufügen",
+      "RemoveFavorite": "Aus Favoriten entfernen",
+      "FavoriteOptions": "Favoriten-Optionen",
+      "OpenItemSheet": "Gegenstandsbogen öffnen",
+      "RitualSpell": "Bekanntes Ritual (Nicht vorbereitet)",
+      "SpellDC": "Zauberrettungswurf-SG",
+      "SpellAttack": "Zauberangriffsmodifikator",
+      "LegendaryResistance": "Legendäre Resistenz",
+      "ReorderFavorites": "Ziehen, um Favoriten neu anzuordnen",
+      "Advantage": "Vorteil",
+      "Disadvantage": "Nachteil",
+      "Normal": "Normal",
+      "Initiative": "Reihenfolge der Züge im Kampf bestimmen.",
+      "SaveDescriptions": {
+        "str": "Physisch direkter Krafteinwirkung widerstehen.",
+        "dex": "Gefahren geschickt ausweichen.",
+        "con": "Gift, Krankheiten oder giftigen Gasen widerstehen oder Zauberkonzentration bei Schaden aufrechterhalten.",
+        "int": "Illusionen als Täuschung entlarven oder psionischen und psychischen Angriffen auf Verstand und Vernunft widerstehen.",
+        "wis": "Geistigen Angriffen und Manipulationen widerstehen.",
+        "cha": "Die eigene Persönlichkeit und Willenskraft behaupten."
+      },
+      "CheckDescriptions": {
+        "str": "Etwas heben, schieben, ziehen oder zerbrechen.",
+        "dex": "Sich geschmeidig, schnell oder leise bewegen.",
+        "con": "Den Körper über normale Grenzen hinaus beanspruchen.",
+        "int": "Schlussfolgern oder sich erinnern.",
+        "wis": "Dinge in der Umgebung oder am Verhalten von Kreaturen wahrnehmen.",
+        "cha": "Einfluss nehmen, unterhalten oder täuschen."
+      },
+      "SkillDescriptions": {
+        "acr": "In schwierigen Lagen das Gleichgewicht halten oder akrobatische Kunststücke vorführen.",
+        "ani": "Ein Tier beruhigen, abrichten oder dazu bringen, sich auf bestimmte Weise zu verhalten.",
+        "arc": "Wissen über Zauber, magische Gegenstände und die Existenzebenen abrufen.",
+        "ath": "Weiter springen, sich in unruhigem Wasser über Wasser halten oder etwas zerbrechen.",
+        "dec": "Eine überzeugende Lüge erzählen oder eine Verkleidung glaubhaft tragen.",
+        "his": "Wissen über historische Ereignisse, Völker, Reiche und Kulturen abrufen.",
+        "ins": "Die Stimmung und die Absichten einer Person durchschauen.",
+        "itm": "Jemanden beeindrucken oder bedrohen, um ihn zum Handeln zu bewegen.",
+        "inv": "Schwer auffindbare Informationen in Büchern entdecken oder verstehen, wie etwas funktioniert.",
+        "med": "Eine Krankheit diagnostizieren oder die Todesursache eines kürzlich Verstorbenen feststellen.",
+        "nat": "Wissen über Geländeformen, Pflanzen, Tiere und Wetter abrufen.",
+        "prc": "Mit geschärften Sinnen etwas bemerken, das leicht übersehen werden kann.",
+        "prf": "Schauspielern, Geschichten erzählen, musizieren oder tanzen.",
+        "per": "Jemanden ehrlich und gewinnend von etwas überzeugen.",
+        "rel": "Wissen über Götter, religiöse Rituale und heilige Symbole abrufen.",
+        "slt": "Taschendiebstahl begehen, Gegenstände verbergen oder Taschenspielertricks vorführen.",
+        "ste": "Unbemerkt bleiben, indem man sich leise bewegt und Verstecke nutzt.",
+        "sur": "Spuren lesen, Nahrung suchen, Pfade finden oder natürlichen Gefahren ausweichen."
+      }
+    },
+    "Config": {
+      "Title": "Nik's Action HUD Konfiguration",
+      "Saved": "Nik's Action HUD Konfiguration gespeichert.",
+      "ResetConfirmTitle": "Konfiguration zurücksetzen",
+      "ResetConfirmMessage": "Bist du sicher, dass du die {scope}-Einstellungen auf die Standardwerte zurücksetzen möchtest?",
+      "FontDefault": "Standard-Schriftart"
+    },
+    "Presets": {
+      "SystemMismatchTitle": "Inkompatibles System",
+      "SystemMismatchContent": "Diese Vorlage wurde für {presetSystem} erstellt, das aktuelle System ist jedoch {currentSystem}. Import dennoch fortsetzen?"
+    },
+    "Dnd5e": {
+      "Saves": "RETTUNGSWÜRFE",
+      "Skills": "FERTIGKEITEN",
+      "Checks": "ATTRIBUTSWÜRFE",
+      "Rest": "RAST",
+      "Macros": "MAKROS",
+      "ShortRest": "Kurze Rast",
+      "LongRest": "Lange Rast",
+      "ShortRestDesc": "Ressourcen auffrischen & Trefferwürfel ausgeben",
+      "LongRestDesc": "Alle TP, Zauberslots und Ressourcen vollständig wiederherstellen",
+      "Initiative": "Initiative",
+      "RollInit": "Initiative würfeln",
+      "InvWeapons": "WAFFEN",
+      "InvWeaponsDesc": "Waffen (Nicht angelegt)",
+      "InvGear": "AUSRÜSTUNG",
+      "InvGearDesc": "Ausrüstung & Rüstung",
+      "InvConsum": "VERBRAUCHSG.",
+      "InvConsumDesc": "Verbrauchsgüter",
+      "InvTools": "WERKZEUGE",
+      "InvToolsDesc": "Werkzeuge",
+      "InvLoot": "BEUTE",
+      "InvLootDesc": "Beute",
+      "InvContainer": "BEHÄLTER",
+      "InvContainerDesc": "Behälter",
+      "ActionEquip": "Anlegen",
+      "ActionUnequip": "Ablegen",
+      "ResourceValue": "Ressourcenwert",
+      "ResourceTracked": "Verfolgte Ressource",
+      "Ready": "Bereit",
+      "Recharge": "Wiederaufladung {val}+",
+      "Cantrip": "ZAUBERTRICK",
+      "CantripsDesc": "Zaubertricks (Beliebig oft)",
+      "Pact": "PAKT",
+      "PactDesc": "Paktmagie (Grad {level})",
+      "Innate": "ANGEBOREN",
+      "InnateDesc": "Angeborenes Zaubern",
+      "AtWill": "BELIEBIG OFT",
+      "AtWillDesc": "Beliebig oft einsetzbare Zauber",
+      "Level": "GRAD {level}",
+      "LevelDesc": "Zauber des {level}. Grads",
+      "ItemSpells": "GEGENSTAND",
+      "ItemSpellsDesc": "Zauber aus Gegenständen",
+      "Uses": "{current} / {max}"
+    },
+    "Spells": {
+      "UnpreparedRitualTitle": "Nur Ritual (Nicht vorbereitet)",
+      "UnpreparedRitualHint": "Unvorbereiteter Ritualzauber",
+      "RitualTag": "Ritual"
+    },
+    "Favorites": {
+      "OpenSheet": "Gegenstandsbogen öffnen",
+      "DeleteFavorite": "Aus Favoriten entfernen",
+      "DialogSubtitle": "Favorisierte Aktion"
+    },
+    "Damage": {
+      "Any": "beliebig"
+    },
+    "Notifications": {
+      "MacroPermissionFailed": "Konnte keine Makro-Ausführungsberechtigung vom SL erhalten.",
+      "MacroDeleted": "Makro aus der Action HUD entfernt.",
+      "UpdateFailed": "Akteursdaten konnten nicht aktualisiert werden.",
+      "PresetExportSuccess": "Vorlage erfolgreich exportiert.",
+      "PresetImportSuccess": "Vorlage erfolgreich importiert.",
+      "PresetImportError": "Vorlage konnte nicht importiert werden: Ungültiges JSON-Format.",
+      "SectionReset": "Abschnittseinstellungen auf Standardwerte zurückgesetzt."
+    },
+    "Settings": {
+      "DisableHud": {
+        "Name": "Action HUD deaktivieren",
+        "Hint": "Deaktiviert und blendet die Action HUD für dein Benutzerkonto vollständig aus."
+      },
+      "ConfigMenu": {
+        "Name": "Action HUD Konfiguration",
+        "Label": "Action HUD konfigurieren",
+        "Hint": "Öffnet das visuelle Konfigurationsmenü für Action HUD Designs, Layout, Regeln und Kategorien."
+      },
+      "SubmenuSide": {
+        "Name": "Untermenü-Ausrichtung",
+        "Hint": "Richtung, in die sich Untermenüs relativ zum Dock öffnen. Automatisch erkennt die Bildschirmränder dynamisch.",
+        "Auto": "Automatisch",
+        "Left": "Links",
+        "Right": "Rechts"
+      },
+      "TooltipPosition": {
+        "Name": "Tooltip-Positionierung",
+        "Hint": "Wähle, wie detaillierte Tooltips positioniert werden.",
+        "Anchor": "Am Dock verankert",
+        "Cursor": "Dem Mauszeiger folgen"
+      },
+      "InterfaceFading": {
+        "Name": "Bei Inaktivität ausblenden (Interface Fading)",
+        "Hint": "Blendet die Action HUD bei Inaktivität ab und beachtet dabei Foundrys Einstellungen für Inaktivitäts-Deckkraft und Ausblendgeschwindigkeit. Volle Deckkraft wird bei Hover, Fokus oder geöffnetem Untermenü wiederhergestellt."
+      },
+      "HideEmptySubmenus": {
+        "Name": "Leere Untermenüs ausblenden",
+        "Hint": "Blendet Aktionsschaltflächen und Untermenüs aus, die für den aktiven Akteur keine Einträge besitzen (z. B. Ausblenden der Zauberschaltfläche bei Nicht-Zauberwirkern)."
+      },
+      "WizardRituals": {
+        "Name": "Unvorbereitete Magier-Rituale anzeigen",
+        "Hint": "Zeigt unvorbereitete Zauber mit dem Ritual-Tag im Zauberbuch von Magiern an, sodass diese Ritualzauber direkt gewirkt werden können."
+      },
+      "DamageTypeDisplay": {
+        "Name": "Schadensarten-Anzeige",
+        "Hint": "Wähle, wie Schadensarten auf Aktionsschaltflächen dargestellt werden: kompakte dezent gefärbte Symbole, Symbole mit Text oder nur geschriebener Text.",
+        "Icons": "Nur Symbole",
+        "Both": "Symbole & Text",
+        "Text": "Nur Text"
+      },
+      "AutoFavoriteNpc": {
+        "Name": "NSC-Aktionen automatisch favorisieren",
+        "Hint": "Favorisiert automatisch Angriffs-, Schadens- und Rettungswurf-Aktivitäten (nach Aktionszeit sortiert), wenn ein NSC-Token ohne bestehende Favoriten auf der Szene platziert wird."
+      },
+      "AutoFavoriteNpcMax": {
+        "Name": "Maximale automatische Favoriten für NSCs",
+        "Hint": "Maximale Anzahl an qualifizierenden Gegenständen oder Merkmalen (mit Angriffs-, Schadens- oder Rettungsaktivitäten), die ein NSC besitzen darf, um automatisches Favorisieren auszulösen (Standard 5)."
+      }
+    },
+    "Themes": {
+      "Carolingian": "Carolingian UI",
+      "Arcanum": "Arcanum",
+      "Obsidian": "Obsidian",
+      "Grimoire": "Grimoire",
+      "Eldritch": "Eldritch",
+      "Valiant": "Valiant",
+      "Sylvan": "Sylvan",
+      "Infernal": "Infernal",
+      "Frostborn": "Frostborn",
+      "Clockwork": "Clockwork",
+      "Radiant": "Radiant",
+      "Ossuary": "Ossuary",
+      "ExportPartialWarning": "Export mit {count} Warnungen abgeschlossen.",
+      "ExportSuccess": "Design erfolgreich exportiert.",
+      "ImportNoJsonError": "Das hochgeladene Archiv enthält keine gültige Design-Konfiguration."
+    },
+    "Keybindings": {
+      "ToggleHUD": {
+        "Name": "Action HUD umschalten",
+        "Hint": "Sichtbarkeit der HUD ein-/ausblenden."
+      },
+      "ToggleActionMenuVisibility": {
+        "Name": "Menüsichtbarkeit umschalten",
+        "Hint": "Aktionsmenü ein-/ausblenden."
+      }
+    }
+  }
+}

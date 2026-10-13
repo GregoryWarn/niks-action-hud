@@ -2,10 +2,7 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-
-## [Unreleased]
+## [14.11.2] - 2026-10-13
 
 ### Fixed
 - **Activity Choice Dialog for Multi-Activity Actions**: Fixed an issue where clicking spells, features, or items with multiple activities (such as *Hunter's Mark*, which contains casting, moving the mark, and bonus damage activities) directly executed a damage or attack activity instead of prompting the activity choice dialog. The HUD now cleanly prompts DnD5e's native Activity Choice dialog whenever an action offers multiple usable activities, while single-activity items continue to roll immediately without extra prompts.

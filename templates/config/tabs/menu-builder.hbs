@@ -1,132 +1,104 @@
-<!-- Menu Builder Tab -->
 <div class="hud-tab-pane {{#if isMenuTab}}active{{/if}}" data-tab="menu">
 
-    <div class="hud-tab-intro">
-        <div class="hud-intro-content">
-            <h4><i class="fas fa-sitemap"></i> Action HUD Menu Builder</h4>
-            <p>Customize the order, appearance, and contents of category buttons on your Action HUD.</p>
+    <section class="hud-cfg-group">
+        <div class="hud-cfg-group-bar">
+            <div class="hud-cfg-group-head">
+                <span class="hud-cfg-group-title">Categories</span><span>· {{customMenu.length}}</span>
+            </div>
+            <span class="hud-cfg-spacer"></span>
+            <button type="button" class="hud-cfg-btn" data-action="addCategory">+ ADD CATEGORY</button>
         </div>
-        <div class="hud-intro-actions">
-            <button type="button" class="hud-btn hud-btn-primary" data-action="addCategory">
-                <i class="fas fa-plus"></i> Add Custom Category
-            </button>
-        </div>
-    </div>
+        <span class="hud-cfg-group-desc">Customize the order, appearance, and contents of category buttons on your Action HUD.</span>
 
-    <!-- Categories List -->
-    <div class="hud-categories-list">
-        {{#each customMenu}}
-        <div class="hud-category-card {{#if this._collapsed}}collapsed{{/if}}" 
-             draggable="true" 
-             data-cat-index="{{@index}}">
+        <div class="hud-cfg-list hud-categories-list">
+            {{#each customMenu}}
+            <div class="hud-category-card {{#if this._collapsed}}collapsed{{/if}}" draggable="true" data-cat-index="{{@index}}">
+                <input type="hidden" name="customMenu.{{@index}}.id" value="{{this.id}}">
+                <input type="hidden" name="customMenu.{{@index}}.systemId" value="{{this.systemId}}">
+                <input type="hidden" name="customMenu.{{@index}}.type" value="{{this.type}}">
+                <input type="hidden" name="customMenu.{{@index}}.useSidebar" value="{{this.useSidebar}}">
 
-            <div class="hud-cat-header" data-action="toggleCollapseCategory">
-                <div class="hud-cat-drag-handle" title="Drag to reorder"><i class="fas fa-grip-vertical"></i></div>
-                <div class="hud-cat-icon-badge">
-                    {{#if this.img}}
-                    <img src="{{this.img}}" alt="">
-                    {{else}}
-                    <i class="{{#if this.icon}}{{this.icon}}{{else}}fas fa-folder{{/if}}"></i>
-                    {{/if}}
-                </div>
-                <div class="hud-cat-title">
-                    <span class="hud-cat-name">{{#if this.displayLabel}}{{this.displayLabel}}{{else if this.label}}{{this.label}}{{else}}Unnamed Category{{/if}}</span>
-                    <span class="hud-cat-meta">
-                        {{#if this.systemId}}
-                        <span class="hud-badge hud-badge-system">System Category</span>
-                        {{else}}
-                        <span class="hud-badge hud-badge-custom">Custom</span>
-                        {{/if}}
-                        {{#if this.tabs.length}}<span class="hud-badge-outline">{{this.tabs.length}} Submenus</span>{{/if}}
+                <div class="hud-cat-header" data-action="toggleCollapseCategory">
+                    <i class="fas fa-grip-vertical hud-cat-grip" title="Drag to reorder" aria-hidden="true"></i>
+                    <span class="hud-cat-icon-badge">{{nahCategoryIcon this "fas fa-folder"}}</span>
+                    <span class="hud-cat-title">
+                        <span class="hud-cat-name">{{#if this.displayLabel}}{{this.displayLabel}}{{else if this.label}}{{this.label}}{{else}}Unnamed Category{{/if}}</span>
+                        <span class="hud-cat-kind">{{#if this.systemId}}SYSTEM{{else}}CUSTOM{{/if}}</span>
+                        {{#if this.tabs.length}}<span class="hud-cat-count">{{this.tabs.length}} {{#if (eq this.tabs.length 1)}}SUBMENU{{else}}SUBMENUS{{/if}}</span>{{/if}}
+                    </span>
+                    <span class="hud-cat-actions">
+                        {{#unless this.systemId}}
+                        <button type="button" class="hud-cat-action danger" data-action="removeCategory" title="Delete category" aria-label="Delete category">✕</button>
+                        {{/unless}}
+                        <button type="button" class="hud-cat-action hud-cat-chevron" data-action="toggleCollapseCategory" title="Expand or collapse" aria-label="Expand or collapse">▾</button>
                     </span>
                 </div>
-                <div class="hud-cat-actions">
-                    <button type="button" class="hud-btn-icon" data-action="toggleCollapseCategory" title="Expand / Collapse">
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
+
+                <div class="hud-cat-body">
+                    <div class="hud-cat-fields">
+                        <label class="hud-cfg-field">
+                            <span class="hud-cfg-field-label">Category label</span>
+                            <input type="text" class="hud-cfg-text" name="customMenu.{{@index}}.label" value="{{this.label}}">
+                        </label>
+                        <div class="hud-cfg-field">
+                            <span class="hud-cfg-field-label">{{localize "NAH.IconPicker.Field.Label"}}</span>
+                            <button type="button" class="hud-icon-field" data-action="pickCategoryIcon" title="{{localize "NAH.IconPicker.Field.Open"}}" aria-label="{{localize "NAH.IconPicker.Field.Open"}}">
+                                <span class="hud-icon-field-preview">{{nahCategoryIcon this "fa-regular fa-square"}}</span>
+                                <span class="hud-icon-field-value">{{#if this.img}}{{this.img}}{{else if this.icon}}{{this.icon}}{{else}}{{localize "NAH.IconPicker.Field.None"}}{{/if}}</span>
+                                <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                            </button>
+                            <input type="hidden" name="customMenu.{{@index}}.icon" value="{{this.icon}}">
+                            <input type="hidden" name="customMenu.{{@index}}.img" value="{{this.img}}">
+                        </div>
+                        <label class="hud-cfg-field hud-cat-field-wide">
+                            <span class="hud-cfg-field-label">Button background</span>
+                            <span class="hud-cfg-input-with-button">
+                                <input type="text" class="hud-cfg-text mono" name="customMenu.{{@index}}.buttonImg" value="{{this.buttonImg}}" placeholder="path/to/bg.png">
+                                <button type="button" class="hud-cfg-btn hud-cfg-btn-square" data-file-picker="customMenu.{{@index}}.buttonImg" title="Browse files" aria-label="Browse files"><i class="fa-solid fa-folder-open" aria-hidden="true"></i></button>
+                            </span>
+                        </label>
+                    </div>
+
                     {{#unless this.systemId}}
-                    <button type="button" class="hud-btn-icon hud-btn-danger" data-action="removeCategory" title="Delete Category">
-                        <i class="fas fa-trash"></i>
-                    </button>
+                    <div class="hud-sub-section">
+                        <div class="hud-cfg-group-bar">
+                            <div class="hud-cfg-group-head hud-sub-head">
+                                <span class="hud-cfg-group-title">Submenus</span><span>· {{#if this.tabs.length}}{{this.tabs.length}}{{else}}0{{/if}}</span>
+                            </div>
+                            <span class="hud-cfg-spacer"></span>
+                            <button type="button" class="hud-cfg-btn hud-cfg-btn-sm" data-action="addSubCategory">+ ADD SUBMENU</button>
+                        </div>
+                        {{#if this.tabs.length}}
+                        <div class="hud-sub-list">
+                            {{#each this.tabs}}
+                            <div class="hud-sub-card" data-tab-index="{{@index}}">
+                                <div class="hud-sub-card-header">
+                                    <input type="text" class="hud-cfg-text" name="customMenu.{{@../index}}.tabs.{{@index}}.label" value="{{this.label}}" placeholder="Healing potions" aria-label="Submenu label">
+                                    <button type="button" class="hud-cfg-btn-delete" data-action="removeSubCategory" title="Delete submenu" aria-label="Delete submenu">✕</button>
+                                </div>
+                                {{#if this.items.length}}
+                                <div class="hud-item-list">
+                                    {{#each this.items}}
+                                    <span class="hud-item-pill" data-item-index="{{@index}}">
+                                        {{#if this.img}}<img src="{{this.img}}" class="hud-item-thumb" alt="">{{/if}}
+                                        {{this.name}}
+                                        <button type="button" class="hud-item-remove" data-action="removeItem" aria-label="Remove item">✕</button>
+                                    </span>
+                                    {{/each}}
+                                </div>
+                                {{else}}
+                                <span class="hud-sub-empty">No items in {{this.label}} yet. Drag items from a character sheet onto this tray.</span>
+                                {{/if}}
+                            </div>
+                            {{/each}}
+                        </div>
+                        {{/if}}
+                    </div>
                     {{/unless}}
                 </div>
             </div>
-
-            <!-- Hidden Category Metadata -->
-            {{#if this.id}}<input type="hidden" name="customMenu.{{@index}}.id" value="{{this.id}}">{{/if}}
-            {{#if this.systemId}}<input type="hidden" name="customMenu.{{@index}}.systemId" value="{{this.systemId}}">{{/if}}
-            {{#if this.type}}<input type="hidden" name="customMenu.{{@index}}.type" value="{{this.type}}">{{/if}}
-            {{#if this.useSidebar}}<input type="hidden" name="customMenu.{{@index}}.useSidebar" value="true">{{/if}}
-
-            <!-- Expandable Category Body -->
-            <div class="hud-cat-body">
-                <div class="hud-cat-settings-grid">
-                    <div class="hud-field-group">
-                        <label>Category Label</label>
-                        <input type="text" name="customMenu.{{@index}}.label" value="{{this.label}}" class="hud-input">
-                    </div>
-                    <div class="hud-field-group">
-                        <label>Icon Class (FontAwesome / RPG-Awesome)</label>
-                        <input type="text" name="customMenu.{{@index}}.icon" value="{{this.icon}}" class="hud-input" placeholder="fas fa-swords">
-                    </div>
-                    <div class="hud-field-group">
-                        <label>Icon Image Override</label>
-                        <div class="hud-input-with-button">
-                            <input type="text" name="customMenu.{{@index}}.img" value="{{this.img}}" class="hud-input" placeholder="path/to/icon.png">
-                            <button type="button" class="hud-btn-browse" data-file-picker="customMenu.{{@index}}.img"><i class="fas fa-folder-open"></i></button>
-                        </div>
-                    </div>
-                    <div class="hud-field-group">
-                        <label>Custom Button Background</label>
-                        <div class="hud-input-with-button">
-                            <input type="text" name="customMenu.{{@index}}.buttonImg" value="{{this.buttonImg}}" class="hud-input" placeholder="path/to/bg.png">
-                            <button type="button" class="hud-btn-browse" data-file-picker="customMenu.{{@index}}.buttonImg"><i class="fas fa-folder-open"></i></button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Sub-Menus / Tabs Manager (Custom Categories) -->
-                {{#unless this.systemId}}
-                <div class="hud-subcategories-section">
-                    <div class="hud-sub-header">
-                        <h5>Submenus & Item Trays</h5>
-                        <button type="button" class="hud-btn hud-btn-sm" data-action="addSubCategory">
-                            <i class="fas fa-plus"></i> Add Submenu
-                        </button>
-                    </div>
-
-                    <div class="hud-sub-list">
-                        {{#each this.tabs}}
-                        <div class="hud-sub-card" data-tab-index="{{@index}}">
-                            <div class="hud-sub-card-header">
-                                <div class="hud-field-group" style="flex: 1;">
-                                    <input type="text" name="customMenu.{{@../index}}.tabs.{{@index}}.label" value="{{this.label}}" class="hud-input" placeholder="Submenu Label">
-                                </div>
-                                <button type="button" class="hud-btn-icon hud-btn-danger" data-action="removeSubCategory" title="Delete Submenu">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
-
-                            {{#if this.items.length}}
-                            <div class="hud-item-list">
-                                {{#each this.items}}
-                                <div class="hud-item-pill" data-item-index="{{@index}}">
-                                    {{#if this.img}}<img src="{{this.img}}" class="hud-item-thumb" alt="">{{/if}}
-                                    <span>{{this.name}}</span>
-                                    <button type="button" class="hud-item-remove" data-action="removeItem"><i class="fas fa-times"></i></button>
-                                </div>
-                                {{/each}}
-                            </div>
-                            {{/if}}
-                        </div>
-                        {{/each}}
-                    </div>
-                </div>
-                {{/unless}}
-
-            </div>
+            {{/each}}
         </div>
-        {{/each}}
-    </div>
+    </section>
 
 </div>

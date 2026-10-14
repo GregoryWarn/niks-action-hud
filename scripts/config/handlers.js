@@ -12,6 +12,8 @@ import { triggerPreview } from "./preview.js";
 import { exportThemeZip, importThemeZip } from "./theme-export.js";
 import { applyActionMenuPresetData, buildActionMenuPresetData } from "./action-menu-presets.js";
 import { isThemeAvailable } from "./constants.js";
+import { IconPicker } from "./icon-picker/icon-picker.js";
+import { categoryIconValue, normalizeIconClass, resolveIconSource } from "../utils/icon-source.js";
 
 // ── Save Handler ─────────────────────────────────────────
 
@@ -156,7 +158,7 @@ export const onReset = async (app, event, target) => {
 	ui.notifications.info(resetMsg);
 
 	if (ActionMenu.refresh) ActionMenu.refresh();
-	triggerPreview(app);
+	app.changeBaseline = null;
 	await app.render();
 };
 
@@ -214,6 +216,29 @@ export const onAddCategory = async (app, event, target) => {
 		buttonFrameLayers: [],
 	});
 
+	await app.render();
+};
+
+export const onPickCategoryIcon = async (app, event, target) => {
+	const catRow = target.closest("[data-cat-index]");
+	if (!catRow) return;
+	const index = Number(catRow.dataset.catIndex);
+	if (Number.isNaN(index)) return;
+
+	captureInputData(app, app.element);
+	const current = app.tempData.customMenu?.[index];
+	if (!current) return;
+
+	const chosen = await IconPicker.pick(categoryIconValue(current));
+	if (chosen === null) return;
+
+	captureInputData(app, app.element);
+	const category = app.tempData.customMenu?.[index];
+	if (!category) return;
+
+	const source = resolveIconSource(chosen);
+	category.img = source.kind === "image" ? source.imagePath : "";
+	category.icon = source.kind === "icon" ? normalizeIconClass(source.iconClass) : source.glyph;
 	await app.render();
 };
 
@@ -379,7 +404,6 @@ export const onLoadConfigPreset = async (app, event, target) => {
 	if (!preset) return;
 
 	loadHudConfig(app.tempData, preset);
-	triggerPreview(app);
 	ui.notifications.info(`Configuration preset "${name}" loaded.`);
 	await app.render();
 };
@@ -439,7 +463,6 @@ export const onLoadActionMenuPreset = async (app, event, target) => {
 	if (!preset) return;
 
 	applyActionMenuPresetData(app.tempData, preset);
-	triggerPreview(app);
 	ui.notifications.info(`Action menu preset "${name}" loaded.`);
 	await app.render();
 };
@@ -472,7 +495,7 @@ export const onExportConfigPresetFile = (app, event, target) => {
 	captureInputData(app, app.element);
 	const cleanConfig = exportHudConfig(app.tempData);
 	const json = JSON.stringify(cleanConfig, null, 2);
-	saveDataToFile(json, "application/json", `niks-action-hud-config-${Date.now()}.json`);
+	foundry.utils.saveDataToFile(json, "application/json", `niks-action-hud-config-${Date.now()}.json`);
 };
 
 export const onImportConfigPresetFile = async (app, event, target) => {
@@ -490,7 +513,6 @@ export const onImportConfigPresetFile = async (app, event, target) => {
 			const text = await file.text();
 			const imported = JSON.parse(text);
 			loadHudConfig(app.tempData, imported);
-			triggerPreview(app);
 			ui.notifications.info("Configuration imported successfully.");
 			await app.render();
 		} catch (err) {
@@ -521,7 +543,6 @@ export const onImportTheme = async (app) => {
 		try {
 			const imported = await importThemeZip(file);
 			loadHudConfig(app.tempData, imported);
-			triggerPreview(app);
 			await app.render();
 		} catch (err) {
 			console.error("Nik's Action HUD | Theme zip import error:", err);

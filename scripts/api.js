@@ -209,7 +209,7 @@ const downloadPreset = (preset, filename = null) => {
 	const name = filename || preset.meta?.name || "action-hud-preset";
 	const safeName = name.replace(/[^a-z0-9]/gi, "_").toLowerCase();
 	const json = JSON.stringify(preset, null, 2);
-	saveDataToFile(json, "application/json", `${safeName}.json`);
+	foundry.utils.saveDataToFile(json, "application/json", `${safeName}.json`);
 };
 
 /**

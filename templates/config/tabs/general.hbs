@@ -1,35 +1,30 @@
-<!-- General & Behavior Tab -->
 <div class="hud-tab-pane {{#if isGeneralTab}}active{{/if}}" data-tab="general">
 
-    <!-- Card 1: Interaction & Automation -->
-    <div class="hud-card">
-        <div class="hud-card-header">
-            <div class="hud-card-icon"><i class="fas fa-hand-pointer"></i></div>
-            <div class="hud-card-titles">
-                <h4>Interaction & Automation</h4>
-                <p>Configure how menus and submenus react during active gameplay.</p>
-            </div>
+    <section class="hud-cfg-group">
+        <div class="hud-cfg-group-head">
+            <span class="hud-cfg-group-title">Interaction</span><span data-cfg-count="rows"></span>
         </div>
-        <div class="hud-card-body">
-            <div class="hud-setting-row">
-                <div class="hud-setting-info">
-                    <label>
-                        Close Menu After Action Use
-                        <span class="hud-scope-badge world" title="World Setting: Applies table-wide to all players (GM only)"><i class="fas fa-globe"></i> World</span>
-                    </label>
-                    <span class="hud-setting-hint">Automatically dismiss open submenu drawers immediately after rolling an attack, spell, or item.</span>
+        <div class="hud-cfg-list">
+            <div class="hud-cfg-row">
+                <div class="hud-cfg-info">
+                    <div class="hud-cfg-label-line">
+                        <label class="hud-cfg-label">Close menu after action use</label>
+                        <span class="hud-cfg-scope world" title="Applies to every player at the table">WORLD</span>
+                    </div>
+                    <span class="hud-cfg-hint">Automatically dismiss open submenu drawers immediately after rolling an attack, spell, or item.</span>
                 </div>
-                <div class="hud-setting-control">
-                    <label class="hud-switch">
-                        <input type="checkbox" class="hud-switch-input" name="closeMenuOnUse" {{#if closeMenuOnUse}}checked{{/if}}>
-                        <span class="hud-switch-slider"></span>
+                <div class="hud-cfg-control">
+                    <label class="hud-cfg-switch">
+                        <input type="checkbox" role="switch" class="hud-switch-input" name="closeMenuOnUse" {{#if closeMenuOnUse}}checked{{/if}}>
+                        <span class="hud-cfg-switch-track" aria-hidden="true"></span>
+                        <span class="hud-cfg-switch-knob" aria-hidden="true"></span>
                     </label>
                 </div>
             </div>
 
-            <div class="hud-setting-row {{#if settingLocks.hideEmptySubmenus.isHard}}hard-locked{{/if}}">
-                <div class="hud-setting-info">
-                    <label>
+            <div class="hud-cfg-row {{#if settingLocks.hideEmptySubmenus.isHard}}hard-locked{{/if}}">
+                <div class="hud-cfg-info">
+                    <div class="hud-cfg-label-line">
                         {{#if settingLocks.hideEmptySubmenus.active}}
                             {{#if settingLocks.hideEmptySubmenus.canManage}}
                                 <a class="hud-lock-icon {{settingLocks.hideEmptySubmenus.type}}" data-setting-key="hideEmptySubmenus" title="{{settingLocks.hideEmptySubmenus.tooltip}}">
@@ -41,22 +36,23 @@
                                 </span>
                             {{/if}}
                         {{/if}}
-                        Hide Empty Submenus
-                        <span class="hud-scope-badge client" title="Client Setting: Applies only to your local user account"><i class="fas fa-user"></i> Client</span>
-                    </label>
-                    <span class="hud-setting-hint">Automatically conceal category buttons (like Spells or Attacks) if the controlled token has no matching items.</span>
+                        <label class="hud-cfg-label">Hide empty submenus</label>
+                        <span class="hud-cfg-scope client" title="Applies to this browser only">CLIENT</span>
+                    </div>
+                    <span class="hud-cfg-hint">Automatically conceal category buttons (like Spells or Attacks) if the controlled token has no matching items.</span>
                 </div>
-                <div class="hud-setting-control">
-                    <label class="hud-switch">
-                        <input type="checkbox" class="hud-switch-input" name="hideEmptySubmenus" {{#if hideEmptySubmenus}}checked{{/if}} {{#if settingLocks.hideEmptySubmenus.disabled}}disabled{{/if}}>
-                        <span class="hud-switch-slider"></span>
+                <div class="hud-cfg-control">
+                    <label class="hud-cfg-switch">
+                        <input type="checkbox" role="switch" class="hud-switch-input" name="hideEmptySubmenus" {{#if hideEmptySubmenus}}checked{{/if}} {{#if settingLocks.hideEmptySubmenus.disabled}}disabled{{/if}}>
+                        <span class="hud-cfg-switch-track" aria-hidden="true"></span>
+                        <span class="hud-cfg-switch-knob" aria-hidden="true"></span>
                     </label>
                 </div>
             </div>
 
-            <div class="hud-setting-row {{#if settingLocks.enableCollapse.isHard}}hard-locked{{/if}}">
-                <div class="hud-setting-info">
-                    <label>
+            <div class="hud-cfg-row {{#if settingLocks.enableCollapse.isHard}}hard-locked{{/if}}">
+                <div class="hud-cfg-info">
+                    <div class="hud-cfg-label-line">
                         {{#if settingLocks.enableCollapse.active}}
                             {{#if settingLocks.enableCollapse.canManage}}
                                 <a class="hud-lock-icon {{settingLocks.enableCollapse.type}}" data-setting-key="enableCollapse" title="{{settingLocks.enableCollapse.tooltip}}">
@@ -68,39 +64,41 @@
                                 </span>
                             {{/if}}
                         {{/if}}
-                        Enable HUD Collapse Button
-                        <span class="hud-scope-badge client" title="Client Setting: Applies only to your local user account"><i class="fas fa-user"></i> Client</span>
-                    </label>
-                    <span class="hud-setting-hint">Display a small triangle button next to the token name to minimize the Action HUD into a compact token strip. Disabled by default.</span>
+                        <label class="hud-cfg-label">Enable HUD collapse button</label>
+                        <span class="hud-cfg-scope client" title="Applies to this browser only">CLIENT</span>
+                    </div>
+                    <span class="hud-cfg-hint">Display a collapse/expand toggle button next to the token name to minimize the Action HUD.</span>
                 </div>
-                <div class="hud-setting-control">
-                    <label class="hud-switch">
-                        <input type="checkbox" class="hud-switch-input" name="enableCollapse" {{#if enableCollapse}}checked{{/if}} {{#if settingLocks.enableCollapse.disabled}}disabled{{/if}}>
-                        <span class="hud-switch-slider"></span>
+                <div class="hud-cfg-control">
+                    <label class="hud-cfg-switch">
+                        <input type="checkbox" role="switch" class="hud-switch-input" name="enableCollapse" {{#if enableCollapse}}checked{{/if}} {{#if settingLocks.enableCollapse.disabled}}disabled{{/if}}>
+                        <span class="hud-cfg-switch-track" aria-hidden="true"></span>
+                        <span class="hud-cfg-switch-knob" aria-hidden="true"></span>
                     </label>
                 </div>
             </div>
 
             {{#if isDnd5eSystem}}
-            <div class="hud-setting-row">
-                <div class="hud-setting-info">
-                    <label>
-                        Group Actions by Activation Type
-                        <span class="hud-scope-badge world" title="World Setting: Applies table-wide to all players (GM only)"><i class="fas fa-globe"></i> World</span>
-                    </label>
-                    <span class="hud-setting-hint">Sort and section actions into Action, Bonus Action, Reaction, and Legendary Action headers.</span>
+            <div class="hud-cfg-row">
+                <div class="hud-cfg-info">
+                    <div class="hud-cfg-label-line">
+                        <label class="hud-cfg-label">Group actions by activation type</label>
+                        <span class="hud-cfg-scope world" title="Applies to every player at the table">WORLD</span>
+                    </div>
+                    <span class="hud-cfg-hint">Sort and section actions into Action, Bonus Action, Reaction, and Legendary Action headers.</span>
                 </div>
-                <div class="hud-setting-control">
-                    <label class="hud-switch">
-                        <input type="checkbox" class="hud-switch-input" name="dnd5eGroupActionsByActivation" {{#if dnd5eGroupActionsByActivation}}checked{{/if}}>
-                        <span class="hud-switch-slider"></span>
+                <div class="hud-cfg-control">
+                    <label class="hud-cfg-switch">
+                        <input type="checkbox" role="switch" class="hud-switch-input" name="dnd5eGroupActionsByActivation" {{#if dnd5eGroupActionsByActivation}}checked{{/if}}>
+                        <span class="hud-cfg-switch-track" aria-hidden="true"></span>
+                        <span class="hud-cfg-switch-knob" aria-hidden="true"></span>
                     </label>
                 </div>
             </div>
 
-            <div class="hud-setting-row {{#if settingLocks.dnd5eShowUnpreparedRituals.isHard}}hard-locked{{/if}}">
-                <div class="hud-setting-info">
-                    <label>
+            <div class="hud-cfg-row {{#if settingLocks.dnd5eShowUnpreparedRituals.isHard}}hard-locked{{/if}}">
+                <div class="hud-cfg-info">
+                    <div class="hud-cfg-label-line">
                         {{#if settingLocks.dnd5eShowUnpreparedRituals.active}}
                             {{#if settingLocks.dnd5eShowUnpreparedRituals.canManage}}
                                 <a class="hud-lock-icon {{settingLocks.dnd5eShowUnpreparedRituals.type}}" data-setting-key="dnd5eShowUnpreparedRituals" title="{{settingLocks.dnd5eShowUnpreparedRituals.tooltip}}">
@@ -112,22 +110,23 @@
                                 </span>
                             {{/if}}
                         {{/if}}
-                        Show Unprepared Wizard Rituals
-                        <span class="hud-scope-badge client" title="Client Setting: Applies only to your local user account"><i class="fas fa-user"></i> Client</span>
-                    </label>
-                    <span class="hud-setting-hint">Display known but unprepared ritual spells in the Spellbook for wizard characters, allowing them to cast ritual spells from their spellbook.</span>
+                        <label class="hud-cfg-label">Show unprepared wizard rituals</label>
+                        <span class="hud-cfg-scope client" title="Applies to this browser only">CLIENT</span>
+                    </div>
+                    <span class="hud-cfg-hint">Display known but unprepared ritual spells in the Spellbook for wizard characters, allowing them to cast ritual spells from their spellbook.</span>
                 </div>
-                <div class="hud-setting-control">
-                    <label class="hud-switch">
-                        <input type="checkbox" class="hud-switch-input" name="dnd5eShowUnpreparedRituals" {{#if dnd5eShowUnpreparedRituals}}checked{{/if}} {{#if settingLocks.dnd5eShowUnpreparedRituals.disabled}}disabled{{/if}}>
-                        <span class="hud-switch-slider"></span>
+                <div class="hud-cfg-control">
+                    <label class="hud-cfg-switch">
+                        <input type="checkbox" role="switch" class="hud-switch-input" name="dnd5eShowUnpreparedRituals" {{#if dnd5eShowUnpreparedRituals}}checked{{/if}} {{#if settingLocks.dnd5eShowUnpreparedRituals.disabled}}disabled{{/if}}>
+                        <span class="hud-cfg-switch-track" aria-hidden="true"></span>
+                        <span class="hud-cfg-switch-knob" aria-hidden="true"></span>
                     </label>
                 </div>
             </div>
 
-            <div class="hud-setting-row {{#if settingLocks.dnd5eDamageTypeDisplay.isHard}}hard-locked{{/if}}">
-                <div class="hud-setting-info">
-                    <label>
+            <div class="hud-cfg-row {{#if settingLocks.dnd5eDamageTypeDisplay.isHard}}hard-locked{{/if}}">
+                <div class="hud-cfg-info">
+                    <div class="hud-cfg-label-line">
                         {{#if settingLocks.dnd5eDamageTypeDisplay.active}}
                             {{#if settingLocks.dnd5eDamageTypeDisplay.canManage}}
                                 <a class="hud-lock-icon {{settingLocks.dnd5eDamageTypeDisplay.type}}" data-setting-key="dnd5eDamageTypeDisplay" title="{{settingLocks.dnd5eDamageTypeDisplay.tooltip}}">
@@ -139,82 +138,81 @@
                                 </span>
                             {{/if}}
                         {{/if}}
-                        Damage Type Display
-                        <span class="hud-scope-badge client" title="Client Setting: Applies only to your local user account"><i class="fas fa-user"></i> Client</span>
-                    </label>
-                    <span class="hud-setting-hint">Choose how damage types are displayed on action buttons: compact subtly colored icons, icons with text, or written text only.</span>
+                        <label class="hud-cfg-label">Damage type display</label>
+                        <span class="hud-cfg-scope client" title="Applies to this browser only">CLIENT</span>
+                    </div>
+                    <span class="hud-cfg-hint">Choose how damage types are displayed on action buttons: compact subtly colored icons, icons with text, or written text only.</span>
                 </div>
-                <div class="hud-setting-control">
-                    <select class="hud-select" name="dnd5eDamageTypeDisplay" style="width: 140px;" {{#if settingLocks.dnd5eDamageTypeDisplay.disabled}}disabled{{/if}}>
-                        <option value="icons" {{#if (eq dnd5eDamageTypeDisplay "icons")}}selected{{/if}}>Icons Only</option>
-                        <option value="both" {{#if (eq dnd5eDamageTypeDisplay "both")}}selected{{/if}}>Icons & Text</option>
-                        <option value="text" {{#if (eq dnd5eDamageTypeDisplay "text")}}selected{{/if}}>Text Only</option>
+                <div class="hud-cfg-control">
+                    <select class="hud-cfg-select" name="dnd5eDamageTypeDisplay" {{#if settingLocks.dnd5eDamageTypeDisplay.disabled}}disabled{{/if}}>
+                        <option value="icons" {{#if (eq dnd5eDamageTypeDisplay "icons")}}selected{{/if}}>Icons only</option>
+                        <option value="both" {{#if (eq dnd5eDamageTypeDisplay "both")}}selected{{/if}}>Icons and text</option>
+                        <option value="text" {{#if (eq dnd5eDamageTypeDisplay "text")}}selected{{/if}}>Text only</option>
                     </select>
                 </div>
             </div>
 
-            <div class="hud-setting-row">
-                <div class="hud-setting-info">
-                    <label>
-                        Auto-Favorite NPC Actions
-                        <span class="hud-scope-badge world" title="World Setting: Applies table-wide to all players (GM only)"><i class="fas fa-globe"></i> World</span>
-                    </label>
-                    <span class="hud-setting-hint">Automatically favorite attack, damage, and save activities when an NPC token with no favorites is placed on the canvas.</span>
+            <div class="hud-cfg-row">
+                <div class="hud-cfg-info">
+                    <div class="hud-cfg-label-line">
+                        <label class="hud-cfg-label">Auto-favorite NPC actions</label>
+                        <span class="hud-cfg-scope world" title="Applies to every player at the table">WORLD</span>
+                    </div>
+                    <span class="hud-cfg-hint">Automatically favorite attack, damage, and save activities when an NPC token with no favorites is placed on the canvas.</span>
                 </div>
-                <div class="hud-setting-control">
-                    <label class="hud-switch">
-                        <input type="checkbox" class="hud-switch-input" name="dnd5eAutoFavoriteNpcActions" {{#if dnd5eAutoFavoriteNpcActions}}checked{{/if}}>
-                        <span class="hud-switch-slider"></span>
+                <div class="hud-cfg-control">
+                    <label class="hud-cfg-switch">
+                        <input type="checkbox" role="switch" class="hud-switch-input" name="dnd5eAutoFavoriteNpcActions" {{#if dnd5eAutoFavoriteNpcActions}}checked{{/if}}>
+                        <span class="hud-cfg-switch-track" aria-hidden="true"></span>
+                        <span class="hud-cfg-switch-knob" aria-hidden="true"></span>
                     </label>
                 </div>
             </div>
 
-            <div class="hud-setting-row">
-                <div class="hud-setting-info">
-                    <label>
-                        Auto-Favorite Max Features
-                        <span class="hud-scope-badge world" title="World Setting: Applies table-wide to all players (GM only)"><i class="fas fa-globe"></i> World</span>
-                    </label>
-                    <span class="hud-setting-hint">Maximum number of qualifying items or features (with attack, damage, or save activities) an NPC can have to trigger auto-favoriting.</span>
+            <div class="hud-cfg-row">
+                <div class="hud-cfg-info">
+                    <div class="hud-cfg-label-line">
+                        <label class="hud-cfg-label">Auto-favorite max features</label>
+                        <span class="hud-cfg-scope world" title="Applies to every player at the table">WORLD</span>
+                    </div>
+                    <span class="hud-cfg-hint">Maximum number of qualifying items or features (with attack, damage, or save activities) an NPC can have to trigger auto-favoriting.</span>
                 </div>
-                <div class="hud-setting-control">
-                    <input type="number" class="hud-input" name="dnd5eAutoFavoriteNpcMax" value="{{dnd5eAutoFavoriteNpcMax}}" min="1" max="20" step="1" style="width: 70px; text-align: center;">
+                <div class="hud-cfg-control">
+                    <div class="hud-cfg-number">
+                        <input type="number" name="dnd5eAutoFavoriteNpcMax" value="{{dnd5eAutoFavoriteNpcMax}}" min="1" max="20" step="1">
+                        <span class="hud-cfg-number-unit">MAX</span>
+                    </div>
                 </div>
             </div>
             {{/if}}
         </div>
-    </div>
+    </section>
 
-    <!-- Card 2: Display Rules & Positioning -->
-    <div class="hud-card">
-        <div class="hud-card-header">
-            <div class="hud-card-icon"><i class="fas fa-eye"></i></div>
-            <div class="hud-card-titles">
-                <h4>Display Rules & Triggers</h4>
-                <p>Choose when the HUD appears and how submenu drawers unfold.</p>
-            </div>
+    <section class="hud-cfg-group">
+        <div class="hud-cfg-group-head">
+            <span class="hud-cfg-group-title">Display</span><span data-cfg-count="rows"></span>
         </div>
-        <div class="hud-card-body">
-            <div class="hud-setting-row">
-                <div class="hud-setting-info">
-                    <label>
-                        Visibility Trigger
-                        <span class="hud-scope-badge world" title="World Setting: Applies table-wide to all players (GM only)"><i class="fas fa-globe"></i> World</span>
-                    </label>
-                    <span class="hud-setting-hint">When should the Action HUD be shown on the canvas?</span>
+        <div class="hud-cfg-list">
+            <div class="hud-cfg-row">
+                <div class="hud-cfg-info">
+                    <div class="hud-cfg-label-line">
+                        <label class="hud-cfg-label">Visibility trigger</label>
+                        <span class="hud-cfg-scope world" title="Applies to every player at the table">WORLD</span>
+                    </div>
+                    <span class="hud-cfg-hint">When should the Action HUD be shown on the canvas?</span>
                 </div>
-                <div class="hud-setting-control">
-                    <select name="actionMenuVisibility" class="hud-select">
-                        <option value="always" {{#if (eq actionMenuVisibility "always")}}selected{{/if}}>Always Visible (Token Selected)</option>
-                        <option value="combat" {{#if (eq actionMenuVisibility "combat")}}selected{{/if}}>In Combat Only</option>
-                        <option value="hover" {{#if (eq actionMenuVisibility "hover")}}selected{{/if}}>On Token Hover</option>
+                <div class="hud-cfg-control">
+                    <select class="hud-cfg-select" name="actionMenuVisibility">
+                        <option value="always" {{#if (eq actionMenuVisibility "always")}}selected{{/if}}>Token selected</option>
+                        <option value="combat" {{#if (eq actionMenuVisibility "combat")}}selected{{/if}}>In combat only</option>
+                        <option value="hover" {{#if (eq actionMenuVisibility "hover")}}selected{{/if}}>On token hover</option>
                     </select>
                 </div>
             </div>
 
-            <div class="hud-setting-row {{#if settingLocks.fadeWhenIdle.isHard}}hard-locked{{/if}}">
-                <div class="hud-setting-info">
-                    <label>
+            <div class="hud-cfg-row {{#if settingLocks.fadeWhenIdle.isHard}}hard-locked{{/if}}">
+                <div class="hud-cfg-info">
+                    <div class="hud-cfg-label-line">
                         {{#if settingLocks.fadeWhenIdle.active}}
                             {{#if settingLocks.fadeWhenIdle.canManage}}
                                 <a class="hud-lock-icon {{settingLocks.fadeWhenIdle.type}}" data-setting-key="fadeWhenIdle" title="{{settingLocks.fadeWhenIdle.tooltip}}">
@@ -226,22 +224,23 @@
                                 </span>
                             {{/if}}
                         {{/if}}
-                        Fade when Idle (Interface Fading)
-                        <span class="hud-scope-badge client" title="Client Setting: Applies only to your local user account"><i class="fas fa-user"></i> Client</span>
-                    </label>
-                    <span class="hud-setting-hint">Dim the Action HUD when inactive, respecting core Foundry's Inactive Opacity and Fade Speed settings. Restores full opacity on hover, focus, or when a submenu is open.</span>
+                        <label class="hud-cfg-label">Fade when idle</label>
+                        <span class="hud-cfg-scope client" title="Applies to this browser only">CLIENT</span>
+                    </div>
+                    <span class="hud-cfg-hint">Dim the Action HUD when inactive, respecting core Foundry's Inactive Opacity and Fade Speed settings. Restores full opacity on hover, focus, or when a submenu is open.</span>
                 </div>
-                <div class="hud-setting-control">
-                    <label class="hud-switch">
-                        <input type="checkbox" class="hud-switch-input" name="fadeWhenIdle" {{#if fadeWhenIdle}}checked{{/if}} {{#if settingLocks.fadeWhenIdle.disabled}}disabled{{/if}}>
-                        <span class="hud-switch-slider"></span>
+                <div class="hud-cfg-control">
+                    <label class="hud-cfg-switch">
+                        <input type="checkbox" role="switch" class="hud-switch-input" name="fadeWhenIdle" {{#if fadeWhenIdle}}checked{{/if}} {{#if settingLocks.fadeWhenIdle.disabled}}disabled{{/if}}>
+                        <span class="hud-cfg-switch-track" aria-hidden="true"></span>
+                        <span class="hud-cfg-switch-knob" aria-hidden="true"></span>
                     </label>
                 </div>
             </div>
 
-            <div class="hud-setting-row {{#if settingLocks.actionMenuSubmenuSide.isHard}}hard-locked{{/if}}">
-                <div class="hud-setting-info">
-                    <label>
+            <div class="hud-cfg-row {{#if settingLocks.actionMenuSubmenuSide.isHard}}hard-locked{{/if}}">
+                <div class="hud-cfg-info">
+                    <div class="hud-cfg-label-line">
                         {{#if settingLocks.actionMenuSubmenuSide.active}}
                             {{#if settingLocks.actionMenuSubmenuSide.canManage}}
                                 <a class="hud-lock-icon {{settingLocks.actionMenuSubmenuSide.type}}" data-setting-key="actionMenuSubmenuSide" title="{{settingLocks.actionMenuSubmenuSide.tooltip}}">
@@ -253,23 +252,23 @@
                                 </span>
                             {{/if}}
                         {{/if}}
-                        Submenu Expansion Direction
-                        <span class="hud-scope-badge client" title="Client Setting: Applies only to your local user account"><i class="fas fa-user"></i> Client</span>
-                    </label>
-                    <span class="hud-setting-hint">Side on which secondary submenus and item trays unfold.</span>
+                        <label class="hud-cfg-label">Submenu expansion direction</label>
+                        <span class="hud-cfg-scope client" title="Applies to this browser only">CLIENT</span>
+                    </div>
+                    <span class="hud-cfg-hint">Side on which secondary submenus and item trays unfold.</span>
                 </div>
-                <div class="hud-setting-control">
-                    <select name="actionMenuSubmenuSide" class="hud-select" {{#if settingLocks.actionMenuSubmenuSide.disabled}}disabled{{/if}}>
-                        <option value="auto" {{#if (eq actionMenuSubmenuSide "auto")}}selected{{/if}}>Automatic (Screen Edge Aware)</option>
-                        <option value="left" {{#if (eq actionMenuSubmenuSide "left")}}selected{{/if}}>Force Left</option>
-                        <option value="right" {{#if (eq actionMenuSubmenuSide "right")}}selected{{/if}}>Force Right</option>
+                <div class="hud-cfg-control">
+                    <select class="hud-cfg-select" name="actionMenuSubmenuSide" {{#if settingLocks.actionMenuSubmenuSide.disabled}}disabled{{/if}}>
+                        <option value="auto" {{#if (eq actionMenuSubmenuSide "auto")}}selected{{/if}}>Automatic</option>
+                        <option value="left" {{#if (eq actionMenuSubmenuSide "left")}}selected{{/if}}>Left</option>
+                        <option value="right" {{#if (eq actionMenuSubmenuSide "right")}}selected{{/if}}>Right</option>
                     </select>
                 </div>
             </div>
 
-            <div class="hud-setting-row {{#if settingLocks.tooltipPosition.isHard}}hard-locked{{/if}}">
-                <div class="hud-setting-info">
-                    <label>
+            <div class="hud-cfg-row {{#if settingLocks.tooltipPosition.isHard}}hard-locked{{/if}}">
+                <div class="hud-cfg-info">
+                    <div class="hud-cfg-label-line">
                         {{#if settingLocks.tooltipPosition.active}}
                             {{#if settingLocks.tooltipPosition.canManage}}
                                 <a class="hud-lock-icon {{settingLocks.tooltipPosition.type}}" data-setting-key="tooltipPosition" title="{{settingLocks.tooltipPosition.tooltip}}">
@@ -281,43 +280,37 @@
                                 </span>
                             {{/if}}
                         {{/if}}
-                        Tooltip Anchor Mode
-                        <span class="hud-scope-badge client" title="Client Setting: Applies only to your local user account"><i class="fas fa-user"></i> Client</span>
-                    </label>
-                    <span class="hud-setting-hint">Position item details tooltip adjacent to the button or tracking the mouse cursor.</span>
+                        <label class="hud-cfg-label">Tooltip anchor</label>
+                        <span class="hud-cfg-scope client" title="Applies to this browser only">CLIENT</span>
+                    </div>
+                    <span class="hud-cfg-hint">Position item details tooltip adjacent to the button or tracking the mouse cursor.</span>
                 </div>
-                <div class="hud-setting-control">
-                    <select name="tooltipPosition" class="hud-select" {{#if settingLocks.tooltipPosition.disabled}}disabled{{/if}}>
-                        <option value="anchor" {{#if (eq tooltipPosition "anchor")}}selected{{/if}}>Anchor to HUD Item</option>
-                        <option value="cursor" {{#if (eq tooltipPosition "cursor")}}selected{{/if}}>Follow Cursor</option>
+                <div class="hud-cfg-control">
+                    <select class="hud-cfg-select" name="tooltipPosition" {{#if settingLocks.tooltipPosition.disabled}}disabled{{/if}}>
+                        <option value="anchor" {{#if (eq tooltipPosition "anchor")}}selected{{/if}}>Anchor to HUD item</option>
+                        <option value="cursor" {{#if (eq tooltipPosition "cursor")}}selected{{/if}}>Follow cursor</option>
                     </select>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Card 3: Excluded Actor Types -->
-    <div class="hud-card">
-        <div class="hud-card-header">
-            <div class="hud-card-icon"><i class="fas fa-filter"></i></div>
-            <div class="hud-card-titles">
-                <h4>
-                    Excluded Actor Types
-                    <span class="hud-scope-badge world" title="World Setting: Applies table-wide to all players (GM only)"><i class="fas fa-globe"></i> World</span>
-                </h4>
-                <p>Prevent the Action HUD from appearing when controlling specific document types (e.g. vehicles, loot, group).</p>
-            </div>
+    <section class="hud-cfg-group">
+        <div class="hud-cfg-group-head">
+            <span class="hud-cfg-group-title">Excluded actor types</span><span data-cfg-count="checked"></span>
+            <span class="hud-cfg-scope world hud-cfg-group-scope" title="Applies to every player at the table">WORLD</span>
         </div>
-        <div class="hud-card-body">
+        <div class="hud-cfg-list hud-cfg-chips-box">
+            <span class="hud-cfg-hint">The HUD stays hidden while you control a checked actor type.</span>
             <div class="hud-chip-group">
                 {{#each allActorTypes}}
                 <label class="hud-chip {{#if this.checked}}active{{/if}}">
-                    <input type="checkbox" class="hud-chip-input" name="excludedActorTypes.{{this.value}}" {{#if this.checked}}checked{{/if}}>
-                    <span><i class="fas {{#if this.checked}}fa-check-circle{{else}}fa-circle{{/if}}"></i> {{this.label}}</span>
+                    <input type="checkbox" name="excludedActorTypes.{{this.value}}" {{#if this.checked}}checked{{/if}}>
+                    <span class="hud-chip-tick" aria-hidden="true"></span>{{this.value}}
                 </label>
                 {{/each}}
             </div>
         </div>
-    </div>
+    </section>
 
 </div>

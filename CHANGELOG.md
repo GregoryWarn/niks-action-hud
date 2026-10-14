@@ -2,6 +2,14 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** will be documented in this file.
 
+## [14.13.0] - 2026-10-14
+
+### Added
+- **Integrated Icon Picker**: Choose category icons visually from Font Awesome, RPG Awesome, native emojis, or local world images directly within the Menu Builder.
+- **Redesigned Configuration UI**: Completely overhauled the configuration window layout with streamlined grouping, switch toggles, and live tracking of unsaved changes.
+- **Local IBM Plex Fonts**: Bundled IBM Plex Sans and IBM Plex Mono fonts locally for clean, high-legibility typography across settings panels.
+- **Brazilian Portuguese Localization**: Added full Portuguese (`pt-BR`) language support (contributed by [@RichardFontoura](https://github.com/RichardFontoura)).
+
 ## [14.12.3] - 2026-10-14
 
 ### Added

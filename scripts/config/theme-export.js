@@ -118,7 +118,7 @@ export async function exportThemeZip(fullConfig, themeName = "custom-theme") {
 	zip.file("theme.json", JSON.stringify(exportCfg, null, 2));
 
 	const zipBlob = await zip.generateAsync({ type: "blob" });
-	saveDataToFile(zipBlob, "application/zip", `${themeName}.zip`);
+	foundry.utils.saveDataToFile(zipBlob, "application/zip", `${themeName}.zip`);
 
 	if (failedCount > 0) {
 		ui.notifications.warn(
@@ -142,9 +142,8 @@ export async function importThemeZip(file) {
 	const targetFolder = "uploaded-themes";
 
 	try {
-		await FilePicker.createDirectory("data", targetFolder);
+		await foundry.applications.apps.FilePicker.implementation.createDirectory("data", targetFolder);
 	} catch {
-		// Directory already exists
 	}
 
 	const imgMap = new Map();
@@ -158,7 +157,7 @@ export async function importThemeZip(file) {
 		const imgFile = new File([blob], baseName, { type: blob.type });
 
 		try {
-			const result = await FilePicker.upload("data", targetFolder, imgFile, {});
+			const result = await foundry.applications.apps.FilePicker.implementation.upload("data", targetFolder, imgFile, {});
 			imgMap.set(name, result.path);
 		} catch (uploadErr) {
 			console.warn(`[Nik's Action HUD] Failed to upload ${name}:`, uploadErr);

@@ -13,6 +13,7 @@ import {
 	bindFilePickers,
 	bindDragDrop,
 	bindSettingsLocksListeners,
+	bindUnsavedChangesTracking,
 } from "./config/listeners.js";
 import {
 	onSave,
@@ -21,6 +22,7 @@ import {
 	onToggleCollapseCategory,
 	onAddCategory,
 	onRemoveCategory,
+	onPickCategoryIcon,
 	onAddSubCategory,
 	onRemoveSubCategory,
 	onRemoveItem,
@@ -37,8 +39,9 @@ import {
 	onExportTheme,
 	onImportTheme,
 } from "./config/handlers.js";
-import { switchTab } from "./config/helpers.js";
+import { switchTab, captureChangeBaseline, refreshConfigStatus } from "./config/helpers.js";
 import { triggerPreview } from "./config/preview.js";
+import { categoryIconValue, iconMarkup } from "./utils/icon-source.js";
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
@@ -64,6 +67,12 @@ if (globalThis.Handlebars?.helpers?.eq == null) {
 	globalThis.Handlebars?.registerHelper("eq", (a, b) => a === b);
 }
 
+if (globalThis.Handlebars?.helpers?.nahCategoryIcon == null) {
+	globalThis.Handlebars?.registerHelper("nahCategoryIcon", (category, fallbackClass) => new Handlebars.SafeString(
+		iconMarkup(categoryIconValue(category), { fallbackClass: typeof fallbackClass === "string" ? fallbackClass : "" }),
+	));
+}
+
 const CONFIG_TEMPLATES = [
 	`modules/${MODULE_ID}/templates/config/main.hbs`,
 	`modules/${MODULE_ID}/templates/config/tabs/general.hbs`,
@@ -73,7 +82,7 @@ const CONFIG_TEMPLATES = [
 ];
 
 Hooks.once("init", () => {
-	loadTemplates(CONFIG_TEMPLATES);
+	foundry.applications.handlebars.loadTemplates(CONFIG_TEMPLATES);
 });
 
 export class ActionHUDConfig extends HandlebarsApplicationMixin(ApplicationV2) {
@@ -98,6 +107,7 @@ export class ActionHUDConfig extends HandlebarsApplicationMixin(ApplicationV2) {
 				toggleCollapseCategory: ActionHUDConfig.prototype._onToggleCollapseCategory,
 				addCategory: ActionHUDConfig.prototype._onAddCategory,
 				removeCategory: ActionHUDConfig.prototype._onRemoveCategory,
+				pickCategoryIcon: ActionHUDConfig.prototype._onPickCategoryIcon,
 				addSubCategory: ActionHUDConfig.prototype._onAddSubCategory,
 				removeSubCategory: ActionHUDConfig.prototype._onRemoveSubCategory,
 				removeItem: ActionHUDConfig.prototype._onRemoveItem,
@@ -145,6 +155,7 @@ export class ActionHUDConfig extends HandlebarsApplicationMixin(ApplicationV2) {
 		this.tempData = {};
 		this._collapsedMenuCategories = new WeakSet();
 		this._collapsedAdapterCategories = new Set();
+		this.changeBaseline = null;
 	}
 
 	async render(options = {}) {
@@ -160,7 +171,7 @@ export class ActionHUDConfig extends HandlebarsApplicationMixin(ApplicationV2) {
 			ui.notifications.warn(game.i18n.localize("NAH.UI.NoPermission"));
 			return;
 		}
-		await loadTemplates(CONFIG_TEMPLATES);
+		await foundry.applications.handlebars.loadTemplates(CONFIG_TEMPLATES);
 		return super._render(context, options);
 	}
 
@@ -180,6 +191,11 @@ export class ActionHUDConfig extends HandlebarsApplicationMixin(ApplicationV2) {
 		switchTab(this, tabName, render);
 	}
 
+	async _onFirstRender(context, options) {
+		await super._onFirstRender(context, options);
+		bindUnsavedChangesTracking(this);
+	}
+
 	_onRender(context, options) {
 		super._onRender(context, options);
 
@@ -190,6 +206,8 @@ export class ActionHUDConfig extends HandlebarsApplicationMixin(ApplicationV2) {
 		bindSettingsLocksListeners(this);
 
 		this._switchTab(this.activeTab, false);
+		if (!this.changeBaseline) captureChangeBaseline(this);
+		refreshConfigStatus(this);
 		triggerPreview(this);
 	}
 
@@ -211,6 +229,7 @@ export class ActionHUDConfig extends HandlebarsApplicationMixin(ApplicationV2) {
 	_onToggleCollapseCategory(event, target) { onToggleCollapseCategory(this, event, target); }
 	async _onAddCategory(event, target) { await onAddCategory(this, event, target); }
 	async _onRemoveCategory(event, target) { await onRemoveCategory(this, event, target); }
+	async _onPickCategoryIcon(event, target) { await onPickCategoryIcon(this, event, target); }
 	async _onAddSubCategory(event, target) { await onAddSubCategory(this, event, target); }
 	async _onRemoveSubCategory(event, target) { await onRemoveSubCategory(this, event, target); }
 	async _onRemoveItem(event, target) { await onRemoveItem(this, event, target); }

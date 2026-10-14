@@ -489,6 +489,11 @@
 	flex-shrink: 0 !important;
 }
 
+.nah-icon-glyph {
+	font-style: normal;
+	line-height: 1;
+}
+
 #nah-action-menu .nah-action-btn.is-custom-btn,
 #nah-action-menu .nah-action-btn.is-custom-btn:first-of-type {
 	background: transparent !important;

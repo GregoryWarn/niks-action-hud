@@ -282,6 +282,42 @@
         "Name": "Toggle Menu Visibility",
         "Hint": "Toggle action menu."
       }
+    },
+    "IconPicker": {
+      "Title": "Icon picker",
+      "SearchPlaceholder": "Search icons by name",
+      "ClearSearch": "Clear search",
+      "ValuePlaceholder": "Font Awesome classes, an emoji or an image path",
+      "ValueLabel": "Icon value",
+      "Tab": {
+        "FontAwesome": "Font Awesome",
+        "RpgAwesome": "RPG Awesome",
+        "Emoji": "Emoji",
+        "Image": "Image"
+      },
+      "Family": {
+        "Solid": "Solid",
+        "Regular": "Regular",
+        "Brands": "Brands",
+        "Color": "Color",
+        "File": "File"
+      },
+      "Count": "{family} · {count} icons",
+      "CountRpgAwesome": "RPG Awesome · {count} icons",
+      "CountEmoji": "Emoji · {count}",
+      "CountImage": "Image",
+      "Empty": "No icons match “{query}”.",
+      "EmptyAll": "No icons available.",
+      "Refine": "Showing the first results. Narrow the search to see the rest.",
+      "ImageHint": "Any image from this world works as an icon. It is drawn at the size of the text around it.",
+      "Browse": "Choose an image",
+      "Clear": "Clear",
+      "Use": "Use",
+      "Field": {
+        "Label": "Icon",
+        "Open": "Open icon picker",
+        "None": "No icon"
+      }
     }
   }
 }

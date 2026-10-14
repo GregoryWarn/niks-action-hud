@@ -1,161 +1,143 @@
-<!-- Presets & Backup Tab -->
 <div class="hud-tab-pane {{#if isPresetsTab}}active{{/if}}" data-tab="presets">
 
-    <!-- Card 1: World Configuration Presets -->
-    <div class="hud-card">
-        <div class="hud-card-header">
-            <div class="hud-card-icon"><i class="fas fa-bookmark"></i></div>
-            <div class="hud-card-titles">
-                <h4>Full Configuration Presets</h4>
-                <p>Save and restore entire HUD configurations (themes, behaviors, custom menus) within this world.</p>
-            </div>
+    <section class="hud-cfg-group">
+        <div class="hud-cfg-group-head">
+            <span class="hud-cfg-group-title">Configuration presets</span><span>· {{#if configPresets.length}}{{configPresets.length}}{{else}}0{{/if}} saved</span>
         </div>
-        <div class="hud-card-body">
-            <div class="hud-preset-controls-grid">
-                <!-- Save New Preset -->
-                <div class="hud-preset-action-box">
-                    <label>Save Current as Preset</label>
-                    <div class="hud-input-with-button">
-                        <input type="text" name="newConfigPresetName" class="hud-input" placeholder="Preset name (e.g. Gritty Dark)">
-                        <button type="button" class="hud-btn hud-btn-primary" data-action="saveConfigPreset">
-                            <i class="fas fa-save"></i> Save
-                        </button>
-                    </div>
+        <span class="hud-cfg-group-desc">Save and restore entire HUD configurations (themes, behaviors, custom menus) within this world.</span>
+        <div class="hud-cfg-list">
+            <div class="hud-cfg-row">
+                <div class="hud-cfg-info">
+                    <span class="hud-cfg-label">Save current as preset</span>
                 </div>
-
-                <!-- Load Existing Preset -->
-                <div class="hud-preset-action-box">
-                    <label>Load or Delete Preset</label>
-                    <div class="hud-input-with-button">
-                        <select name="loadConfigPresetSelect" class="hud-select">
-                            <option value="">-- Select Saved Preset --</option>
-                            {{#each configPresets}}
-                            <option value="{{this}}">{{this}}</option>
-                            {{/each}}
-                        </select>
-                        <button type="button" class="hud-btn" data-action="loadConfigPreset">
-                            <i class="fas fa-folder-open"></i> Load
-                        </button>
-                        <button type="button" class="hud-btn hud-btn-danger" data-action="deleteConfigPreset">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
+                <div class="hud-cfg-control hud-cfg-actions">
+                    <input type="text" class="hud-cfg-text hud-cfg-text-wide" name="newConfigPresetName" placeholder="Gritty Dark">
+                    <button type="button" class="hud-cfg-btn" data-action="saveConfigPreset">SAVE</button>
+                </div>
+            </div>
+            <div class="hud-cfg-row">
+                <div class="hud-cfg-info">
+                    <span class="hud-cfg-label">Load or delete preset</span>
+                </div>
+                <div class="hud-cfg-control hud-cfg-actions">
+                    <select class="hud-cfg-select hud-cfg-text-wide" name="loadConfigPresetSelect" aria-label="Select a saved preset">
+                        <option value="">Select a saved preset</option>
+                        {{#each configPresets}}
+                        <option value="{{this}}">{{this}}</option>
+                        {{/each}}
+                    </select>
+                    <button type="button" class="hud-cfg-btn" data-action="loadConfigPreset">LOAD</button>
+                    <button type="button" class="hud-cfg-btn hud-cfg-btn-danger hud-cfg-btn-square" data-action="deleteConfigPreset" title="Delete" aria-label="Delete preset"><i class="fa-solid fa-trash-can" aria-hidden="true"></i></button>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Card 2: Action Menu Layout Presets -->
-    <div class="hud-card">
-        <div class="hud-card-header">
-            <div class="hud-card-icon"><i class="fas fa-th-large"></i></div>
-            <div class="hud-card-titles">
-                <h4>Action Menu Layout Presets</h4>
-                <p>Save and switch category order and submenu configurations independently from themes.</p>
-            </div>
+    <section class="hud-cfg-group">
+        <div class="hud-cfg-group-head">
+            <span class="hud-cfg-group-title">Menu layout presets</span><span>· {{#if actionMenuPresets.length}}{{actionMenuPresets.length}}{{else}}0{{/if}} saved</span>
         </div>
-        <div class="hud-card-body">
-            <div class="hud-preset-controls-grid">
-                <div class="hud-preset-action-box">
-                    <label>Save Menu Layout</label>
-                    <div class="hud-input-with-button">
-                        <input type="text" name="newActionMenuPresetName" class="hud-input" placeholder="Layout name (e.g. Caster Focus)">
-                        <button type="button" class="hud-btn hud-btn-primary" data-action="saveActionMenuPreset">
-                            <i class="fas fa-save"></i> Save
-                        </button>
-                    </div>
+        <span class="hud-cfg-group-desc">Save and switch category order and submenu configurations independently from themes.</span>
+        <div class="hud-cfg-list">
+            <div class="hud-cfg-row">
+                <div class="hud-cfg-info">
+                    <span class="hud-cfg-label">Save menu layout</span>
                 </div>
-
-                <div class="hud-preset-action-box">
-                    <label>Load or Delete Layout</label>
-                    <div class="hud-input-with-button">
-                        <select name="loadActionMenuPresetSelect" class="hud-select">
-                            <option value="">-- Select Layout Preset --</option>
-                            {{#each actionMenuPresets}}
-                            <option value="{{this}}">{{this}}</option>
-                            {{/each}}
-                        </select>
-                        <button type="button" class="hud-btn" data-action="loadActionMenuPreset">
-                            <i class="fas fa-folder-open"></i> Load
-                        </button>
-                        <button type="button" class="hud-btn hud-btn-danger" data-action="deleteActionMenuPreset">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
+                <div class="hud-cfg-control hud-cfg-actions">
+                    <input type="text" class="hud-cfg-text hud-cfg-text-wide" name="newActionMenuPresetName" placeholder="Caster Focus">
+                    <button type="button" class="hud-cfg-btn" data-action="saveActionMenuPreset">SAVE</button>
+                </div>
+            </div>
+            <div class="hud-cfg-row">
+                <div class="hud-cfg-info">
+                    <span class="hud-cfg-label">Load or delete layout</span>
+                </div>
+                <div class="hud-cfg-control hud-cfg-actions">
+                    <select class="hud-cfg-select hud-cfg-text-wide" name="loadActionMenuPresetSelect" aria-label="Select a layout preset">
+                        <option value="">Select a layout preset</option>
+                        {{#each actionMenuPresets}}
+                        <option value="{{this}}">{{this}}</option>
+                        {{/each}}
+                    </select>
+                    <button type="button" class="hud-cfg-btn" data-action="loadActionMenuPreset">LOAD</button>
+                    <button type="button" class="hud-cfg-btn hud-cfg-btn-danger hud-cfg-btn-square" data-action="deleteActionMenuPreset" title="Delete" aria-label="Delete preset"><i class="fa-solid fa-trash-can" aria-hidden="true"></i></button>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Card 3: File Import / Export -->
-    <div class="hud-card">
-        <div class="hud-card-header">
-            <div class="hud-card-icon"><i class="fas fa-file-export"></i></div>
-            <div class="hud-card-titles">
-                <h4>File Import & Export</h4>
-                <p>Backup configurations as downloadable JSON files, or package custom themes as ZIP archives.</p>
-            </div>
+    <section class="hud-cfg-group">
+        <div class="hud-cfg-group-head">
+            <span class="hud-cfg-group-title">Import and export</span>
         </div>
-        <div class="hud-card-body">
-            <div class="hud-export-grid">
-                <div class="hud-export-box">
-                    <div class="hud-export-info">
-                        <h5><i class="fas fa-file-code"></i> JSON Configuration File</h5>
-                        <p>Export all settings, colors, anchors, and menus to JSON, or import on another world or machine.</p>
-                    </div>
-                    <div class="hud-export-actions">
-                        <button type="button" class="hud-btn" data-action="exportConfigPresetFile">
-                            <i class="fas fa-download"></i> Export JSON
-                        </button>
-                        <button type="button" class="hud-btn" data-action="importConfigPresetFile">
-                            <i class="fas fa-upload"></i> Import JSON
-                        </button>
-                    </div>
+        <span class="hud-cfg-group-desc">Backup configurations as downloadable JSON files, or package custom themes as ZIP archives.</span>
+        <div class="hud-cfg-list">
+            <div class="hud-cfg-row">
+                <div class="hud-cfg-info">
+                    <span class="hud-cfg-label">Configuration file · JSON</span>
+                    <span class="hud-cfg-hint narrow">Export all settings, colors, anchors, and menus to JSON, or import on another world or machine.</span>
                 </div>
-
-                <div class="hud-export-box">
-                    <div class="hud-export-info">
-                        <h5><i class="fas fa-file-zipper"></i> Theme Package Archive (.zip)</h5>
-                        <p>Packs the active theme settings and all referenced local graphics into an archive package.</p>
-                    </div>
-                    <div class="hud-export-actions">
-                        <button type="button" class="hud-btn" data-action="exportTheme">
-                            <i class="fas fa-download"></i> Export Theme ZIP
-                        </button>
-                        <button type="button" class="hud-btn" data-action="importTheme">
-                            <i class="fas fa-upload"></i> Import Theme ZIP
-                        </button>
-                    </div>
+                <div class="hud-cfg-control hud-cfg-actions">
+                    <button type="button" class="hud-cfg-btn" data-action="exportConfigPresetFile"><i class="fa-solid fa-download" aria-hidden="true"></i>EXPORT</button>
+                    <button type="button" class="hud-cfg-btn" data-action="importConfigPresetFile"><i class="fa-solid fa-upload" aria-hidden="true"></i>IMPORT</button>
+                </div>
+            </div>
+            <div class="hud-cfg-row">
+                <div class="hud-cfg-info">
+                    <span class="hud-cfg-label">Theme package · ZIP</span>
+                    <span class="hud-cfg-hint narrow">Packs the active theme settings and all referenced local graphics into an archive package.</span>
+                </div>
+                <div class="hud-cfg-control hud-cfg-actions">
+                    <button type="button" class="hud-cfg-btn" data-action="exportTheme"><i class="fa-solid fa-download" aria-hidden="true"></i>EXPORT</button>
+                    <button type="button" class="hud-cfg-btn" data-action="importTheme"><i class="fa-solid fa-upload" aria-hidden="true"></i>IMPORT</button>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Card 4: Factory Reset -->
-    <div class="hud-card hud-danger-card">
-        <div class="hud-card-header">
-            <div class="hud-card-icon"><i class="fas fa-rotate-left"></i></div>
-            <div class="hud-card-titles">
-                <h4>Reset to Defaults</h4>
-                <p>Restore default module settings section-by-section, or execute a clean factory reset.</p>
+    <section class="hud-cfg-group">
+        <div class="hud-cfg-group-head">
+            <span class="hud-cfg-group-title">Reset</span>
+        </div>
+        <span class="hud-cfg-group-desc">Restore default module settings section-by-section, or execute a clean factory reset.</span>
+        <div class="hud-cfg-list">
+            <div class="hud-cfg-row">
+                <div class="hud-cfg-info">
+                    <span class="hud-cfg-label">Appearance</span>
+                    <span class="hud-cfg-hint narrow">Theme, scale, typography and preview options.</span>
+                </div>
+                <div class="hud-cfg-control hud-cfg-actions">
+                    <button type="button" class="hud-cfg-btn hud-cfg-btn-danger" data-action="reset" data-scope="appearance">RESET</button>
+                </div>
+            </div>
+            <div class="hud-cfg-row">
+                <div class="hud-cfg-info">
+                    <span class="hud-cfg-label">Behavior</span>
+                    <span class="hud-cfg-hint narrow">Every setting on the General tab.</span>
+                </div>
+                <div class="hud-cfg-control hud-cfg-actions">
+                    <button type="button" class="hud-cfg-btn hud-cfg-btn-danger" data-action="reset" data-scope="behavior">RESET</button>
+                </div>
+            </div>
+            <div class="hud-cfg-row">
+                <div class="hud-cfg-info">
+                    <span class="hud-cfg-label">Menu layout</span>
+                    <span class="hud-cfg-hint narrow">Category order, custom categories and submenus.</span>
+                </div>
+                <div class="hud-cfg-control hud-cfg-actions">
+                    <button type="button" class="hud-cfg-btn hud-cfg-btn-danger" data-action="reset" data-scope="menu">RESET</button>
+                </div>
+            </div>
+            <div class="hud-cfg-row">
+                <div class="hud-cfg-info">
+                    <span class="hud-cfg-label">Factory reset</span>
+                    <span class="hud-cfg-hint narrow">Every section above, at once. This cannot be undone.</span>
+                </div>
+                <div class="hud-cfg-control hud-cfg-actions">
+                    <button type="button" class="hud-cfg-btn hud-cfg-btn-danger-fill" data-action="reset" data-scope="all">FACTORY RESET</button>
+                </div>
             </div>
         </div>
-        <div class="hud-card-body">
-            <div class="hud-reset-buttons-grid">
-                <button type="button" class="hud-btn hud-btn-outline-danger" data-action="reset" data-scope="appearance">
-                    <i class="fas fa-palette"></i> Reset Appearance
-                </button>
-                <button type="button" class="hud-btn hud-btn-outline-danger" data-action="reset" data-scope="behavior">
-                    <i class="fas fa-sliders"></i> Reset Behavior
-                </button>
-                <button type="button" class="hud-btn hud-btn-outline-danger" data-action="reset" data-scope="menu">
-                    <i class="fas fa-sitemap"></i> Reset Menu Layout
-                </button>
-                <button type="button" class="hud-btn hud-btn-danger" data-action="reset" data-scope="all">
-                    <i class="fas fa-triangle-exclamation"></i> Factory Reset All
-                </button>
-            </div>
-        </div>
-    </div>
+    </section>
 
 </div>

@@ -1,0 +1,100 @@
+/**
+ * Button Shape Overrides for Nik's Action HUD
+ * Allows any theme's button geometry to be used with any visual theme.
+ */
+
+/* 1. Arcanum: Slanted Parallelogram */
+[data-button-shape="arcanum"] .nah-action-btn,
+.nah-action-btn[data-button-shape="arcanum"] {
+	clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%) !important;
+	border-radius: 0 !important;
+	padding: 0 22px !important;
+}
+
+/* 2. Carolingian: Smooth Rounded / Pill */
+[data-button-shape="carolingian"] .nah-action-btn,
+.nah-action-btn[data-button-shape="carolingian"] {
+	clip-path: none !important;
+	border-radius: var(--cui-radius, 8px) !important;
+	padding: 0 18px !important;
+}
+
+/* 3. Clockwork: Chamfered Octagonal */
+[data-button-shape="clockwork"] .nah-action-btn,
+.nah-action-btn[data-button-shape="clockwork"] {
+	clip-path: polygon(0 6px, 6px 0, calc(100% - 6px) 0, 100% 6px, 100% calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 0 calc(100% - 6px)) !important;
+	border-radius: 0 !important;
+	padding: 0 20px !important;
+}
+
+/* 4. Eldritch: Asymmetric Bottom-Right Notch */
+[data-button-shape="eldritch"] .nah-action-btn,
+.nah-action-btn[data-button-shape="eldritch"] {
+	clip-path: polygon(0 0, 100% 0, calc(100% - 14px) 100%, 0 100%) !important;
+	border-radius: 0 !important;
+	padding: 0 22px !important;
+}
+
+/* 5. Frostborn: Pointed Hexagon */
+[data-button-shape="frostborn"] .nah-action-btn,
+.nah-action-btn[data-button-shape="frostborn"] {
+	clip-path: polygon(10px 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 10px 100%, 0 50%) !important;
+	border-radius: 0 !important;
+	padding: 0 22px !important;
+}
+
+/* 6. Grimoire: Subtle Rounded Rectangular */
+[data-button-shape="grimoire"] .nah-action-btn,
+.nah-action-btn[data-button-shape="grimoire"] {
+	clip-path: none !important;
+	border-radius: 4px !important;
+	padding: 0 22px !important;
+}
+
+/* 7. Infernal: Asymmetric Angular Slant */
+[data-button-shape="infernal"] .nah-action-btn,
+.nah-action-btn[data-button-shape="infernal"] {
+	clip-path: polygon(14px 0, 100% 0, calc(100% - 6px) 100%, 0 100%) !important;
+	border-radius: 0 !important;
+	padding: 0 22px !important;
+}
+
+/* 8. Obsidian: Clean Rounded Rectangle */
+[data-button-shape="obsidian"] .nah-action-btn,
+.nah-action-btn[data-button-shape="obsidian"] {
+	clip-path: none !important;
+	border-radius: 8px !important;
+	padding: 0 20px !important;
+}
+
+/* 9. Ossuary: Angled Tombstone Top */
+[data-button-shape="ossuary"] .nah-action-btn,
+.nah-action-btn[data-button-shape="ossuary"] {
+	clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 12px, 100% 100%, 0 100%, 0 12px) !important;
+	border-radius: 0 !important;
+	padding: 0 22px !important;
+}
+
+/* 10. Radiant: Symmetrical Pointed Hexagon */
+[data-button-shape="radiant"] .nah-action-btn,
+.nah-action-btn[data-button-shape="radiant"] {
+	clip-path: polygon(14px 0, calc(100% - 14px) 0, 100% 50%, calc(100% - 14px) 100%, 14px 100%, 0 50%) !important;
+	border-radius: 0 !important;
+	padding: 0 22px !important;
+}
+
+/* 11. Sylvan: Balanced Trapezoid Slant */
+[data-button-shape="sylvan"] .nah-action-btn,
+.nah-action-btn[data-button-shape="sylvan"] {
+	clip-path: polygon(12px 0, 100% 0, calc(100% - 12px) 100%, 0 100%) !important;
+	border-radius: 0 !important;
+	padding: 0 22px !important;
+}
+
+/* 12. Valiant: Right Chevron / Banner Point */
+[data-button-shape="valiant"] .nah-action-btn,
+.nah-action-btn[data-button-shape="valiant"] {
+	clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%) !important;
+	border-radius: 0 !important;
+	padding: 0 22px 0 18px !important;
+}

@@ -128,7 +128,8 @@
       "ResetSuccess": "Configuration réinitialisée aux valeurs par défaut.",
       "ResetConfirmTitle": "Réinitialiser la configuration",
       "ResetConfirmMessage": "Voulez-vous vraiment réinitialiser les paramètres {scope} aux valeurs par défaut ?",
-      "FontDefault": "Police par défaut"
+      "FontDefault": "Police par défaut",
+      "ShapeDefault": "Thème par défaut"
     },
     "Presets": {
       "SystemMismatchTitle": "Système non concordant",

@@ -51,7 +51,7 @@ function buildExportConfig(full) {
 	const c = {};
 	c.theme = full.theme || getDefaultTheme();
 	c.actionMenuFont = full.actionMenuFont || "";
-	c.actionMenuEmphasizeFirstButton = full.actionMenuEmphasizeFirstButton ?? true;
+	c.actionMenuButtonShape = full.actionMenuButtonShape || "";
 
 	c.customMenu = full.customMenu || [];
 	c.adapterCategoryOverrides = full.adapterCategoryOverrides || {};

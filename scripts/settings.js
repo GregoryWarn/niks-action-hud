@@ -70,7 +70,7 @@ export class SettingsManager {
 				adapterCategoryOverrides: {},
 				actionMenuVisibility: "always",
 				actionMenuUseTokenImg: false,
-				actionMenuEmphasizeFirstButton: true,
+				actionMenuButtonShape: "",
 				actionMenuSubmenuSide: "auto",
 				dnd5eGroupActionsByActivation: false,
 				dnd5eShowUnpreparedRituals: true,

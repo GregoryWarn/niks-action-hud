@@ -10,7 +10,7 @@ import {
 	mergeAdapterCategoryAppearance,
 } from "../features/action-menu/adapter-category-overrides.js";
 import { adapterRegistry } from "../systems/registry.js";
-import { THEMES, isThemeAvailable, getDefaultTheme, DEFAULT_EXCLUDED_ACTOR_TYPES } from "./constants.js";
+import { THEMES, isThemeAvailable, getDefaultTheme, DEFAULT_EXCLUDED_ACTOR_TYPES, BUTTON_SHAPES } from "./constants.js";
 import {
 	exportHudConfig,
 	loadHudConfig,
@@ -213,6 +213,18 @@ export const prepareFontList = () => {
 	return fontList;
 };
 
+export const prepareButtonShapeList = () => {
+	const defaultShapeLabel = game.i18n?.localize?.("NAH.Config.ShapeDefault") || "Default (from Theme)";
+	const shapeList = [{ value: "", label: defaultShapeLabel }];
+	for (const [id, meta] of Object.entries(BUTTON_SHAPES)) {
+		shapeList.push({
+			value: id,
+			label: meta.label,
+		});
+	}
+	return shapeList;
+};
+
 export const prepareUiOptions = () => ({
 	blendModes: [
 		{ value: "normal", label: "Normal" },
@@ -400,6 +412,7 @@ export const prepareContext = async (app, options = {}) => {
 		theme: currentTheme,
 		themeCards,
 		fontList: prepareFontList(),
+		buttonShapeList: prepareButtonShapeList(),
 		...prepareUiOptions(),
 		allActorTypes,
 		excludedTypesArray,

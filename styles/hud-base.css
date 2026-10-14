@@ -494,8 +494,7 @@
 	line-height: 1;
 }
 
-#nah-action-menu .nah-action-btn.is-custom-btn,
-#nah-action-menu .nah-action-btn.is-custom-btn:first-of-type {
+#nah-action-menu .nah-action-btn.is-custom-btn {
 	background: transparent !important;
 	background-image: none !important;
 	overflow: hidden !important;
@@ -506,8 +505,7 @@
 		2px 2px 0 #000 !important;
 }
 
-#nah-action-menu .nah-action-btn.is-custom-btn:hover,
-#nah-action-menu .nah-action-btn.is-custom-btn:first-of-type:hover {
+#nah-action-menu .nah-action-btn.is-custom-btn:hover {
 	background: transparent !important;
 	background-image: none !important;
 	filter: brightness(1.2);

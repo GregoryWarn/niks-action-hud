@@ -128,7 +128,8 @@
       "ResetSuccess": "Configuração restaurada para os padrões.",
       "ResetConfirmTitle": "Restaurar Configuração",
       "ResetConfirmMessage": "Tem certeza de que deseja restaurar as configurações de {scope} para os padrões?",
-      "FontDefault": "Fonte Padrão"
+      "FontDefault": "Fonte Padrão",
+      "ShapeDefault": "Padrão do Tema"
     },
     "Presets": {
       "SystemMismatchTitle": "Sistema Incompatível",

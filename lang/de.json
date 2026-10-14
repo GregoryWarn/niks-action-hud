@@ -128,7 +128,8 @@
       "ResetSuccess": "Konfiguration auf Standardwerte zurückgesetzt.",
       "ResetConfirmTitle": "Konfiguration zurücksetzen",
       "ResetConfirmMessage": "Bist du sicher, dass du die {scope}-Einstellungen auf die Standardwerte zurücksetzen möchtest?",
-      "FontDefault": "Standard-Schriftart"
+      "FontDefault": "Standard-Schriftart",
+      "ShapeDefault": "Design-Standard"
     },
     "Presets": {
       "SystemMismatchTitle": "Inkompatibles System",

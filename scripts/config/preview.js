@@ -20,8 +20,8 @@ export const triggerPreview = (app) => {
 	let theme = app.tempData.theme || getDefaultTheme();
 	if (!isThemeAvailable(theme)) theme = getDefaultTheme();
 	const font = app.tempData.actionMenuFont || "";
+	const shape = app.tempData.actionMenuButtonShape || "";
 	const scale = Math.max(0.5, Math.min(2.5, Number(app.tempData.actionMenuScale) || 1.0));
-	const emphasizeFirst = app.tempData.actionMenuEmphasizeFirstButton ?? true;
 	const pos = app.tempData.actionMenuPos || { anchorX: "left", anchorY: "bottom", offsetX: 240, offsetY: 20 };
 
 	// 1. Synchronize Live Sandbox inside the config dialog
@@ -36,16 +36,14 @@ export const triggerPreview = (app) => {
 		} else {
 			sandbox.style.removeProperty("--am-font-family");
 		}
-		sandbox.dataset.emphasizeFirst = String(emphasizeFirst);
+		if (shape) {
+			sandbox.dataset.buttonShape = shape;
+		} else {
+			delete sandbox.dataset.buttonShape;
+		}
 
 		const previewButtons = sandbox.querySelectorAll(".nah-action-btn");
-		previewButtons.forEach((btn, index) => {
-			if (index === 0 && emphasizeFirst) {
-				btn.classList.add("nah-action-btn-first");
-			} else {
-				btn.classList.remove("nah-action-btn-first");
-			}
-
+		previewButtons.forEach((btn) => {
 			// Apply inline font-family to button text spans for immediate rendering
 			const textEls = btn.querySelectorAll(".nah-btn-content span");
 			textEls.forEach((el) => {
@@ -70,7 +68,7 @@ export const triggerPreview = (app) => {
 			scale: scale,
 			theme: theme,
 			font: font,
-			emphasizeFirst: emphasizeFirst,
+			buttonShape: shape,
 			useTokenImg: app.tempData.actionMenuUseTokenImg ?? false,
 		});
 	}

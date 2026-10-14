@@ -178,7 +178,7 @@ export const getRenderConfig = (ActionMenu) => {
 		baseScale: baseScale || 1.0,
 		autoScale,
 		actionMenuFont,
-		actionMenuEmphasizeFirstButton: config.actionMenuEmphasizeFirstButton ?? true,
+		actionMenuButtonShape: config.actionMenuButtonShape || "",
 		fadeWhenIdle,
 	};
 };
@@ -783,13 +783,15 @@ export const renderPlaceholder = (ActionMenu) => {
 	const fontClassPh = cfg.actionMenuFont ? "am-custom-font" : "";
 	const fontStylePh = cfg.actionMenuFont ? `--am-font-family: '${cfg.actionMenuFont}';` : "";
 	const fadeClassPh = cfg.fadeWhenIdle !== false ? "faded-ui" : "";
+	const buttonShapePh = cfg.actionMenuButtonShape || "";
+	const shapeAttrPh = buttonShapePh ? `data-button-shape="${buttonShapePh}"` : "";
 
 	const html = `
 		<div id="${ActionMenu.ROOT_ID}" class="theme-${cfg.theme} is-placeholder ${fontClassPh} ${fadeClassPh}" 
 			 style="${posStyle} zoom: ${cfg.scale}; --am-scale: ${cfg.scale}; --am-base-scale: ${cfg.baseScale}; --am-auto-scale: ${cfg.autoScale}; ${fontStylePh}"
-			 data-anchor-x="${cfg.anchor.anchorX}" data-anchor-y="${cfg.anchor.anchorY}">
+			 data-anchor-x="${cfg.anchor.anchorX}" data-anchor-y="${cfg.anchor.anchorY}" ${shapeAttrPh}>
 			<div id="${ActionMenu.SUB_ID}" class="theme-${cfg.theme}"></div>
-			<div id="${ActionMenu.ID}" class="theme-${cfg.theme}">
+			<div id="${ActionMenu.ID}" class="theme-${cfg.theme}" ${shapeAttrPh}>
 				<div class="nah-top-stack">
 					<div class="nah-identity-header">
 						<div class="nah-identity-text">
@@ -903,11 +905,15 @@ export const renderMain = (ActionMenu) => {
 			sub.className = `theme-${cfg.theme}`;
 		}
 
-		const firstButtonEmphasisClass = (cfg.actionMenuEmphasizeFirstButton ?? config.actionMenuEmphasizeFirstButton) === false
-			? "no-first-button-emphasis"
-			: "";
+		const buttonShape = cfg.actionMenuButtonShape || config.actionMenuButtonShape || "";
 		if (menu) {
-			menu.className = `theme-${cfg.theme} ${ActionMenu.isCollapsed ? "is-collapsed" : ""} ${firstButtonEmphasisClass}`.trim();
+			menu.className = `theme-${cfg.theme} ${ActionMenu.isCollapsed ? "is-collapsed" : ""}`.trim();
+			if (buttonShape) menu.dataset.buttonShape = buttonShape;
+			else delete menu.dataset.buttonShape;
+		}
+		if (root) {
+			if (buttonShape) root.dataset.buttonShape = buttonShape;
+			else delete root.dataset.buttonShape;
 		}
 
 		const newMenuHtml = `

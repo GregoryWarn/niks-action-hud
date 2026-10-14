@@ -27,10 +27,11 @@
         </div>
         <div class="hud-preview-container">
             <div class="hud-preview-sandbox theme-{{theme}} {{#if actionMenuFont}}am-custom-font{{/if}}"
+                 {{#if actionMenuButtonShape}}data-button-shape="{{actionMenuButtonShape}}"{{/if}}
                  style="transform: scale({{actionMenuScale}}); transform-origin: center center; {{#if actionMenuFont}}--am-font-family: '{{actionMenuFont}}', sans-serif;{{/if}}">
                 <div class="nah-action-buttons-list">
                     {{#each sampleButtons}}
-                    <button type="button" class="nah-action-btn {{#if @first}}{{#if @root.actionMenuEmphasizeFirstButton}}nah-action-btn-first{{/if}}{{/if}}">
+                    <button type="button" class="nah-action-btn">
                         <div class="nah-btn-content">
                             <span style="{{#if @root.actionMenuFont}}font-family: '{{@root.actionMenuFont}}', sans-serif;{{/if}}{{#if this.labelScale}} --nah-label-scale: {{this.labelScale}};{{/if}}">{{this.label}}</span>
                             <i class="{{this.icon}}"></i>
@@ -115,7 +116,7 @@
 
     <section class="hud-cfg-group">
         <div class="hud-cfg-group-head">
-            <span class="hud-cfg-group-title">Typography and avatars</span><span data-cfg-count="rows"></span>
+            <span class="hud-cfg-group-title">Styling, typography and avatars</span><span data-cfg-count="rows"></span>
         </div>
         <div class="hud-cfg-list">
             <div class="hud-cfg-row">
@@ -137,6 +138,22 @@
             <div class="hud-cfg-row">
                 <div class="hud-cfg-info">
                     <div class="hud-cfg-label-line">
+                        <label class="hud-cfg-label">Category button shape</label>
+                    </div>
+                    <span class="hud-cfg-hint">Override category button geometry with any theme's button shape.</span>
+                </div>
+                <div class="hud-cfg-control">
+                    <select class="hud-cfg-select" name="actionMenuButtonShape">
+                        {{#each buttonShapeList}}
+                        <option value="{{this.value}}" {{#if (eq this.value @root.actionMenuButtonShape)}}selected{{/if}}>{{this.label}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+            </div>
+
+            <div class="hud-cfg-row">
+                <div class="hud-cfg-info">
+                    <div class="hud-cfg-label-line">
                         <label class="hud-cfg-label">Use token image instead of portrait</label>
                     </div>
                     <span class="hud-cfg-hint">Displays active token texture art instead of the actor's character sheet portrait.</span>
@@ -144,22 +161,6 @@
                 <div class="hud-cfg-control">
                     <label class="hud-cfg-switch">
                         <input type="checkbox" role="switch" class="hud-switch-input" name="actionMenuUseTokenImg" {{#if actionMenuUseTokenImg}}checked{{/if}}>
-                        <span class="hud-cfg-switch-track" aria-hidden="true"></span>
-                        <span class="hud-cfg-switch-knob" aria-hidden="true"></span>
-                    </label>
-                </div>
-            </div>
-
-            <div class="hud-cfg-row">
-                <div class="hud-cfg-info">
-                    <div class="hud-cfg-label-line">
-                        <label class="hud-cfg-label">Emphasize first action button</label>
-                    </div>
-                    <span class="hud-cfg-hint">Applies primary glow and larger geometry to the first action category button.</span>
-                </div>
-                <div class="hud-cfg-control">
-                    <label class="hud-cfg-switch">
-                        <input type="checkbox" role="switch" class="hud-switch-input" name="actionMenuEmphasizeFirstButton" {{#if actionMenuEmphasizeFirstButton}}checked{{/if}}>
                         <span class="hud-cfg-switch-track" aria-hidden="true"></span>
                         <span class="hud-cfg-switch-knob" aria-hidden="true"></span>
                     </label>

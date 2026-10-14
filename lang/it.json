@@ -128,7 +128,8 @@
       "ResetSuccess": "Configurazione ripristinata ai valori predefiniti.",
       "ResetConfirmTitle": "Ripristina configurazione",
       "ResetConfirmMessage": "Vuoi davvero ripristinare le impostazioni di {scope} ai valori predefiniti?",
-      "FontDefault": "Carattere predefinito"
+      "FontDefault": "Carattere predefinito",
+      "ShapeDefault": "Predefinito del tema"
     },
     "Presets": {
       "SystemMismatchTitle": "Sistema incompatibile",

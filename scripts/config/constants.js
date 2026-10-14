@@ -230,3 +230,53 @@ export const DEFAULT_ANCHOR_POSITIONS = Object.freeze({
 
 export const DEFAULT_EXCLUDED_ACTOR_TYPES = "encounter,group,vehicle";
 
+export const BUTTON_SHAPES = Object.freeze({
+	arcanum: {
+		id: "arcanum",
+		label: "Arcanum (Slanted Parallelogram)",
+	},
+	carolingian: {
+		id: "carolingian",
+		label: "Carolingian (Rounded)",
+	},
+	clockwork: {
+		id: "clockwork",
+		label: "Clockwork (Chamfered Octagon)",
+	},
+	eldritch: {
+		id: "eldritch",
+		label: "Eldritch (Asymmetric Notch)",
+	},
+	frostborn: {
+		id: "frostborn",
+		label: "Frostborn (Pointed Hexagon)",
+	},
+	grimoire: {
+		id: "grimoire",
+		label: "Grimoire (Slightly Rounded)",
+	},
+	infernal: {
+		id: "infernal",
+		label: "Infernal (Asymmetric Slant)",
+	},
+	obsidian: {
+		id: "obsidian",
+		label: "Obsidian (Rounded Rectangle)",
+	},
+	ossuary: {
+		id: "ossuary",
+		label: "Ossuary (Angled Tombstone)",
+	},
+	radiant: {
+		id: "radiant",
+		label: "Radiant (Pointed Octagon)",
+	},
+	sylvan: {
+		id: "sylvan",
+		label: "Sylvan (Trapezoid Slant)",
+	},
+	valiant: {
+		id: "valiant",
+		label: "Valiant (Chevron Banner)",
+	},
+});

@@ -2,6 +2,11 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** will be documented in this file.
 
+## [14.13.1] - 2026-10-14
+
+### Added
+- **Category Button Shape Override**: Added an option in *Appearance -> Styling, typography and avatars* to override category button shapes with the geometry of any theme (such as chamfered, hexagonal, slanted, or rounded) while preserving your selected theme colors and typography.
+
 ## [14.13.0] - 2026-10-14
 
 ### Added

@@ -101,6 +101,7 @@ Organized, flyout drawers designed for fast combat decision-making:
 ## ⚙️ Configuration Suite
 
 - **Live Preview Sandbox**: See your theme, button styles, and layout changes in real time before saving.
+- **Category Button Shape Override**: Mix and match visual aesthetics by pairing any theme's button geometry (such as chamfered, hexagonal, slanted, or rounded) with any chosen color theme.
 - **Visual Category Builder**: Create custom categories and flyout trays, reorder, rename, or customize menu icons, button scaling, and visibility conditions.
 - **Excluded Actor Types**: Simple toggle chips to prevent the HUD from showing on specific actor types (`encounter`, `group`, and `vehicle` excluded by default).
 - **Presets & Backups**: Export and import complete HUD setups as JSON presets with modular section resets.

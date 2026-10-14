@@ -552,9 +552,16 @@ export function previewUpdate(ActionMenu, data) {
 			}
 		}
 	}
-	if (data.emphasizeFirst !== undefined) {
+	if (data.buttonShape !== undefined) {
 		const menu = document.getElementById(ActionMenu.ID);
-		if (menu) menu.classList.toggle("no-first-button-emphasis", !data.emphasizeFirst);
+		if (menu) {
+			if (data.buttonShape) menu.dataset.buttonShape = data.buttonShape;
+			else delete menu.dataset.buttonShape;
+		}
+		if (root) {
+			if (data.buttonShape) root.dataset.buttonShape = data.buttonShape;
+			else delete root.dataset.buttonShape;
+		}
 	}
 	if (data.useTokenImg !== undefined) {
 		const imgBox = root.querySelector(".nah-identity-img-box");

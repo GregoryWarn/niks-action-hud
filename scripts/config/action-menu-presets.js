@@ -10,7 +10,7 @@ export const ACTION_MENU_PRESET_KEYS = [
 	"customMenu",
 	"adapterCategoryOverrides",
 	"actionMenuFont",
-	"actionMenuEmphasizeFirstButton",
+	"actionMenuButtonShape",
 	"actionMenuUseTokenImg",
 	"closeMenuOnUse",
 	"hideEmptySubmenus",

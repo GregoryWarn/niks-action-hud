@@ -35,7 +35,7 @@ export const APPEARANCE_FIELDS = Object.freeze([
 	{ key: "actionMenuFont", type: "string", fallback: "" },
 	{ key: "actionMenuScale", type: "number", fallback: 1.0 },
 	{ key: "actionMenuUseTokenImg", type: "boolean", fallback: false },
-	{ key: "actionMenuEmphasizeFirstButton", type: "boolean", fallback: true },
+	{ key: "actionMenuButtonShape", type: "string", fallback: "" },
 	{ key: "responsiveEnabled", type: "boolean", fallback: true },
 	{ key: "responsiveBaseWidth", type: "number", fallback: 1920 },
 	{ key: "responsiveBaseHeight", type: "number", fallback: 1080 },

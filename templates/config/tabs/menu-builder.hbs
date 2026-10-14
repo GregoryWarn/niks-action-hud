@@ -30,7 +30,7 @@
                     {{/if}}
                 </div>
                 <div class="hud-cat-title">
-                    <span class="hud-cat-name">{{#if this.label}}{{this.label}}{{else}}Unnamed Category{{/if}}</span>
+                    <span class="hud-cat-name">{{#if this.displayLabel}}{{this.displayLabel}}{{else if this.label}}{{this.label}}{{else}}Unnamed Category{{/if}}</span>
                     <span class="hud-cat-meta">
                         {{#if this.systemId}}
                         <span class="hud-badge hud-badge-system">System Category</span>
@@ -40,7 +40,7 @@
                         {{#if this.tabs.length}}<span class="hud-badge-outline">{{this.tabs.length}} Submenus</span>{{/if}}
                     </span>
                 </div>
-                <div class="hud-cat-actions" onclick="event.stopPropagation()">
+                <div class="hud-cat-actions">
                     <button type="button" class="hud-btn-icon" data-action="toggleCollapseCategory" title="Expand / Collapse">
                         <i class="fas fa-chevron-down"></i>
                     </button>

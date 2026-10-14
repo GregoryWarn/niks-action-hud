@@ -1038,13 +1038,22 @@
 }
 
 #nah-dock.am-custom-font,
-#nah-dock.am-custom-font * {
+#nah-dock.am-custom-font *:not(i):not([class*="fa-"]):not([class*="ra-"]):not(.fa):not(.fas):not(.far):not(.fal):not(.fat):not(.fad):not(.fab):not(.ra) {
 	font-family: var(--am-font-family), sans-serif !important;
 }
 
 #nah-tooltip.am-custom-font,
-#nah-tooltip.am-custom-font * {
+#nah-tooltip.am-custom-font *:not(i):not([class*="fa-"]):not([class*="ra-"]):not(.fa):not(.fas):not(.far):not(.fal):not(.fat):not(.fad):not(.fab):not(.ra) {
 	font-family: var(--am-font-family), sans-serif !important;
+}
+
+/* Explicit protection for icons inside HUD, Tooltip, and Live Preview */
+:is(#nah-dock, #nah-tooltip, .hud-preview-sandbox) :is(i, .fa, .fas, .far, .fal, .fat, .fad, .fab, [class*="fa-"]) {
+	font-family: var(--_fa-family, var(--font-awesome, "Font Awesome 7 Pro", "Font Awesome 6 Pro", "FontAwesome")) !important;
+}
+
+:is(#nah-dock, #nah-tooltip, .hud-preview-sandbox) :is(.ra, [class*="ra-"]) {
+	font-family: RPGAwesome !important;
 }
 
 /* ==========================================================================

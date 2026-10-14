@@ -125,6 +125,7 @@
     "Config": {
       "Title": "Nik's Action HUD Configuration",
       "Saved": "Nik's Action HUD configuration saved.",
+      "ResetSuccess": "Configuration restored to defaults.",
       "ResetConfirmTitle": "Reset Configuration",
       "ResetConfirmMessage": "Are you sure you want to reset {scope} settings to defaults?",
       "FontDefault": "Default Font"

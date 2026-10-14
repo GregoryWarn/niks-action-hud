@@ -2,6 +2,16 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** will be documented in this file.
 
+## [14.12.2] - 2026-10-14
+
+### Fixed
+- **Menu Icon Font Preservation**: Fixed an issue where selecting a custom font in the Appearance settings stripped FontAwesome and RPG-Awesome icons from category buttons, replacing them with missing glyph placeholder boxes.
+- **Menu Builder Category Deletion**: Fixed an issue where clicking the delete button on custom categories in the Menu Builder had no effect due to blocked click event propagation.
+- **Custom Category Visibility**: Newly created custom categories now remain visible on the HUD even when empty, allowing GMs and players to click them and drop items or macros into their submenus.
+- **Settings Reset & Factory Defaults**: Resetting settings sections or executing a factory reset now immediately persists to world settings and refreshes the canvas HUD across all connected clients.
+- **Category Button Translations**: Default category button labels and submenu titles (Attacks, Spells, Features, Legendary, Abilities, Items) now automatically translate according to the active language.
+- **Click Execution for Depleted / Exhausted Actions**: Actions, items, and spells with zero remaining uses or expended spell slots remain clickable and executable, allowing players and GMs to roll item cards, cast without consuming resources, or trigger DnD5e's native slot and activity prompts.
+
 ## [14.12.1] - 2026-10-13
 
 ### Fixed

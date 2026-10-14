@@ -45,8 +45,8 @@ export const triggerPreview = (app) => {
 				btn.classList.remove("nah-action-btn-first");
 			}
 
-			// Apply inline font-family to button content and text spans for immediate rendering
-			const textEls = btn.querySelectorAll(".nah-btn-content, .nah-btn-content span");
+			// Apply inline font-family to button text spans for immediate rendering
+			const textEls = btn.querySelectorAll(".nah-btn-content span");
 			textEls.forEach((el) => {
 				if (font) {
 					el.style.fontFamily = `'${font}', sans-serif`;

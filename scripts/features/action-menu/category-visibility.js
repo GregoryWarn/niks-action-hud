@@ -92,7 +92,7 @@ export function isActionMenuCategoryVisible(category, customMenu = [], inCombat 
 		const actor = options.actor || actionMenu?.currentActor;
 		if (actionMenu && actor) {
 			const isSubmenu = !category?.type || category.type === "submenu";
-			if (isSubmenu && !categoryHasEntries(actionMenu, actor, category)) {
+			if (isSubmenu && category?.systemId && !categoryHasEntries(actionMenu, actor, category)) {
 				return false;
 			}
 		}

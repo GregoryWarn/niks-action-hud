@@ -55,8 +55,8 @@
                     <div class="nah-action-buttons-list">
                         {{#each sampleButtons}}
                         <button type="button" class="nah-action-btn {{#if @first}}{{#if @root.actionMenuEmphasizeFirstButton}}nah-action-btn-first{{/if}}{{/if}}">
-                            <div class="nah-btn-content" {{#if @root.actionMenuFont}}style="font-family: '{{@root.actionMenuFont}}', sans-serif;"{{/if}}>
-                                <span>{{this.label}}</span>
+                            <div class="nah-btn-content">
+                                <span {{#if @root.actionMenuFont}}style="font-family: '{{@root.actionMenuFont}}', sans-serif;"{{/if}}>{{this.label}}</span>
                                 <i class="{{this.icon}}"></i>
                             </div>
                         </button>

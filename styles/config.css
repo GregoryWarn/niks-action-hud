@@ -946,7 +946,6 @@
 /* Custom font overrides for Live Preview Sandbox */
 .hud-preview-sandbox.am-custom-font,
 .hud-preview-sandbox.am-custom-font .nah-action-btn,
-.hud-preview-sandbox.am-custom-font .nah-btn-content,
 .hud-preview-sandbox.am-custom-font .nah-btn-content span {
 	font-family: var(--am-font-family), sans-serif !important;
 }

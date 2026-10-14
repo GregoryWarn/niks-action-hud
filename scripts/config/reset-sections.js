@@ -29,7 +29,7 @@ export function resetSection(tempData, scope) {
 
 		case RESET_SCOPES.MENU: {
 			const adapter = window.ActionHUD?.adapter;
-			tempData.customMenu = defaultRegistry.getDefaultLayout(game.system.id, adapter);
+			tempData.customMenu = foundry.utils.deepClone(defaultRegistry.getDefaultLayout(game.system.id, adapter));
 			tempData.adapterCategoryOverrides = {};
 			break;
 		}

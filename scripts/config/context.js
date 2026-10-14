@@ -16,6 +16,7 @@ import {
 	loadHudConfig,
 } from "./schema.js";
 import { getLockState } from "./settings-locks.js";
+import { localizeCategory } from "../utils/localization.js";
 
 const resolveMenuPreviewActor = (app, targetActors, menuActors) => {
 	const explicitActor = app.menuPreviewActorId
@@ -314,6 +315,7 @@ export const prepareContext = async (app, options = {}) => {
 
 		return {
 			...cat,
+			displayLabel: localizeCategory(cat.label, cat.systemId),
 			_collapsed: app._collapsedMenuCategories?.has(cat) || false,
 			_adapterRowsBefore: adapterMenuPreview.adapterRowsBefore[index] || [],
 			tabs: enrichedTabs,
@@ -359,11 +361,11 @@ export const prepareContext = async (app, options = {}) => {
 
 	// Sample category buttons for Live Preview Sandbox
 	const sampleButtons = [
-		{ label: "Attacks", icon: "fas fa-swords" },
-		{ label: "Spells", icon: "fas fa-wand-magic-sparkles" },
-		{ label: "Features", icon: "fas fa-bolt" },
-		{ label: "Abilities", icon: "fas fa-dice-d20" },
-		{ label: "Items", icon: "fas fa-box-open" },
+		{ label: localizeCategory("Attacks", "attack"), icon: "fas fa-swords" },
+		{ label: localizeCategory("Spells", "magic"), icon: "fas fa-wand-magic-sparkles" },
+		{ label: localizeCategory("Features", "feature"), icon: "fas fa-bolt" },
+		{ label: localizeCategory("Abilities", "utility"), icon: "fas fa-dice-d20" },
+		{ label: localizeCategory("Items", "item"), icon: "fas fa-box-open" },
 	];
 
 	const activeTab = app.activeTab || "general";

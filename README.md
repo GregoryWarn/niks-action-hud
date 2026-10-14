@@ -40,11 +40,11 @@ A sleek, canvas-docked Action HUD for **Foundry VTT (v14)** and **D&D 5e (6.x)**
 - **Smooth 360° Resizing**: Drag the bottom-right resize handle to scale the HUD up or down with a live zoom percentage readout; double-click to instantly reset to 100%.
 - **Smart Token & Character Fallback**: Select any token to view its actions instantly. When no token is selected, the HUD automatically displays your assigned player character.
 - **Global Clustered Action Search**: Type in the search box of any submenu to search across all action types, spells, features, inventory items, and utility checks at once, clustered under clear category headers. Clears instantly with <kbd>Esc</kbd>.
-- **Automatic Empty Menu Hiding**: Automatically hides category buttons that have no actions for the selected actor (e.g. hiding the Spells button for characters without magic).
+- **Automatic Empty Menu Hiding**: Automatically hides system category buttons that have no actions for the selected actor (e.g. hiding the Spells button for characters without magic), while custom user categories remain visible for easy tray population.
 - **Subtly Tinted Damage Type Icons**: Renders intuitive, beautifully colored vector damage type icons (e.g. fire, radiant, bludgeoning) directly on action badges using DnD5e's native SVG assets, with client customization for **Icons Only**, **Both (Icon + Text)**, or **Text Only**.
 - **Core Interface Fading**: Seamlessly integrates with Foundry's core interface fading, dimming when idle and restoring full brightness on hover or interaction.
 - **Native Activity Choice Dialogs**: Spells, items, and features containing multiple activities (such as *Hunter's Mark* with spell slot casting, moving the mark, and bonus damage) automatically trigger DnD5e's native Activity Choice dialog on click.
-- **Intelligent Resource & Spell Slot Tracking**: Spells with limited daily uses (such as species magic or feat spells like *Fey Touched*) remain interactive and available as long as the character has usable spell slots remaining to cast them, even after free uses are expended.
+- **Intelligent Resource & Spell Slot Tracking**: Spells, actions, and features with zero remaining daily uses or expended spell slots remain clickable and executable, allowing players and GMs to post chat cards, cast without consuming resources, or trigger DnD5e's native upcast and slot selection prompts.
 - **Direct Sheet Navigation**: Right-click any action, spell, or item to jump directly to its sheet.
 - **Multi-Language Support**: Fully localized out of the box in English, German (Deutsch), French (Français), Spanish (Español), and Italian (Italiano, contributed by [@GregoryWarn](https://github.com/GregoryWarn)).
 

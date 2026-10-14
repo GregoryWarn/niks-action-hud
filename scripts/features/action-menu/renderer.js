@@ -8,6 +8,7 @@ import { getCustomMenuIndex, isActionMenuCategoryVisible, hasSubMenuEntries } fr
 import { prepareFavoriteItems } from "./favorites.js";
 import { resolveSafeTokenImage, handleImageError, DEFAULT_FALLBACK_TOKEN_IMG } from "./image-fallback.js";
 import { isThemeAvailable, getDefaultTheme } from "../../config/constants.js";
+import { localizeCategory } from "../../utils/localization.js";
 
 const escapeHtml = (value) => String(value ?? "")
 	.replace(/&/g, "&amp;")
@@ -437,7 +438,7 @@ export const buildCategoryButtonHtml = (
 	if (onClick) attributes.push(`onclick="${escapeHtml(onClick)}"`);
 	if (!interactive) attributes.push('aria-disabled="true"', 'tabindex="-1"');
 
-	const label = game.i18n?.localize?.(cat.label) || cat.label;
+	const label = localizeCategory(cat.label, cat.systemId);
 
 	return `
 		<button ${attributes.join(" ")}>
@@ -521,7 +522,7 @@ export const buildListItems = (ActionMenu, items) => {
 			let nameStyle = "";
 
 			if (item.isExhausted) {
-				rowStyle = "opacity: 0.5; filter: grayscale(100%); cursor: not-allowed;";
+				rowStyle = "opacity: 0.6; filter: grayscale(60%); cursor: pointer;";
 				nameStyle = "text-decoration: line-through; color: #888;";
 			} else if (item.isVirtual) {
 				rowStyle = "opacity: 0.7; border-left: 2px solid #9966ff; padding-left: 6px;";
@@ -572,7 +573,7 @@ export const buildListItems = (ActionMenu, items) => {
 				return `
 					<div class="nah-list-item nah-one-line-item ${item.isUnpreparedRitual ? "nah-unprepared-ritual" : ""}" 
 						 style="${rowStyle}" 
-						 onclick="${item.isExhausted ? "" : `ActionHUD.actionMenu.useItem('${item.id}', event)`}"
+						 onclick="ActionHUD.actionMenu.useItem('${item.id}', event)"
 						 ${rightClickAttr}
 						 onmouseenter="ActionHUD.actionMenu.showTooltip('${item.id}', event)"
 						 onmouseleave="ActionHUD.actionMenu.hideTooltip()">
@@ -614,7 +615,7 @@ export const buildListItems = (ActionMenu, items) => {
 				return `
 					<div class="nah-list-item nah-one-line-item nah-feature-item ${item.isUnpreparedRitual ? "nah-unprepared-ritual" : ""}" 
 						 style="${rowStyle}" 
-						 onclick="${item.isExhausted ? "" : `ActionHUD.actionMenu.useItem('${item.id}', event)`}"
+						 onclick="ActionHUD.actionMenu.useItem('${item.id}', event)"
 						 ${rightClickAttr}
 						 onmouseenter="ActionHUD.actionMenu.showTooltip('${item.id}', event)"
 						 onmouseleave="ActionHUD.actionMenu.hideTooltip()">
@@ -648,7 +649,7 @@ export const buildListItems = (ActionMenu, items) => {
 			return `
 				<div class="nah-list-item ${item.isUnpreparedRitual ? "nah-unprepared-ritual" : ""}" 
 					 style="${rowStyle}" 
-					 onclick="${item.isExhausted ? "" : `ActionHUD.actionMenu.useItem('${item.id}', event)`}"
+					 onclick="ActionHUD.actionMenu.useItem('${item.id}', event)"
 					 ${rightClickAttr}
 					 onmouseenter="ActionHUD.actionMenu.showTooltip('${item.id}', event)"
 					 onmouseleave="ActionHUD.actionMenu.hideTooltip()">
@@ -907,7 +908,7 @@ export const renderSubMenu = async (ActionMenu, categoryId, renderGeneration = n
 		hideEmpty = true;
 	}
 
-	if (hideEmpty && !window.ActionHUD?.isEditMode && !hasSubMenuEntries(data)) {
+	if (hideEmpty && category?.systemId && !window.ActionHUD?.isEditMode && !hasSubMenuEntries(data)) {
 		container.classList.remove("active");
 		root?.classList.remove("has-active-submenu");
 		delete container.dataset.activeCat;
@@ -1054,7 +1055,7 @@ export const renderSubMenu = async (ActionMenu, categoryId, renderGeneration = n
 			? `<div class="nah-magic-tabs custom-scrollbar secondary">${levelTabsHtml}</div>`
 			: "";
 
-		const headerTitleText = game.i18n?.localize?.(data.title) || data.title;
+		const headerTitleText = localizeCategory(data.title, category?.systemId);
 		const headerStatsHtml = data.headerStatsHtml || "";
 		const newMenuHeaderHtml = `<div class="nah-menu-header-group"><span class="nah-font-hero text-xl">${escapeHtml(headerTitleText)}</span>${headerStatsHtml}</div>`;
 
@@ -1156,7 +1157,7 @@ export const renderSubMenu = async (ActionMenu, categoryId, renderGeneration = n
 			listHtml = buildListItems(ActionMenu, data.items);
 		}
 
-		const headerTitleText = game.i18n?.localize?.(data.title) || data.title;
+		const headerTitleText = localizeCategory(data.title, category?.systemId);
 		const headerStatsHtml = data.headerStatsHtml || "";
 		const newMenuHeaderHtml = `<div class="nah-menu-header-group"><span class="nah-font-hero text-xl">${escapeHtml(headerTitleText)}</span>${headerStatsHtml}</div>`;
 

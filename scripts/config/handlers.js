@@ -110,8 +110,46 @@ export const onReset = async (app, event, target) => {
 
 	if (!confirm) return;
 
-	captureInputData(app, app.element);
+	if (scope !== RESET_SCOPES.ALL) {
+		captureInputData(app, app.element);
+	}
 	resetSection(app.tempData, scope);
+
+	// Persist the reset configuration immediately to game.settings
+	const cleanConfig = exportHudConfig(app.tempData);
+	await game.settings.set(MODULE_ID, "configuration", cleanConfig);
+
+	if (scope === RESET_SCOPES.ALL || scope === RESET_SCOPES.BEHAVIOR) {
+		if (game.settings.settings.has(`${MODULE_ID}.hideEmptySubmenus`) && cleanConfig.hideEmptySubmenus !== undefined) {
+			await game.settings.set(MODULE_ID, "hideEmptySubmenus", cleanConfig.hideEmptySubmenus);
+		}
+		if (game.settings.settings.has(`${MODULE_ID}.fadeWhenIdle`) && cleanConfig.fadeWhenIdle !== undefined) {
+			await game.settings.set(MODULE_ID, "fadeWhenIdle", cleanConfig.fadeWhenIdle);
+		}
+		if (game.settings.settings.has(`${MODULE_ID}.actionMenuSubmenuSide`) && cleanConfig.actionMenuSubmenuSide !== undefined) {
+			await game.settings.set(MODULE_ID, "actionMenuSubmenuSide", cleanConfig.actionMenuSubmenuSide);
+		}
+		if (game.settings.settings.has(`${MODULE_ID}.tooltipPosition`) && cleanConfig.tooltipPosition !== undefined) {
+			await game.settings.set(MODULE_ID, "tooltipPosition", cleanConfig.tooltipPosition);
+		}
+		if (game.settings.settings.has(`${MODULE_ID}.dnd5eShowUnpreparedRituals`) && cleanConfig.dnd5eShowUnpreparedRituals !== undefined) {
+			await game.settings.set(MODULE_ID, "dnd5eShowUnpreparedRituals", cleanConfig.dnd5eShowUnpreparedRituals);
+		}
+		if (game.settings.settings.has(`${MODULE_ID}.dnd5eDamageTypeDisplay`) && cleanConfig.dnd5eDamageTypeDisplay !== undefined) {
+			await game.settings.set(MODULE_ID, "dnd5eDamageTypeDisplay", cleanConfig.dnd5eDamageTypeDisplay);
+		}
+		if (game.settings.settings.has(`${MODULE_ID}.dnd5eAutoFavoriteNpcActions`) && cleanConfig.dnd5eAutoFavoriteNpcActions !== undefined) {
+			await game.settings.set(MODULE_ID, "dnd5eAutoFavoriteNpcActions", cleanConfig.dnd5eAutoFavoriteNpcActions);
+		}
+		if (game.settings.settings.has(`${MODULE_ID}.dnd5eAutoFavoriteNpcMax`) && cleanConfig.dnd5eAutoFavoriteNpcMax !== undefined) {
+			await game.settings.set(MODULE_ID, "dnd5eAutoFavoriteNpcMax", cleanConfig.dnd5eAutoFavoriteNpcMax);
+		}
+	}
+
+	const resetMsg = game.i18n.localize("NAH.Config.ResetSuccess") || game.i18n.localize("NAH.Presets.SectionReset") || "Configuration reset to defaults.";
+	ui.notifications.info(resetMsg);
+
+	if (ActionMenu.refresh) ActionMenu.refresh();
 	triggerPreview(app);
 	await app.render();
 };
@@ -169,6 +207,7 @@ export const onAddCategory = async (app, event, target) => {
 		buttonFrameLayers: [],
 	});
 
+	triggerPreview(app);
 	await app.render();
 };
 
@@ -182,6 +221,7 @@ export const onRemoveCategory = async (app, event, target) => {
 	if (Array.isArray(app.tempData.customMenu)) {
 		app.tempData.customMenu.splice(index, 1);
 	}
+	triggerPreview(app);
 	await app.render();
 };
 

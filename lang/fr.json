@@ -8,10 +8,10 @@
       "Magic": "Magie",
       "Features": "Aptitudes",
       "Feature": "Aptitude",
-      "Legendary": "Légendaires",
+      "Legendary": "Légendaire",
       "Abilities": "Caractéristiques",
       "Utility": "Utilitaires",
-      "Items": "Objets",
+      "Items": "Inventaire",
       "Inventory": "Inventaire"
     },
     "Tabs": {
@@ -34,10 +34,10 @@
       "Attacks": "Attaques",
       "Spells": "Sorts",
       "Features": "Aptitudes",
-      "Legendary": "Légendaires",
+      "Legendary": "Légendaire",
       "Utility": "Utilitaires",
       "Abilities": "Caractéristiques",
-      "Items": "Objets"
+      "Items": "Inventaire"
     },
     "UI": {
       "SelectedActor": "Acteur actif",
@@ -125,6 +125,7 @@
     "Config": {
       "Title": "Configuration de Nik's Action HUD",
       "Saved": "Configuration de Nik's Action HUD enregistrée.",
+      "ResetSuccess": "Configuration réinitialisée aux valeurs par défaut.",
       "ResetConfirmTitle": "Réinitialiser la configuration",
       "ResetConfirmMessage": "Voulez-vous vraiment réinitialiser les paramètres {scope} aux valeurs par défaut ?",
       "FontDefault": "Police par défaut"

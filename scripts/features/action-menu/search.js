@@ -2,6 +2,7 @@ import { buildListItems } from "./renderer.js";
 import { getSubMenuData, getActionCategories } from "./registry.js";
 import { isActionMenuCategoryVisible } from "./category-visibility.js";
 import { MODULE_ID } from "../../constants.js";
+import { localizeCategory } from "../../utils/localization.js";
 
 /**
  * Resolve items for the currently active tab or subtab within submenu data.
@@ -204,7 +205,7 @@ export async function filterList(ActionMenu, query) {
 		}
 
 		if (catMatches.length > 0) {
-			const headerName = cat.label || catData.title || "Actions";
+			const headerName = localizeCategory(cat.label || catData.title, cat.systemId) || "Actions";
 			clusteredItems.push({
 				isHeader: true,
 				name: headerName,

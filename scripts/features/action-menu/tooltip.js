@@ -161,21 +161,26 @@ async function _resolveAndRender(ActionMenu, itemId, options = {}) {
 		const menuItem = findMenuItemData(ActionMenu, itemId);
 		const globalFlavor = menuItem?.globalFlavor || "";
 
-		const extractedUuid = extractUuidFromMacro(macro.command);
+		const sourceId = macro.flags?.[MODULE_ID]?.sourceId;
+		const extractedUuid = sourceId || extractUuidFromMacro(macro.command);
+		let item = null;
 		if (extractedUuid) {
 			try {
-				const item = await fromUuid(extractedUuid);
-				if (item) {
-					let desc =
-						overrideFlavor ||
-						globalFlavor ||
-						item.system?.description?.value ||
-						item.system?.description ||
-						"";
-					if (typeof desc !== "string") desc = "";
-					return renderTooltip(ActionMenu, item, item, desc, options);
-				}
+				item = (await fromUuid(extractedUuid)) || ActionMenu.currentActor?.items?.get(extractedUuid.split(".").pop());
 			} catch (_e) {}
+		}
+		if (!item && ActionMenu.currentActor?.items) {
+			item = ActionMenu.currentActor.items.getName(macro.name);
+		}
+		if (item) {
+			let desc =
+				overrideFlavor ||
+				globalFlavor ||
+				item.system?.description?.value ||
+				item.system?.description ||
+				"";
+			if (typeof desc !== "string") desc = "";
+			return renderTooltip(ActionMenu, item, item, desc, options);
 		}
 
 		const fallback = { name: macro.name, img: macro.img, type: "Macro" };

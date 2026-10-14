@@ -17,6 +17,7 @@ import {
 } from "./action-menu/renderer.js";
 import {
 	getFavorites as getFavoritesModule,
+	addFavorite as addFavoriteModule,
 	toggleFavorite as toggleFavoriteModule,
 	addPersonalItem as addPersonalItemModule,
 	addMacro as addMacroModule,
@@ -90,23 +91,67 @@ export class ActionMenu {
 	static _registrationOrder = 0;
 	static _currentSubMenuData = null;
 
-	static isCollapsed = false;
+	static isCollapsed = (() => {
+		try {
+			return sessionStorage.getItem("nah_is_collapsed") === "true";
+		} catch (_e) {
+			return false;
+		}
+	})();
 
 	static toggleCollapse() {
-		ActionMenu.isCollapsed = !ActionMenu.isCollapsed;
-		const menu = document.getElementById(ActionMenu.ID);
-		const btnIcon = document.querySelector(
-			`#${ActionMenu.ROOT_ID} .${CSS_CLASSES.COLLAPSE_BTN} i`,
-		);
+		const config = game.settings.get(MODULE_ID, "configuration") || {};
+		let enableCollapse = config.enableCollapse ?? false;
+		try {
+			if (game.settings.settings.has(`${MODULE_ID}.enableCollapse`)) {
+				enableCollapse = game.settings.get(MODULE_ID, "enableCollapse") ?? enableCollapse;
+			}
+		} catch (_e) {}
+		if (!enableCollapse) return;
 
-		if (ActionMenu.isCollapsed) {
+		ActionMenu.isCollapsed = !ActionMenu.isCollapsed;
+		try {
+			sessionStorage.setItem("nah_is_collapsed", String(ActionMenu.isCollapsed));
+		} catch (_e) {
+			// Ignore sessionStorage errors
+		}
+
+		const root = document.getElementById(ActionMenu.ROOT_ID);
+		const menu = document.getElementById(ActionMenu.ID);
+		const collapseBtn = document.querySelector(
+			`#${ActionMenu.ROOT_ID} .${CSS_CLASSES.COLLAPSE_BTN}`,
+		);
+		const btnIcon = collapseBtn?.querySelector("i");
+		const isCollapsed = ActionMenu.isCollapsed;
+
+		if (isCollapsed) {
 			menu?.classList.add("is-collapsed");
+			root?.classList.add("is-collapsed");
 			btnIcon?.classList.remove("fa-caret-down");
 			btnIcon?.classList.add("fa-caret-right");
+
+			// Close any active submenu & hide tooltip
+			const sub = document.getElementById(ActionMenu.SUB_ID);
+			if (sub?.classList.contains("active")) {
+				sub.classList.remove("active");
+				root?.classList.remove("has-active-submenu");
+				delete sub.dataset.activeCat;
+			}
+			ActionMenu.hideTooltip?.(true);
 		} else {
 			menu?.classList.remove("is-collapsed");
+			root?.classList.remove("is-collapsed");
 			btnIcon?.classList.remove("fa-caret-right");
 			btnIcon?.classList.add("fa-caret-down");
+		}
+
+		if (collapseBtn) {
+			const label = game.i18n?.localize?.(
+				isCollapsed ? "NAH.UI.Expand" : "NAH.UI.Collapse",
+			) || (isCollapsed ? "Expand HUD" : "Collapse HUD");
+			collapseBtn.title = label;
+			collapseBtn.setAttribute("aria-label", label);
+			collapseBtn.setAttribute("aria-expanded", String(!isCollapsed));
 		}
 	}
 
@@ -126,8 +171,16 @@ export class ActionMenu {
 		return getRegisteredActionMenuSubMenus(ActionMenu);
 	}
 
+	static getActionCategories(actor = ActionMenu.currentActor) {
+		return getActionCategories(ActionMenu, actor);
+	}
+
 	static _getActionCategories(actor) {
 		return getActionCategories(ActionMenu, actor);
+	}
+
+	static getSubMenuData(actor = ActionMenu.currentActor, categoryId) {
+		return getSubMenuData(ActionMenu, actor, categoryId);
 	}
 
 	static _getSubMenuData(actor, categoryId) {
@@ -434,6 +487,10 @@ export class ActionMenu {
 		return getFavoritesModule(ActionMenu);
 	}
 
+	static async addFavorite(itemId, insertIndex = -1) {
+		return await addFavoriteModule(ActionMenu, itemId, insertIndex);
+	}
+
 	static async toggleFavorite(itemId) {
 		await toggleFavoriteModule(ActionMenu, itemId);
 	}
@@ -590,7 +647,9 @@ export class ActionMenu {
 		}
 
 		if (hideEmpty && !window.ActionHUD?.isEditMode && ActionMenu.currentActor) {
-			if (!ActionMenu.categoryHasEntries(categoryId)) {
+			const categories = getActionCategories(ActionMenu, ActionMenu.currentActor);
+			const category = categories?.find((c) => String(c.id) === String(categoryId)) || null;
+			if (category?.systemId && !ActionMenu.categoryHasEntries(categoryId)) {
 				container.classList.remove("active");
 				root?.classList.remove("has-active-submenu");
 				delete container.dataset.activeCat;

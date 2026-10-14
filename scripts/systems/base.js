@@ -175,7 +175,7 @@ export class BaseSystemAdapter {
 			};
 		}
 
-		if (!menuData) return { title: "", items: [] };
+		if (!menuData) return null;
 
 		if (menuData.systemId) {
 			return await this._getSystemSubMenuData(actor, menuData.systemId, menuData);
@@ -231,7 +231,7 @@ export class BaseSystemAdapter {
 			};
 		}
 
-		if (!menuData) return { title: "", items: [] };
+		if (!menuData) return null;
 
 		if (menuData.systemId) {
 			if (typeof this._getSystemSubMenuDataSync === "function") {
@@ -296,7 +296,7 @@ export class BaseSystemAdapter {
 
 				if (Array.isArray(tab.items)) {
 					tab.items.forEach((savedItem, iIdx) => {
-						this._processCustomItem(savedItem, targetArray, false, {
+						this._processCustomItem(actor, savedItem, targetArray, false, {
 							catIdx: index,
 							tabIdx: tIdx,
 							itemIdx: iIdx,
@@ -304,14 +304,16 @@ export class BaseSystemAdapter {
 					});
 				}
 
-				const pKey = `${index}-${tIdx}`;
-				const personalItems = personalMap[pKey];
+				const catId = menuData?.id;
+				const personalItems = catId
+					? personalMap[`${catId}-${tIdx}`]
+					: personalMap[`${index}-${tIdx}`];
 				if (Array.isArray(personalItems)) {
 					if (targetArray.length > 0) {
 						targetArray.push({ isHeader: true, name: "Personal" });
 					}
 					personalItems.forEach((pItem, pIdx) => {
-						this._processCustomItem(pItem, targetArray, true, {
+						this._processCustomItem(actor, pItem, targetArray, true, {
 							catIdx: index,
 							tabIdx: tIdx,
 							itemIdx: pIdx,
@@ -332,23 +334,21 @@ export class BaseSystemAdapter {
 		};
 	}
 
-	_processCustomItem(savedItem, targetArray, isPersonal, meta = {}) {
+	_processCustomItem(actor, savedItem, targetArray, isPersonal, meta = {}) {
 		if (!savedItem || !savedItem.id || !savedItem.type) return;
 
-		if (savedItem.type === "Macro") {
-			targetArray.push({
-				id: `macro-${savedItem.id}`,
-				name: savedItem.name || "Macro",
-				img: savedItem.img || "icons/svg/dice-target.svg",
-				cost: "",
-				description: savedItem.flavor || "Macro",
-				globalFlavor: !isPersonal ? savedItem.flavor || "" : "",
-				isPersonal,
-				customCatIndex: meta.catIdx,
-				customTabIndex: meta.tabIdx,
-				customItemIndex: meta.itemIdx,
-			});
-		}
+		targetArray.push({
+			id: savedItem.type === "Macro" ? `macro-${savedItem.id}` : savedItem.id,
+			name: savedItem.name || "Action",
+			img: savedItem.img || "icons/svg/dice-target.svg",
+			cost: "",
+			description: savedItem.flavor || "Action",
+			globalFlavor: !isPersonal ? savedItem.flavor || "" : "",
+			isPersonal,
+			customCatIndex: meta.catIdx,
+			customTabIndex: meta.tabIdx,
+			customItemIndex: meta.itemIdx,
+		});
 	}
 
 	/**
@@ -401,8 +401,10 @@ export class BaseSystemAdapter {
 		const item = await Item.fromDropData(dropData);
 		if (!item) return null;
 
-		const rootName = "Action HUD Macros";
-		let folder = game.folders.find((f) => f.name === rootName && f.type === "Macro");
+		const rootName = "Action HUD Actions";
+		let folder = game.folders.find(
+			(f) => (f.name === rootName || f.name === "Action HUD Macros") && f.type === "Macro"
+		);
 		if (!folder) {
 			folder = await Folder.create({
 				name: rootName,

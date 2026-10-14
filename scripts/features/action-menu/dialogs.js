@@ -88,8 +88,8 @@ export const editMacro = async (ActionMenu, macroId, options = {}) => {
 	const content = `
 		<div class="nah-dialog-content nah-edit-macro-content" style="display:flex; flex-direction:column; gap:15px; padding:5px; height:100%; min-height:360px; box-sizing:border-box;">
 			<div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #444; padding-bottom:5px;">
-				<label style="font-weight:bold; font-size:1.1em;">${macro?.name || "Macro"}</label>
-				<span style="font-size:0.8em; color:#aaa;">Edit Macro</span>
+				<label style="font-weight:bold; font-size:1.1em;">${macro?.name || "Action"}</label>
+				<span style="font-size:0.8em; color:#aaa;">Edit Action</span>
 			</div>
 			
 			<div style="flex:1; display:flex; flex-direction:column; gap:5px; min-height:260px;">
@@ -104,7 +104,7 @@ export const editMacro = async (ActionMenu, macroId, options = {}) => {
 	const result = await new Promise((resolve) => {
 		const dialog = new DialogV2({
 			window: {
-				title: "Edit Macro",
+				title: "Edit Action",
 				icon: "fas fa-edit",
 				width: 420,
 				height: 560,
@@ -126,7 +126,7 @@ export const editMacro = async (ActionMenu, macroId, options = {}) => {
 				},
 				{
 					action: "delete",
-					label: "Delete Macro",
+					label: "Delete Action",
 					icon: "fas fa-trash",
 					callback: () => {
 						resolve({ action: "delete" });
@@ -222,7 +222,7 @@ export const openFavoriteDialog = async (ActionMenu, favoriteId) => {
 			img = macro.img || "icons/svg/dice-target.svg";
 			name = macro.name;
 		} else {
-			name = "Macro";
+			name = "Action";
 			img = "icons/svg/dice-target.svg";
 		}
 	} else {

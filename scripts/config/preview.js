@@ -5,6 +5,7 @@
 
 import { captureInputData } from "./capture.js";
 import { isThemeAvailable, getDefaultTheme } from "./constants.js";
+import { autoFitCategoryButtonLabels } from "../features/action-menu/renderer.js";
 
 export const triggerPreview = (app) => {
 	if (!app?.element) return;
@@ -55,6 +56,8 @@ export const triggerPreview = (app) => {
 				}
 			});
 		});
+
+		autoFitCategoryButtonLabels(sandbox);
 	}
 
 	// 2. Synchronize Live Canvas Action HUD in background

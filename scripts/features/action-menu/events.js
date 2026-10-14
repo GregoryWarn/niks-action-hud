@@ -42,15 +42,48 @@ export function bindOutsideClickListener(ActionMenu) {
 	);
 }
 
+export function clearAllDragState(ActionMenu) {
+	const root = document.getElementById(ActionMenu.ROOT_ID);
+	if (root) {
+		clearFavoriteDropIndicators(root);
+		root
+			.querySelectorAll(".nah-quick-slot.is-dragging")
+			.forEach((s) => s.classList.remove("is-dragging"));
+		root.classList.remove("drag-hover");
+		root.removeAttribute("data-drag-text");
+		root.querySelectorAll(".drag-target")?.forEach((el) => el.classList.remove("drag-target"));
+	}
+	const sub = document.getElementById(ActionMenu.SUB_ID);
+	sub?.classList.remove("drag-hover");
+}
+
+let globalDragAttached = false;
+function bindGlobalDragCleanup(ActionMenu) {
+	if (globalDragAttached) return;
+	globalDragAttached = true;
+
+	window.addEventListener("dragend", () => {
+		clearAllDragState(ActionMenu);
+	});
+
+	window.addEventListener("drop", (e) => {
+		const root = document.getElementById(ActionMenu.ROOT_ID);
+		const sub = document.getElementById(ActionMenu.SUB_ID);
+		if ((!root || !root.contains(e.target)) && (!sub || !sub.contains(e.target))) {
+			clearAllDragState(ActionMenu);
+		}
+	});
+}
+
 export function bindSubMenuEvents(ActionMenu) {
 	const sub = document.getElementById(ActionMenu.SUB_ID);
 	if (!sub) return;
 
 	sub.addEventListener("drop", (event) => {
+		clearAllDragState(ActionMenu);
 		if (isFavoriteDragEvent(event)) {
 			event.preventDefault();
 			event.stopPropagation();
-			sub.classList.remove("drag-hover");
 			return;
 		}
 		void onDrop(ActionMenu, event);
@@ -76,7 +109,7 @@ export function bindSubMenuEvents(ActionMenu) {
 			sub.classList.remove("drag-hover");
 			return;
 		}
-		if (!sub.contains(e.relatedTarget)) {
+		if (!e.relatedTarget || !sub.contains(e.relatedTarget)) {
 			sub.classList.remove("drag-hover");
 		}
 	});
@@ -87,19 +120,15 @@ export function bindRootEvents(ActionMenu) {
 	if (!root) return;
 
 	bindOutsideClickListener(ActionMenu);
+	bindGlobalDragCleanup(ActionMenu);
 
-	const dropText = game.i18n.localize("NAH.UI.DropMacro") || "Drop Macro";
 	let favoriteDrag = null;
 	let suppressClickUntil = 0;
 
 	const isFavDrag = (e) => Boolean(favoriteDrag || isFavoriteDragEvent(e));
 
 	const finishFavDrag = () => {
-		clearFavoriteDropIndicators(root);
-		root
-			.querySelectorAll(".nah-quick-slot.is-dragging")
-			.forEach((s) => s.classList.remove("is-dragging"));
-		root.classList.remove("drag-hover");
+		clearAllDragState(ActionMenu);
 		favoriteDrag = null;
 		suppressClickUntil = performance.now() + 250;
 	};
@@ -146,62 +175,91 @@ export function bindRootEvents(ActionMenu) {
 	});
 
 	root.addEventListener("dragend", () => {
+		clearAllDragState(ActionMenu);
 		if (favoriteDrag) finishFavDrag();
 	});
 
 	root.addEventListener("drop", (event) => {
-		if (!isFavDrag(event)) {
-			void onDrop(ActionMenu, event);
+		if (isFavDrag(event)) {
+			event.preventDefault();
+			event.stopImmediatePropagation();
+			const container = closest(event.target, ".nah-quick-slot-container");
+			const targetSlot = closest(event.target, ".nah-quick-slot[data-favorite-id]");
+			const sourceId = favoriteDrag?.favoriteId || event.dataTransfer?.getData(PRIMARY_FAVORITE_DRAG_TYPE);
+			const actor = favoriteDrag?.actor || ActionMenu.currentActor;
+			const targetId = targetSlot?.dataset.favoriteId || null;
+			const insertAfter = targetSlot ? event.clientX >= targetSlot.getBoundingClientRect().left + targetSlot.getBoundingClientRect().width / 2 : true;
+
+			finishFavDrag();
+			if (container && sourceId && actor) {
+				void ActionMenu.reorderFavorites(sourceId, targetId, insertAfter, actor);
+			}
 			return;
 		}
 
-		event.preventDefault();
-		event.stopImmediatePropagation();
-		const container = closest(event.target, ".nah-quick-slot-container");
-		const targetSlot = closest(event.target, ".nah-quick-slot[data-favorite-id]");
-		const sourceId = favoriteDrag?.favoriteId || event.dataTransfer?.getData(PRIMARY_FAVORITE_DRAG_TYPE);
-		const actor = favoriteDrag?.actor || ActionMenu.currentActor;
-		const targetId = targetSlot?.dataset.favoriteId || null;
-		const insertAfter = targetSlot ? event.clientX >= targetSlot.getBoundingClientRect().left + targetSlot.getBoundingClientRect().width / 2 : true;
-
-		finishFavDrag();
-		if (container && sourceId && actor) {
-			void ActionMenu.reorderFavorites(sourceId, targetId, insertAfter, actor);
-		}
+		clearAllDragState(ActionMenu);
+		void onDrop(ActionMenu, event);
 	});
 
 	root.addEventListener("dragover", (event) => {
-		if (!isFavDrag(event)) {
+		if (isFavDrag(event)) {
 			event.preventDefault();
+			event.stopPropagation();
+			if (event.dataTransfer) event.dataTransfer.dropEffect = "move";
+			clearFavoriteDropIndicators(root);
+
+			const container = closest(event.target, ".nah-quick-slot-container");
+			const targetSlot = closest(event.target, ".nah-quick-slot[data-favorite-id]");
+			if (!container || !targetSlot || targetSlot.dataset.favoriteId === favoriteDrag?.favoriteId) return;
+
+			const rect = targetSlot.getBoundingClientRect();
+			const insertAfter = event.clientX >= rect.left + rect.width / 2;
+			targetSlot.classList.add(insertAfter ? "drop-after" : "drop-before");
 			return;
 		}
 
 		event.preventDefault();
-		event.stopPropagation();
-		if (event.dataTransfer) event.dataTransfer.dropEffect = "move";
-		clearFavoriteDropIndicators(root);
 
-		const container = closest(event.target, ".nah-quick-slot-container");
+		// Highlight custom category button if directly hovering over one
+		const customBtn = closest(event.target, ".nah-action-btn[data-category^='custom-']");
+		root.querySelectorAll(".nah-action-btn.drag-target").forEach((b) => {
+			if (b !== customBtn) b.classList.remove("drag-target");
+		});
+		if (customBtn) {
+			customBtn.classList.add("drag-target");
+		}
+
+		// Show slot drop indicator if hovering over quick slots
 		const targetSlot = closest(event.target, ".nah-quick-slot[data-favorite-id]");
-		if (!container || !targetSlot || targetSlot.dataset.favoriteId === favoriteDrag?.favoriteId) return;
-
-		const rect = targetSlot.getBoundingClientRect();
-		const insertAfter = event.clientX >= rect.left + rect.width / 2;
-		targetSlot.classList.add(insertAfter ? "drop-after" : "drop-before");
+		clearFavoriteDropIndicators(root);
+		if (targetSlot) {
+			const rect = targetSlot.getBoundingClientRect();
+			const insertAfter = event.clientX >= rect.left + rect.width / 2;
+			targetSlot.classList.add(insertAfter ? "drop-after" : "drop-before");
+		}
 	});
 
 	root.addEventListener("dragenter", (event) => {
-		event.preventDefault();
 		if (isFavDrag(event)) return;
+		event.preventDefault();
+
+		const customBtn = closest(event.target, ".nah-action-btn[data-category^='custom-']");
+		if (customBtn) {
+			customBtn.classList.add("drag-target");
+		}
 		root.classList.add("drag-hover");
-		root.setAttribute("data-drag-text", dropText);
 	});
 
 	root.addEventListener("dragleave", (event) => {
 		event.preventDefault();
-		if (!root.contains(event.relatedTarget)) {
-			if (isFavDrag(event)) clearFavoriteDropIndicators(root);
-			root.classList.remove("drag-hover");
+		const related = event.relatedTarget;
+		if (!related || !root.contains(related)) {
+			clearAllDragState(ActionMenu);
+		} else {
+			const customBtn = closest(event.target, ".nah-action-btn[data-category^='custom-']");
+			if (customBtn && !customBtn.contains(related)) {
+				customBtn.classList.remove("drag-target");
+			}
 		}
 	});
 

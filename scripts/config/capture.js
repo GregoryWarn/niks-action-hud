@@ -59,6 +59,10 @@ export const captureMenuBuilder = (app, formData) => {
 	const maxCatIndex = _findMaxIndex(formData, "customMenu");
 
 	if (maxCatIndex >= 0) {
+		if (customMenu.length > maxCatIndex + 1) {
+			customMenu.length = maxCatIndex + 1;
+		}
+
 		for (let c = 0; c <= maxCatIndex; c++) {
 			const catPrefix = `customMenu.${c}`;
 			if (formData[`${catPrefix}.label`] === undefined && formData[`${catPrefix}.id`] === undefined) continue;
@@ -66,6 +70,12 @@ export const captureMenuBuilder = (app, formData) => {
 			if (!customMenu[c]) customMenu[c] = { tabs: [] };
 			const cat = customMenu[c];
 
+			if (formData[`${catPrefix}.id`] !== undefined) cat.id = String(formData[`${catPrefix}.id`]).trim();
+			if (formData[`${catPrefix}.systemId`] !== undefined) cat.systemId = String(formData[`${catPrefix}.systemId`]).trim();
+			if (formData[`${catPrefix}.type`] !== undefined) cat.type = String(formData[`${catPrefix}.type`]).trim();
+			if (formData[`${catPrefix}.useSidebar`] !== undefined) {
+				cat.useSidebar = formData[`${catPrefix}.useSidebar`] === "true" || formData[`${catPrefix}.useSidebar`] === true;
+			}
 			if (formData[`${catPrefix}.label`] !== undefined) cat.label = String(formData[`${catPrefix}.label`]).trim();
 			if (formData[`${catPrefix}.icon`] !== undefined) cat.icon = _normalizeMenuIcon(formData[`${catPrefix}.icon`]);
 			if (formData[`${catPrefix}.img`] !== undefined) cat.img = String(formData[`${catPrefix}.img`]).trim();
@@ -80,6 +90,9 @@ export const captureMenuBuilder = (app, formData) => {
 			// Submenus / Tabs
 			const maxTabIndex = _findMaxIndex(formData, `${catPrefix}.tabs`);
 			if (maxTabIndex >= 0 && Array.isArray(cat.tabs)) {
+				if (cat.tabs.length > maxTabIndex + 1) {
+					cat.tabs.length = maxTabIndex + 1;
+				}
 				for (let t = 0; t <= maxTabIndex; t++) {
 					const tabLabel = formData[`${catPrefix}.tabs.${t}.label`];
 					if (tabLabel !== undefined && cat.tabs[t]) {

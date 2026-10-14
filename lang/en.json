@@ -67,8 +67,8 @@
       "AllFeatures": "All",
       "AllItems": "All",
       "AllAbilities": "All",
-      "DragMacrosHere": "Drag & drop macros here",
-      "DropMacro": "Drop Macro",
+      "DragMacrosHere": "Drag & drop actions here",
+      "DropMacro": "Drop Action",
       "RightClickRemove": "Right-click to remove"
     },
     "Tooltips": {
@@ -139,7 +139,7 @@
       "Skills": "SKILLS",
       "Checks": "CHECKS",
       "Rest": "REST",
-      "Macros": "MACROS",
+      "Macros": "ACTIONS",
       "ShortRest": "Short Rest",
       "LongRest": "Long Rest",
       "ShortRestDesc": "Recover resources & spend Hit Dice",
@@ -192,8 +192,9 @@
       "Any": "any"
     },
     "Notifications": {
-      "MacroPermissionFailed": "Could not obtain macro execution permissions from the GM.",
-      "MacroDeleted": "Macro removed from Action HUD.",
+      "MacroPermissionFailed": "Could not obtain action execution permissions from the GM.",
+      "MacroDeleted": "Action removed from Action HUD.",
+      "ActionDeleted": "Action removed from Action HUD.",
       "UpdateFailed": "Unable to update actor data.",
       "PresetExportSuccess": "Preset exported successfully.",
       "PresetImportSuccess": "Preset imported successfully.",
@@ -204,6 +205,10 @@
       "DisableHud": {
         "Name": "Disable Action HUD",
         "Hint": "Completely disables and hides the Action HUD for your user account."
+      },
+      "EnableCollapse": {
+        "Name": "Enable HUD Collapse Button",
+        "Hint": "Display a small triangle button next to the token name to minimize the Action HUD into a compact token strip."
       },
       "ConfigMenu": {
         "Name": "Action HUD Configuration",

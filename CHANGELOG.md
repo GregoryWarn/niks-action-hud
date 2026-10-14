@@ -2,6 +2,27 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** will be documented in this file.
 
+## [14.12.3] - 2026-10-14
+
+### Added
+- **HUD Collapse Button Setting**: Added a client-scoped toggle in the Action HUD configuration menu (*General -> Interaction & Automation*) to enable or disable the collapse caret button next to the token name. Disabled by default, preventing unwanted collapse while keeping the full collapse capability readily available when desired.
+
+### Changed
+- **Terminology Update ("Actions" instead of "Macros")**: Renamed all user-facing instances of "macro" / "macros" across the HUD to "action" / "actions" (including drag-and-drop drop targets, favorites, edit dialogs, notifications, and localized text across all supported languages).
+- **Abilities Menu Subtab Cleanup**: Removed the redundant "Macros" subtab from the Abilities drawer, streamlining the tab to focus strictly on Saves, Skills, Checks, and Rests.
+
+### Fixed
+- **Drag & Drop Macro/Item Overlay & Handling**: Fixed an issue where dragging an item or macro over the Action HUD triggered a blurry teal "Drop Macro" overlay that remained stuck on screen and failed to drop items. Replaced the disruptive full-dock blur and scale effect with clean drop target highlights, guaranteed reliable hover cleanup across all drop/cancel/leave events, and enabled direct drag-and-drop support for pinning items or macros to the Favorites bar and adding directly to Custom Category buttons.
+- **Submenu Drawer Opening**: Fixed an unhandled `TypeError: ActionMenu.getActionCategories is not a function` when clicking HUD category buttons, which prevented custom category drawers from opening to view or add items.
+- **Dynamic Category Label Scaling**: Fixed an issue where long localized category labels (such as French *"Caractéristiques"* or Italian *"Caratteristiche"*) crowded into or pushed the category icon over the button's right edge. Long labels are now dynamically scaled down to fit the button with balanced breathing room, and icons are protected from flex shrinking.
+- **Collapsible Action HUD Toggle**: The caret triangle button to the left of the token name now fully collapses the Action HUD into a compact, non-intrusive token identity strip (hiding action buttons and quick slots while keeping portrait sheet navigation, active turn controls, and canvas dragging available). Clicking it again expands the HUD back to its full view, with state remembered across reloads and token selections. Includes keyboard accessibility (`Enter`/`Space`) and localized tooltips.
+- **Custom Category Deletion**: Fixed an issue in the Menu Builder where deleting a custom category failed or caused the category to instantly reappear upon saving or previewing due to premature re-capture from outdated form inputs.
+- **Custom Category Tray Access**: Fixed an issue where clicking a custom category button on the HUD immediately closed the flyout submenu if the category had no items yet. Custom categories now remain openable even when empty so players and GMs can easily drag and drop macros or items into them.
+- **Rich Action Details in Custom Categories**: Actions, weapons, spells, features, and items placed in custom categories now display their full rich metadata matching standard HUD tabs, including damage formulas with colored/SVG damage type icons, attack modifiers and to-hit bonuses, spell components (V/S/M) and duration badges, activation type badges (Action, Bonus Action, Reaction), limited uses / slot counters, and real-time exhaustion tracking.
+- **Empty Custom Category State & Deletion Cleanup**: Fixed an issue where creating a new custom category after deleting a previous one inherited stale personal items (such as a "Torch") that were tied to the category's array index. Custom categories now strictly isolate personal items by unique category ID without index fallback, and deleting a category cleanly purges associated personal items from actor flags.
+- **Personal Macro & Item Retention**: Personal items and macros assigned to custom categories are now securely tied to unique category IDs instead of shiftable array indices, preventing items from disappearing or migrating into other categories when custom categories are deleted or reordered.
+- **Custom Category Metadata Preservation**: Added preservation for custom category types, sidebar preferences, and system identifiers in the Menu Builder form lifecycle, ensuring custom configurations remain intact across edits.
+
 ## [14.12.2] - 2026-10-14
 
 ### Fixed

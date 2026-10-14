@@ -105,11 +105,59 @@ export const toggleFavorite = async (ActionMenu, itemId) => {
 	ActionMenu.refresh();
 };
 
+export const addFavorite = async (ActionMenu, itemId, insertIndex = -1) => {
+	const actor = ActionMenu?.currentActor;
+	if (!actor || !itemId) return false;
+
+	const favs = [...getFavorites(ActionMenu)];
+	if (favs.includes(itemId)) {
+		return false;
+	}
+
+	if (insertIndex >= 0 && insertIndex <= favs.length) {
+		favs.splice(insertIndex, 0, itemId);
+	} else {
+		favs.push(itemId);
+	}
+
+	if (actor.isToken) {
+		const baseActor = game.actors?.get(actor.id) || actor.baseActor;
+		if (baseActor && (baseActor.isOwner || game.user.isGM)) {
+			await setActorFlag(baseActor, "favorites", favs);
+			await setActorFlag(actor, "favorites", favs);
+
+			if (canvas.tokens?.placeables) {
+				for (const token of canvas.tokens.placeables) {
+					if (
+						token.actor &&
+						token.actor.isToken &&
+						token.actor.id === baseActor.id &&
+						token.actor !== actor
+					) {
+						setActorFlag(token.actor, "favorites", favs).catch(() => {});
+					}
+				}
+			}
+
+			ActionMenu.refresh();
+			return true;
+		}
+	}
+
+	await setActorFlag(actor, "favorites", favs);
+	ActionMenu.refresh();
+	return true;
+};
+
 export const addPersonalItem = async (ActionMenu, catIndex, tabIndex, itemData) => {
 	const actor = ActionMenu?.currentActor;
 	if (!actor) return;
 
-	const key = `${catIndex}-${tabIndex}`;
+	const config = game.settings.get(MODULE_ID, "configuration") || {};
+	const catDef = typeof catIndex === "number" ? config.customMenu?.[catIndex] : null;
+	const catId = catDef?.id;
+
+	const key = catId ? `${catId}-${tabIndex}` : `${catIndex}-${tabIndex}`;
 	const personalMap = getActorFlag(actor, "personalMap") || {};
 
 	if (!personalMap[key]) personalMap[key] = [];
@@ -123,7 +171,7 @@ export const addPersonalItem = async (ActionMenu, catIndex, tabIndex, itemData) 
 	personalMap[key].push(itemData);
 
 	await setActorFlag(actor, "personalMap", personalMap);
-	ui.notifications.info(`Added personal macro: ${itemData.name}`);
+	ui.notifications.info(`Added personal action: ${itemData.name}`);
 	ActionMenu.refresh();
 };
 
@@ -151,14 +199,21 @@ export const removePersonalItem = async (
 	const actor = ActionMenu?.currentActor;
 	if (!actor) return;
 
-	const key = `${catIndex}-${tabIndex}`;
+	const config = game.settings.get(MODULE_ID, "configuration") || {};
+	const catDef = typeof catIndex === "number" ? config.customMenu?.[catIndex] : null;
+	const catId = catDef?.id;
+
 	const personalMap = foundry.utils.deepClone(
 		getActorFlag(actor, "personalMap") || {},
 	);
+	const key = catId ? `${catId}-${tabIndex}` : `${catIndex}-${tabIndex}`;
 	if (personalMap[key]) {
 		personalMap[key].splice(itemIndex, 1);
 		if (personalMap[key].length === 0) {
 			delete personalMap[key];
+		}
+		if (catId && personalMap[`${catIndex}-${tabIndex}`]) {
+			delete personalMap[`${catIndex}-${tabIndex}`];
 		}
 		await setActorFlag(actor, "personalMap", personalMap);
 		ActionMenu.refresh();
@@ -223,7 +278,7 @@ export const editCustomMacro = async (ActionMenu, macroId, personalMeta) => {
 
 export const editGlobalMacro = async (ActionMenu, macroId, globalMeta) => {
 	if (!game.user.isGM) {
-		ui.notifications.warn("Only the GM can edit global macro flavor text.");
+		ui.notifications.warn("Only the GM can edit action flavor text.");
 		return;
 	}
 
@@ -251,8 +306,8 @@ export const editGlobalMacro = async (ActionMenu, macroId, globalMeta) => {
 	const content = `
 		<div class="nah-dialog-content nah-edit-macro-content" style="display:flex; flex-direction:column; gap:15px; padding:5px; height:100%; min-height:360px; box-sizing:border-box;">
 			<div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #444; padding-bottom:5px;">
-				<label style="font-weight:bold; font-size:1.1em;">${macro?.name || "Macro"}</label>
-				<span style="font-size:0.8em; color:#aaa;">Edit Global Flavor</span>
+				<label style="font-weight:bold; font-size:1.1em;">${macro?.name || "Action"}</label>
+				<span style="font-size:0.8em; color:#aaa;">Edit Action Flavor</span>
 			</div>
 			
 			<div style="flex:1; display:flex; flex-direction:column; gap:5px; min-height:260px;">
@@ -414,7 +469,7 @@ export const removeMacro = async (ActionMenu, macroId) => {
 		await removeFavorite(ActionMenu, favoriteId, actor);
 	}
 
-	ui.notifications.info(game.i18n.localize("NAH.Notifications.MacroDeleted") || "Macro removed.");
+	ui.notifications.info(game.i18n.localize("NAH.Notifications.ActionDeleted") || game.i18n.localize("NAH.Notifications.MacroDeleted") || "Action removed.");
 	ActionMenu.refresh();
 };
 

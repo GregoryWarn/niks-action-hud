@@ -242,6 +242,9 @@ export const initializeTempData = (app, globalConfig) => {
 	if (game.settings?.settings?.has(`${MODULE_ID}.hideEmptySubmenus`)) {
 		app.tempData.hideEmptySubmenus = game.settings.get(MODULE_ID, "hideEmptySubmenus");
 	}
+	if (game.settings?.settings?.has(`${MODULE_ID}.enableCollapse`)) {
+		app.tempData.enableCollapse = game.settings.get(MODULE_ID, "enableCollapse");
+	}
 	if (game.settings?.settings?.has(`${MODULE_ID}.fadeWhenIdle`)) {
 		app.tempData.fadeWhenIdle = game.settings.get(MODULE_ID, "fadeWhenIdle");
 	}
@@ -366,7 +369,14 @@ export const prepareContext = async (app, options = {}) => {
 		{ label: localizeCategory("Features", "feature"), icon: "fas fa-bolt" },
 		{ label: localizeCategory("Abilities", "utility"), icon: "fas fa-dice-d20" },
 		{ label: localizeCategory("Items", "item"), icon: "fas fa-box-open" },
-	];
+	].map((btn) => {
+		const len = (btn.label || "").trim().length;
+		const scale = len > 10 ? Math.max(0.62, Math.min(1.0, Math.round((10.5 / len) * 100) / 100)) : 1.0;
+		return {
+			...btn,
+			labelScale: scale < 1.0 ? scale : null,
+		};
+	});
 
 	const activeTab = app.activeTab || "general";
 
@@ -375,7 +385,7 @@ export const prepareContext = async (app, options = {}) => {
 		canConfigure,
 		canEditStyle,
 		canEditMenu,
-		moduleVersion: game.modules.get(MODULE_ID)?.version || "14.8.1",
+		moduleVersion: game.modules.get(MODULE_ID)?.version || "14.12.3",
 		isDnd5eSystem: game.system.id === "dnd5e",
 		activeTab,
 		isGeneralTab: activeTab === "general",
@@ -412,6 +422,7 @@ export const prepareContext = async (app, options = {}) => {
 		// Setting locks integration (niks-settings-locks)
 		settingLocks: {
 			hideEmptySubmenus: getLockState("hideEmptySubmenus"),
+			enableCollapse: getLockState("enableCollapse"),
 			fadeWhenIdle: getLockState("fadeWhenIdle"),
 			actionMenuSubmenuSide: getLockState("actionMenuSubmenuSide"),
 			tooltipPosition: getLockState("tooltipPosition"),

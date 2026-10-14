@@ -54,6 +54,33 @@
                 </div>
             </div>
 
+            <div class="hud-setting-row {{#if settingLocks.enableCollapse.isHard}}hard-locked{{/if}}">
+                <div class="hud-setting-info">
+                    <label>
+                        {{#if settingLocks.enableCollapse.active}}
+                            {{#if settingLocks.enableCollapse.canManage}}
+                                <a class="hud-lock-icon {{settingLocks.enableCollapse.type}}" data-setting-key="enableCollapse" title="{{settingLocks.enableCollapse.tooltip}}">
+                                    <i class="fa-solid {{#if settingLocks.enableCollapse.isLocked}}fa-lock{{else}}fa-lock-open{{/if}}"></i>
+                                </a>
+                            {{else if settingLocks.enableCollapse.isLocked}}
+                                <span class="hud-lock-icon {{settingLocks.enableCollapse.type}}" title="{{settingLocks.enableCollapse.tooltip}}">
+                                    <i class="fa-solid fa-lock"></i>
+                                </span>
+                            {{/if}}
+                        {{/if}}
+                        Enable HUD Collapse Button
+                        <span class="hud-scope-badge client" title="Client Setting: Applies only to your local user account"><i class="fas fa-user"></i> Client</span>
+                    </label>
+                    <span class="hud-setting-hint">Display a small triangle button next to the token name to minimize the Action HUD into a compact token strip. Disabled by default.</span>
+                </div>
+                <div class="hud-setting-control">
+                    <label class="hud-switch">
+                        <input type="checkbox" class="hud-switch-input" name="enableCollapse" {{#if enableCollapse}}checked{{/if}} {{#if settingLocks.enableCollapse.disabled}}disabled{{/if}}>
+                        <span class="hud-switch-slider"></span>
+                    </label>
+                </div>
+            </div>
+
             {{#if isDnd5eSystem}}
             <div class="hud-setting-row">
                 <div class="hud-setting-info">

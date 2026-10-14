@@ -67,8 +67,8 @@
       "AllFeatures": "Alle",
       "AllItems": "Alle",
       "AllAbilities": "Alle",
-      "DragMacrosHere": "Makros hierher ziehen & ablegen",
-      "DropMacro": "Makro ablegen",
+      "DragMacrosHere": "Aktionen hierher ziehen & ablegen",
+      "DropMacro": "Aktion ablegen",
       "RightClickRemove": "Rechtsklick zum Entfernen"
     },
     "Tooltips": {
@@ -139,7 +139,7 @@
       "Skills": "FERTIGKEITEN",
       "Checks": "ATTRIBUTSWÜRFE",
       "Rest": "RAST",
-      "Macros": "MAKROS",
+      "Macros": "AKTIONEN",
       "ShortRest": "Kurze Rast",
       "LongRest": "Lange Rast",
       "ShortRestDesc": "Ressourcen auffrischen & Trefferwürfel ausgeben",
@@ -192,8 +192,9 @@
       "Any": "beliebig"
     },
     "Notifications": {
-      "MacroPermissionFailed": "Konnte keine Makro-Ausführungsberechtigung vom SL erhalten.",
-      "MacroDeleted": "Makro aus der Action HUD entfernt.",
+      "MacroPermissionFailed": "Konnte keine Aktions-Ausführungsberechtigung vom SL erhalten.",
+      "MacroDeleted": "Aktion aus der Action HUD entfernt.",
+      "ActionDeleted": "Aktion aus der Action HUD entfernt.",
       "UpdateFailed": "Akteursdaten konnten nicht aktualisiert werden.",
       "PresetExportSuccess": "Vorlage erfolgreich exportiert.",
       "PresetImportSuccess": "Vorlage erfolgreich importiert.",
@@ -204,6 +205,10 @@
       "DisableHud": {
         "Name": "Action HUD deaktivieren",
         "Hint": "Deaktiviert und blendet die Action HUD für dein Benutzerkonto vollständig aus."
+      },
+      "EnableCollapse": {
+        "Name": "HUD-Einklapp-Schaltfläche aktivieren",
+        "Hint": "Zeigt eine kleine Dreiecks-Schaltfläche neben dem Token-Namen an, um das Action-HUD auf eine kompakte Leiste zu minimieren."
       },
       "ConfigMenu": {
         "Name": "Action HUD Konfiguration",

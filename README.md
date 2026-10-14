@@ -37,6 +37,7 @@ A sleek, canvas-docked Action HUD for **Foundry VTT (v14)** and **D&D 5e (6.x)**
 ## ✨ Key Features
 
 - **Bottom Docking & Free Canvas Dragging**: Positioned cleanly along the bottom canvas edge. Drag from the actor header to place the HUD anywhere; your position is automatically saved per-client across sessions.
+- **Collapsible HUD Mode**: Click the triangle caret next to the token name to minimize the Action HUD into a compact token identity banner, freeing up canvas space while preserving portrait sheet navigation, turn management, and canvas dragging.
 - **Smooth 360° Resizing**: Drag the bottom-right resize handle to scale the HUD up or down with a live zoom percentage readout; double-click to instantly reset to 100%.
 - **Smart Token & Character Fallback**: Select any token to view its actions instantly. When no token is selected, the HUD automatically displays your assigned player character.
 - **Global Clustered Action Search**: Type in the search box of any submenu to search across all action types, spells, features, inventory items, and utility checks at once, clustered under clear category headers. Clears instantly with <kbd>Esc</kbd>.
@@ -46,7 +47,7 @@ A sleek, canvas-docked Action HUD for **Foundry VTT (v14)** and **D&D 5e (6.x)**
 - **Native Activity Choice Dialogs**: Spells, items, and features containing multiple activities (such as *Hunter's Mark* with spell slot casting, moving the mark, and bonus damage) automatically trigger DnD5e's native Activity Choice dialog on click.
 - **Intelligent Resource & Spell Slot Tracking**: Spells, actions, and features with zero remaining daily uses or expended spell slots remain clickable and executable, allowing players and GMs to post chat cards, cast without consuming resources, or trigger DnD5e's native upcast and slot selection prompts.
 - **Direct Sheet Navigation**: Right-click any action, spell, or item to jump directly to its sheet.
-- **Multi-Language Support**: Fully localized out of the box in English, German (Deutsch), French (Français), Spanish (Español), and Italian (Italiano, contributed by [@GregoryWarn](https://github.com/GregoryWarn)).
+- **Multi-Language Support**: Fully localized out of the box in English, German (Deutsch), French (Français), Spanish (Español), and Italian (Italiano, contributed by [@GregoryWarn](https://github.com/GregoryWarn)). Features dynamic category button font scaling to guarantee long localized words (such as French *Caractéristiques* or Italian *Caratteristiche*) fit with balanced spacing without clipping or pushing icons out of bounds.
 
 ---
 
@@ -86,18 +87,20 @@ Organized, flyout drawers designed for fast combat decision-making:
 
 ## ⭐ Favorites Dock & Quick Slots
 
-- **Canvas Quick Slots**: Pin your favorite attacks, spells, items, or macros to a dedicated dock for instant one-click execution.
+- **Canvas Quick Slots**: Pin your favorite attacks, spells, items, or actions to a dedicated dock for instant one-click execution.
+- **Drag-and-Drop Pinning**: Drag items directly from your character sheet or actions from your hotbar onto the favorites bar to instantly pin them to your canvas quick slots.
 - **Uses Tracking on Favorite Icons**: Quick slot icons dynamically display remaining uses (e.g. `3/3`, `1/2`, `0/1`) for items with item-level limited uses or single activities with activity uses, complete with real-time updates and an exhausted badge indicator when fully spent.
 - **Drag-to-Reorder**: Rearrange quick slots smoothly via drag-and-drop.
 - **Rich Hover Tooltips**: View item artwork, full descriptions, activation costs, and roll details on hover.
 - **Auto-Favorites for NPCs**: Automatically populates default attack and action favorites when placing NPC tokens on the scene.
+- **Collapsible Action HUD**: Minimize the Action HUD down to a clean, non-intrusive token identity strip to maximize screen real estate during exploration, while retaining one-click character sheet access, turn management, and canvas dragging. Enabled via the *Enable HUD Collapse Button* client setting in the configuration panel (disabled by default).
 
 ---
 
 ## ⚙️ Configuration Suite
 
 - **Live Preview Sandbox**: See your theme, button styles, and layout changes in real time before saving.
-- **Visual Category Builder**: Reorder, rename, or customize menu icons, button scaling, and visibility conditions.
+- **Visual Category Builder**: Create custom categories and flyout trays, reorder, rename, or customize menu icons, button scaling, and visibility conditions.
 - **Excluded Actor Types**: Simple toggle chips to prevent the HUD from showing on specific actor types (`encounter`, `group`, and `vehicle` excluded by default).
 - **Presets & Backups**: Export and import complete HUD setups as JSON presets with modular section resets.
 - **Client Damage Display Preferences**: Choose between **Icons Only**, **Icons + Text**, or **Text Only** in the Action HUD Configuration panel to tune visual density to your table's preference.

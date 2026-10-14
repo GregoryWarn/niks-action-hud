@@ -49,6 +49,7 @@ export const BEHAVIOR_FIELDS = Object.freeze([
 	{ key: "actionMenuVisibility", type: "string", fallback: "always" },
 	{ key: "closeMenuOnUse", type: "boolean", fallback: false },
 	{ key: "hideEmptySubmenus", type: "boolean", fallback: true },
+	{ key: "enableCollapse", type: "boolean", fallback: false },
 	{ key: "fadeWhenIdle", type: "boolean", fallback: true },
 	{ key: "dnd5eGroupActionsByActivation", type: "boolean", fallback: false },
 	{ key: "dnd5eShowUnpreparedRituals", type: "boolean", fallback: true },

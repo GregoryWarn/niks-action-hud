@@ -67,8 +67,8 @@
       "AllFeatures": "Todos",
       "AllItems": "Todos",
       "AllAbilities": "Todas",
-      "DragMacrosHere": "Arrastra y suelta macros aquí",
-      "DropMacro": "Soltar macro",
+      "DragMacrosHere": "Arrastra y suelta acciones aquí",
+      "DropMacro": "Soltar acción",
       "RightClickRemove": "Clic derecho para eliminar"
     },
     "Tooltips": {
@@ -139,7 +139,7 @@
       "Skills": "HABILIDADES",
       "Checks": "PRUEBAS",
       "Rest": "DESCANSO",
-      "Macros": "MACROS",
+      "Macros": "ACCIONES",
       "ShortRest": "Descanso corto",
       "LongRest": "Descanso largo",
       "ShortRestDesc": "Recuperar recursos y gastar Dados de Golpe",
@@ -192,8 +192,9 @@
       "Any": "cualquiera"
     },
     "Notifications": {
-      "MacroPermissionFailed": "No se pudieron obtener los permisos de ejecución de macro del DJ.",
-      "MacroDeleted": "Macro eliminada del Action HUD.",
+      "MacroPermissionFailed": "No se pudieron obtener los permisos de ejecución de acción del DJ.",
+      "MacroDeleted": "Acción eliminada del Action HUD.",
+      "ActionDeleted": "Acción eliminada del Action HUD.",
       "UpdateFailed": "No se pudieron actualizar los datos del personaje.",
       "PresetExportSuccess": "Ajuste preestablecido exportado correctamente.",
       "PresetImportSuccess": "Ajuste preestablecido importado correctamente.",
@@ -204,6 +205,10 @@
       "DisableHud": {
         "Name": "Desactivar Action HUD",
         "Hint": "Desactiva y oculta completamente el Action HUD para tu cuenta de usuario."
+      },
+      "EnableCollapse": {
+        "Name": "Activar botón de plegado del HUD",
+        "Hint": "Muestra un pequeño botón triangular junto al nombre del token para minimizar el Action HUD en una barra compacta."
       },
       "ConfigMenu": {
         "Name": "Configuración del Action HUD",

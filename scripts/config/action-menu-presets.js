@@ -14,6 +14,7 @@ export const ACTION_MENU_PRESET_KEYS = [
 	"actionMenuUseTokenImg",
 	"closeMenuOnUse",
 	"hideEmptySubmenus",
+	"enableCollapse",
 	"fadeWhenIdle",
 	"dnd5eGroupActionsByActivation",
 	"dnd5eShowUnpreparedRituals",

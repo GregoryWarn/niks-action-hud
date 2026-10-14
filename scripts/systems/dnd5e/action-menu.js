@@ -1352,7 +1352,6 @@ export function _getUtilityData(actor) {
 		skill: { label: game.i18n.localize("NAH.Dnd5e.Skills") },
 		check: { label: game.i18n.localize("NAH.Dnd5e.Checks") },
 		rest: { label: game.i18n.localize("NAH.Dnd5e.Rest") },
-		macro: { label: game.i18n.localize("NAH.Dnd5e.Macros") },
 	};
 
 	const items = {
@@ -1360,7 +1359,6 @@ export function _getUtilityData(actor) {
 		skill: { all: [] },
 		check: { all: [] },
 		rest: { all: [] },
-		macro: { all: [] },
 	};
 
 	const profBonus = actor.system.attributes?.prof || 2;
@@ -1505,39 +1503,6 @@ export function _getUtilityData(actor) {
 		description: game.i18n.localize("NAH.Dnd5e.LongRestDesc"),
 	});
 
-	// Macros
-	const macroIds = actor.getFlag(MODULE_ID, "macros") || [];
-
-	if (macroIds.length > 0) {
-		macroIds.forEach((id) => {
-			const macro = game.macros.get(id);
-			if (macro) {
-				items["macro"]["all"].push({
-					id: `macro-${macro.id}`,
-					name: macro.name,
-					img: macro.img,
-					cost: "",
-					isAbilityRoll: true,
-					oneLineLayout: true,
-					favoritable: false,
-					description: game.i18n.localize("NAH.UI.RightClickRemove"),
-				});
-			}
-		});
-	} else {
-		items["macro"]["all"].push({
-			id: "macro-help",
-			name: game.i18n.localize("NAH.UI.DragMacrosHere"),
-			img: "icons/svg/down.svg",
-			cost: "",
-			description: "Drag & Drop macros from the hotbar to the Action Menu.",
-			isHeader: false,
-			isAbilityRoll: true,
-			oneLineLayout: true,
-			favoritable: false,
-		});
-	}
-
 	const primaryLabels = {};
 	const primaryTooltips = {};
 	const subTabLabels = {
@@ -1545,11 +1510,9 @@ export function _getUtilityData(actor) {
 		skill: { all: game.i18n.localize("NAH.Dnd5e.Skills") || "Skills" },
 		check: { all: game.i18n.localize("NAH.Dnd5e.Checks") || "Checks" },
 		rest: { all: game.i18n.localize("NAH.Dnd5e.Rest") || "Actions" },
-		macro: { all: game.i18n.localize("NAH.Dnd5e.Macros") || "Custom Macros" },
 	};
 
 	Object.keys(categories).forEach((key) => {
-		if (key === "macro" && items["macro"]["all"].length === 0) return;
 		primaryLabels[key] = categories[key].label;
 		primaryTooltips[key] = categories[key].label;
 	});
@@ -1559,7 +1522,6 @@ export function _getUtilityData(actor) {
 		const allItemsList = [];
 		for (const [key, tabData] of Object.entries(items)) {
 			if (key === "all") continue;
-			if (key === "macro" && macroIds.length === 0) continue;
 			const list = tabData?.all;
 			if (!Array.isArray(list) || list.length === 0) continue;
 			const cleanHeader = (primaryLabels[key] || key).replace(/<[^>]*>/g, "").trim();
@@ -1600,5 +1562,307 @@ export function _getUtilityData(actor) {
 		tabLabels: primaryLabels,
 		tabTooltips: primaryTooltips,
 		subTabLabels: subTabLabels,
+	};
+}
+
+/**
+ * Resolves an underlying DnD5e Item document from a custom menu entry or personal item entry.
+ * @param {Actor} actor
+ * @param {object} savedItem
+ * @returns {Item|null}
+ */
+export function resolveItemFromCustomEntry(actor, savedItem) {
+	if (!savedItem) return null;
+
+	// 1. Direct Item type
+	if (savedItem.type === "Item" && savedItem.id) {
+		const item = actor?.items?.get(savedItem.id) ||
+			(typeof fromUuidSync === "function" ? fromUuidSync(savedItem.id) : null) ||
+			actor?.items?.getName(savedItem.name);
+		if (item) return item;
+	}
+
+	// 2. Macro type or item-wrapped macro
+	const macroId = savedItem.id ? String(savedItem.id).replace(/^macro-/, "") : "";
+	let macro = null;
+	if (typeof fromUuidSync === "function") {
+		macro = fromUuidSync(savedItem.id) || fromUuidSync(macroId);
+	}
+	if (!macro && game.macros) {
+		macro = game.macros.get(macroId) || game.macros.get(savedItem.id);
+	}
+
+	// Check macro flags for sourceId
+	const sourceId = macro?.flags?.[MODULE_ID]?.sourceId || savedItem.sourceId;
+	if (sourceId) {
+		let item = (typeof fromUuidSync === "function" ? fromUuidSync(sourceId) : null);
+		if (!item && actor?.items) {
+			const itemId = sourceId.split(".").pop();
+			item = actor.items.get(itemId);
+		}
+		if (item) {
+			if (actor?.items && item.actor?.id !== actor.id) {
+				const actorItem = actor.items.get(item.id) || actor.items.getName(item.name);
+				if (actorItem) return actorItem;
+			}
+			return item;
+		}
+	}
+
+	// Check macro command for fromUuid
+	if (macro?.command) {
+		const match = macro.command.match(/fromUuid\s*\(\s*["'`]([^"'`]+)["'`]\s*\)/);
+		if (match?.[1]) {
+			let item = (typeof fromUuidSync === "function" ? fromUuidSync(match[1]) : null);
+			if (item) {
+				if (actor?.items && item.actor?.id !== actor.id) {
+					const actorItem = actor.items.get(item.id) || actor.items.getName(item.name);
+					if (actorItem) return actorItem;
+				}
+				return item;
+			}
+		}
+	}
+
+	// Check current actor items by name match
+	if (actor?.items && (savedItem.name || macro?.name)) {
+		const name = savedItem.name || macro?.name;
+		const matchItem = actor.items.getName(name);
+		if (matchItem) return matchItem;
+	}
+
+	return null;
+}
+
+/**
+ * Formats a DnD5e Item for the HUD with all rich metadata (damage, spell info, uses, activation, range).
+ * @param {Item} item
+ * @param {Actor} actor
+ * @param {object} options
+ * @returns {object}
+ */
+export function formatDnd5eItemForHUD(item, actor, options = {}) {
+	if (!item) return null;
+
+	const { isPersonal = false, meta = {}, macroId = null, flavor = "" } = options;
+	const realId = macroId ? `macro-${macroId}` : item.id;
+	const customCatIndex = meta.catIdx;
+	const customTabIndex = meta.tabIdx;
+	const customItemIndex = meta.itemIdx;
+
+	const name = item.name;
+	const img = item.img || "icons/svg/item-bag.svg";
+	const description = flavor || item.system?.description?.value || item.system?.description || "";
+	const globalFlavor = !isPersonal ? flavor : "";
+
+	let costHtml = "";
+	let usesBracket = "";
+	let isExhausted = false;
+	let hasDamage = false;
+	let oneLineLayout = false;
+	let isUnpreparedRitual = false;
+	let durationText = "";
+	let hasInlineControls = false;
+
+	// 1. Spells
+	if (item.type === "spell") {
+		const linkedActivity = typeof item.system?.activities?.find === "function"
+			? item.system.activities.find((a) => a.type === "cast" || a.type === "attack" || a.type === "damage" || a.type === "save")
+			: null;
+
+		const resolved = _resolveFeatureUses(item, actor);
+		usesBracket = resolved.usesBracket || "";
+		isExhausted = resolved.isExhausted;
+
+		const isWizardSpell = typeof actor?.items?.some === "function"
+			? actor.items.some((it) => it.type === "class" && it.identifier === "wizard")
+			: false;
+		const isRitual = item.system?.properties?.has?.("ritual") || Boolean(item.system?.properties?.ritual);
+		if (isWizardSpell && isRitual && !item.system?.prepared?.prepared && item.system?.preparation?.mode === "prepared") {
+			isUnpreparedRitual = true;
+		}
+
+		if (isExhausted) {
+			const spellLevel = linkedActivity?.spell?.level ?? item.system?.level ?? 1;
+			if (actorHasAvailableSpellSlots(actor, spellLevel)) {
+				isExhausted = false;
+			}
+		}
+
+		const activation = item.system?.activation?.type || linkedActivity?.activation?.type;
+		const actIcon = _getActivationIcon(activation);
+		const rangeText = _formatRange(item);
+		const showRange = rangeText && !rangeText.startsWith("5 ");
+		const { damageText, damageHtml } = _getItemDamage(item, actor);
+		durationText = _formatDuration(item, linkedActivity);
+		const durationLabel = _getDurationLabel(item, linkedActivity);
+
+		const infoParts = [];
+		const tooltipParts = [];
+
+		if (damageText) {
+			infoParts.push(damageHtml || damageText);
+			tooltipParts.push(damageText);
+			if (showRange) {
+				infoParts.push(rangeText);
+				tooltipParts.push(rangeText);
+			}
+		} else if (rangeText) {
+			infoParts.push(rangeText);
+			tooltipParts.push(rangeText);
+		}
+
+		if (durationText) {
+			const durHtml = durationLabel
+				? `<span class="nah-spell-duration" title="${escapeHtml(durationLabel)}">${durationText}</span>`
+				: `<span class="nah-spell-duration">${durationText}</span>`;
+			infoParts.push(durHtml);
+			tooltipParts.push(durationLabel || durationText);
+		}
+
+		const subInfoHtml = infoParts.length
+			? `<span class="nah-info-sub" title="${escapeHtml(tooltipParts.join(" · "))}" style="font-size:0.78em; letter-spacing:0.5px; margin-left:4px; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:100%;${damageText ? "" : " color:#888;"}">${infoParts.join(" · ")}</span>`
+			: "";
+
+		const props = item.system?.properties;
+		const hasProp = (k) => props?.has ? props.has(k) : Boolean(props?.[k]);
+		const compParts = [];
+		if (hasProp("verbal")) compParts.push("V");
+		if (hasProp("somatic")) compParts.push("S");
+		if (hasProp("material")) compParts.push("M");
+		const compStr = compParts.join("");
+
+		const tagsParts = [];
+		if (isRitual) {
+			tagsParts.push(`<span class="nah-tag-ritual" title="Ritual" style="font-size:0.7em; padding:1px 3px; border-radius:3px; background:rgba(255,255,255,0.1); color:#aaa; margin-right:3px;">R</span>`);
+		}
+		if (hasProp("concentration")) {
+			tagsParts.push(`<span class="nah-tag-concentration" title="Concentration" style="font-size:0.7em; padding:1px 3px; border-radius:3px; background:rgba(255,165,0,0.2); color:#ffa500; margin-right:3px;">C</span>`);
+		}
+
+		costHtml = `
+			<div class="nah-cost-wrapper" style="display:inline-flex; align-items:center; gap:4px; white-space:nowrap;">
+				${actIcon}
+				${tagsParts.join("")}
+				${compStr ? `<span class="nah-cost-text">${compStr}</span>` : ""}
+				${subInfoHtml}
+			</div>
+		`;
+		hasDamage = Boolean(damageText);
+	}
+	// 2. Weapons
+	else if (item.type === "weapon") {
+		const { damageFormula, damageType, damageText, damageHtml } = _getWeaponDamage(item, actor);
+		const attackActivity = _getPrimaryAttackActivity(item);
+		const toHit = attackActivity?.labels?.toHit || item.labels?.toHit || "";
+		const { activationIcon } = _getItemActivityData(item);
+		const resolved = _resolveFeatureUses(item, actor);
+
+		isExhausted = resolved.isExhausted;
+		usesBracket = resolved.usesBracket || "";
+
+		const rangeText = _formatRange(item);
+		const showRange = rangeText && !rangeText.startsWith("5 ");
+
+		let displayHtml = "";
+		const text = damageText || damageFormula;
+		if (text) {
+			displayHtml = `<span class="nah-info-sub" title="${escapeHtml(text)}" style="font-size:0.78em; letter-spacing:0.5px; display:inline-flex; align-items:center; line-height:1.1; white-space:nowrap; min-width:0; overflow:hidden; text-overflow:ellipsis; max-width:100%;">${damageHtml || text}${showRange ? ` · ${rangeText}` : ""}</span>`;
+		} else if (toHit) {
+			displayHtml = `<span style="color:#aaa; font-size:0.9em; display:inline-flex; align-items:center; white-space:nowrap;">Hit: ${toHit}${showRange ? ` · ${rangeText}` : ""}</span>`;
+		} else if (item.labels?.properties) {
+			displayHtml = `<span style="color:#666; font-size:0.75em; display:inline-flex; align-items:center; white-space:nowrap;">${item.labels.properties}${showRange ? ` · ${rangeText}` : ""}</span>`;
+		}
+
+		const ammoHtml = _buildDnd5eAmmoHtml(item);
+		if (ammoHtml) hasInlineControls = true;
+
+		costHtml = `
+			<div class="nah-cost-wrapper" style="display:inline-flex; align-items:center; gap:5px; white-space:nowrap;">
+				${activationIcon}
+				${displayHtml}
+				${ammoHtml}
+			</div>
+		`;
+		hasDamage = Boolean(text);
+	}
+	// 3. Features & Feats
+	else if (item.type === "feat") {
+		const { activationIcon } = _getItemActivityData(item);
+		const resolved = _resolveFeatureUses(item, actor);
+		isExhausted = resolved.isExhausted;
+		usesBracket = resolved.usesBracket || "";
+
+		const rangeText = _formatRange(item);
+		const showRange = rangeText && !rangeText.startsWith("5 ");
+		const { damageText, damageHtml } = _getItemDamage(item, actor);
+
+		let displayHtml = "";
+		if (damageText) {
+			displayHtml = `<span class="nah-info-sub" title="${escapeHtml(damageText)}" style="font-size:0.78em; letter-spacing:0.5px; margin-left:4px; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:100%;">${damageHtml || damageText}${showRange ? ` · ${rangeText}` : ""}</span>`;
+		}
+
+		if (activationIcon || displayHtml) {
+			costHtml = `
+				<div class="nah-cost-wrapper" style="display:inline-flex; align-items:center; gap:5px; white-space:nowrap;">
+					${activationIcon}
+					${displayHtml}
+				</div>
+			`;
+		}
+
+		hasDamage = Boolean(damageText);
+		oneLineLayout = !hasDamage;
+	}
+	// 4. Equipment, Consumables, Tools, Loot, Containers, etc.
+	else {
+		const { activationIcon } = _getItemActivityData(item);
+		const resolved = _resolveFeatureUses(item, actor);
+		isExhausted = resolved.isExhausted;
+		usesBracket = resolved.usesBracket || "";
+
+		if (!usesBracket && typeof item.system?.quantity === "number" && item.system.quantity > 1) {
+			usesBracket = `<span style="color:#aaa;">×${item.system.quantity}</span>`;
+		}
+
+		const { damageFormula, damageText, damageHtml } = _getItemDamage(item, actor);
+		const rangeText = _formatRange(item);
+		const showRange = rangeText && !rangeText.startsWith("5 ");
+		const text = damageText || damageFormula;
+
+		let displayHtml = "";
+		if (text) {
+			displayHtml = `<span class="nah-info-sub" title="${escapeHtml(text)}" style="font-size:0.78em; letter-spacing:0.5px; display:inline-flex; align-items:center; line-height:1.1; white-space:nowrap; min-width:0; overflow:hidden; text-overflow:ellipsis; max-width:100%;">${damageHtml || text}${showRange ? ` · ${rangeText}` : ""}</span>`;
+		}
+
+		if (displayHtml || activationIcon) {
+			costHtml = `
+				<div class="nah-cost-wrapper" style="display:inline-flex; align-items:center; gap:5px; white-space:nowrap;">
+					${activationIcon}
+					${displayHtml}
+				</div>
+			`;
+		}
+		hasDamage = Boolean(text);
+	}
+
+	return {
+		id: realId,
+		name,
+		img,
+		uses: usesBracket,
+		cost: costHtml,
+		description,
+		globalFlavor,
+		isPersonal,
+		isExhausted,
+		hasDamage,
+		oneLineLayout,
+		isUnpreparedRitual,
+		duration: durationText,
+		hasInlineControls,
+		customCatIndex,
+		customTabIndex,
+		customItemIndex,
 	};
 }

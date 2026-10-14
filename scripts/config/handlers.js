@@ -37,6 +37,9 @@ export const onSave = async (app, event, target) => {
 		if (game.settings.settings.has(`${MODULE_ID}.hideEmptySubmenus`) && cleanConfig.hideEmptySubmenus !== undefined) {
 			await game.settings.set(MODULE_ID, "hideEmptySubmenus", cleanConfig.hideEmptySubmenus);
 		}
+		if (game.settings.settings.has(`${MODULE_ID}.enableCollapse`) && cleanConfig.enableCollapse !== undefined) {
+			await game.settings.set(MODULE_ID, "enableCollapse", cleanConfig.enableCollapse);
+		}
 		if (game.settings.settings.has(`${MODULE_ID}.fadeWhenIdle`) && cleanConfig.fadeWhenIdle !== undefined) {
 			await game.settings.set(MODULE_ID, "fadeWhenIdle", cleanConfig.fadeWhenIdle);
 		}
@@ -123,6 +126,9 @@ export const onReset = async (app, event, target) => {
 		if (game.settings.settings.has(`${MODULE_ID}.hideEmptySubmenus`) && cleanConfig.hideEmptySubmenus !== undefined) {
 			await game.settings.set(MODULE_ID, "hideEmptySubmenus", cleanConfig.hideEmptySubmenus);
 		}
+		if (game.settings.settings.has(`${MODULE_ID}.enableCollapse`) && cleanConfig.enableCollapse !== undefined) {
+			await game.settings.set(MODULE_ID, "enableCollapse", cleanConfig.enableCollapse);
+		}
 		if (game.settings.settings.has(`${MODULE_ID}.fadeWhenIdle`) && cleanConfig.fadeWhenIdle !== undefined) {
 			await game.settings.set(MODULE_ID, "fadeWhenIdle", cleanConfig.fadeWhenIdle);
 		}
@@ -192,8 +198,9 @@ export const onAddCategory = async (app, event, target) => {
 	captureInputData(app, app.element);
 	if (!Array.isArray(app.tempData.customMenu)) app.tempData.customMenu = [];
 
+	const uniqueId = `custom_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
 	app.tempData.customMenu.push({
-		id: `custom_${Date.now()}`,
+		id: uniqueId,
 		label: "New Category",
 		icon: "fas fa-star",
 		type: "submenu",
@@ -207,7 +214,6 @@ export const onAddCategory = async (app, event, target) => {
 		buttonFrameLayers: [],
 	});
 
-	triggerPreview(app);
 	await app.render();
 };
 
@@ -219,9 +225,27 @@ export const onRemoveCategory = async (app, event, target) => {
 
 	captureInputData(app, app.element);
 	if (Array.isArray(app.tempData.customMenu)) {
+		const cat = app.tempData.customMenu[index];
+		if (cat?.systemId) return; // Prevent deleting system categories
+		const deletedId = cat?.id;
 		app.tempData.customMenu.splice(index, 1);
+
+		// Clean up any personal items on active/preview actor for this category ID and legacy index
+		const actor = app.previewActor || window.ActionHUD?.actionMenu?.currentActor;
+		if (actor && actor.isOwner) {
+			const pMap = foundry.utils.deepClone(actor.getFlag(MODULE_ID, "personalMap") || {});
+			let changed = false;
+			for (const k of Object.keys(pMap)) {
+				if ((deletedId && k.startsWith(`${deletedId}-`)) || k.startsWith(`${index}-`)) {
+					delete pMap[k];
+					changed = true;
+				}
+			}
+			if (changed) {
+				await actor.setFlag(MODULE_ID, "personalMap", pMap).catch(() => {});
+			}
+		}
 	}
-	triggerPreview(app);
 	await app.render();
 };
 

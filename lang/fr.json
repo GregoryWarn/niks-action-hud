@@ -67,8 +67,8 @@
       "AllFeatures": "Toutes",
       "AllItems": "Tous",
       "AllAbilities": "Toutes",
-      "DragMacrosHere": "Glisser-déposer des macros ici",
-      "DropMacro": "Déposer la macro",
+      "DragMacrosHere": "Glisser-déposer des actions ici",
+      "DropMacro": "Déposer l'action",
       "RightClickRemove": "Clic droit pour retirer"
     },
     "Tooltips": {
@@ -139,7 +139,7 @@
       "Skills": "COMPÉTENCES",
       "Checks": "TESTS",
       "Rest": "REPOS",
-      "Macros": "MACROS",
+      "Macros": "ACTIONS",
       "ShortRest": "Repos court",
       "LongRest": "Repos long",
       "ShortRestDesc": "Récupérer des ressources & dépenser des dés de vie",
@@ -192,8 +192,9 @@
       "Any": "tout"
     },
     "Notifications": {
-      "MacroPermissionFailed": "Impossible d'obtenir les permissions d'exécution de macro auprès du MJ.",
-      "MacroDeleted": "Macro retirée de l'Action HUD.",
+      "MacroPermissionFailed": "Impossible d'obtenir les permissions d'exécution d'action auprès du MJ.",
+      "MacroDeleted": "Action retirée de l'Action HUD.",
+      "ActionDeleted": "Action retirée de l'Action HUD.",
       "UpdateFailed": "Impossible de mettre à jour les données de l'acteur.",
       "PresetExportSuccess": "Préréglage exporté avec succès.",
       "PresetImportSuccess": "Préréglage importé avec succès.",
@@ -204,6 +205,10 @@
       "DisableHud": {
         "Name": "Désactiver l'Action HUD",
         "Hint": "Désactive et masque complètement l'Action HUD pour votre compte utilisateur."
+      },
+      "EnableCollapse": {
+        "Name": "Activer le bouton de réduction du HUD",
+        "Hint": "Affiche un petit bouton triangulaire à côté du nom du token pour réduire l'Action HUD en une bande compacte."
       },
       "ConfigMenu": {
         "Name": "Configuration de l'Action HUD",

@@ -52,6 +52,12 @@
                 </div>
             </div>
 
+            <!-- Hidden Category Metadata -->
+            {{#if this.id}}<input type="hidden" name="customMenu.{{@index}}.id" value="{{this.id}}">{{/if}}
+            {{#if this.systemId}}<input type="hidden" name="customMenu.{{@index}}.systemId" value="{{this.systemId}}">{{/if}}
+            {{#if this.type}}<input type="hidden" name="customMenu.{{@index}}.type" value="{{this.type}}">{{/if}}
+            {{#if this.useSidebar}}<input type="hidden" name="customMenu.{{@index}}.useSidebar" value="true">{{/if}}
+
             <!-- Expandable Category Body -->
             <div class="hud-cat-body">
                 <div class="hud-cat-settings-grid">

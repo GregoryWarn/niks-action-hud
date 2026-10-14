@@ -264,13 +264,38 @@ export const buildHeaderHtml = (ActionMenu) => {
 		? `style="--token-subject-scale: ${subjectScale}; scale: ${subjectScale}; transform-origin: center center;"`
 		: "";
 
+	let enableCollapse = config.enableCollapse ?? false;
+	try {
+		if (game.settings.settings.has(`${MODULE_ID}.enableCollapse`)) {
+			enableCollapse = game.settings.get(MODULE_ID, "enableCollapse") ?? enableCollapse;
+		}
+	} catch (_e) {}
+
+	let collapseBtnHtml = "";
+	if (enableCollapse) {
+		const collapseTitle = game.i18n?.localize?.(
+			ActionMenu.isCollapsed ? "NAH.UI.Expand" : "NAH.UI.Collapse",
+		) || (ActionMenu.isCollapsed ? "Expand HUD" : "Collapse HUD");
+
+		collapseBtnHtml = `
+					<div class="nah-collapse-btn"
+						 role="button"
+						 tabindex="0"
+						 onclick="event.stopPropagation(); ActionHUD.actionMenu.toggleCollapse()"
+						 onkeydown="if(event.key==='Enter'||event.key===' '){event.stopPropagation();event.preventDefault();ActionHUD.actionMenu.toggleCollapse();}"
+						 title="${escapeHtml(collapseTitle)}"
+						 aria-label="${escapeHtml(collapseTitle)}"
+						 aria-expanded="${!ActionMenu.isCollapsed}"
+						 style="position: absolute; right: 100%; top: 0.6em; transform: translateY(-50%); margin-right: 8px;">
+						<i class="fas ${ActionMenu.isCollapsed ? "fa-caret-right" : "fa-caret-down"}"></i>
+					</div>`;
+	}
+
 	return `
 		<div class="nah-identity-header">
 			<div class="nah-identity-text">
 				<div style="position: relative; display: inline-block;">
-					<div class="nah-collapse-btn" onclick="ActionHUD.actionMenu.toggleCollapse()" style="position: absolute; right: 100%; top: 0.6em; transform: translateY(-50%); margin-right: 8px;">
-						<i class="fas ${ActionMenu.isCollapsed ? "fa-caret-right" : "fa-caret-down"}"></i>
-					</div>
+					${collapseBtnHtml}
 					<span class="nah-identity-name">${escapeHtml(displayName)}</span>
 					${endTurnBtn}
 				</div>
@@ -307,9 +332,9 @@ export const buildQuickSlotsHtml = (ActionMenu) => {
 				img = macro.img || "icons/svg/dice-target.svg";
 				name = macro.name;
 			} else {
-				item = { id: realId, name: "Macro" };
+				item = { id: realId, name: "Action" };
 				img = "icons/svg/dice-target.svg";
-				name = "Macro";
+				name = "Action";
 			}
 		} else if (itemId.startsWith("activity:")) {
 			const parts = itemId.split(":");
@@ -439,9 +464,14 @@ export const buildCategoryButtonHtml = (
 	if (!interactive) attributes.push('aria-disabled="true"', 'tabindex="-1"');
 
 	const label = localizeCategory(cat.label, cat.systemId);
+	const labelLen = (label || "").trim().length;
+	if (labelLen > 10) {
+		const scale = Math.max(0.62, Math.min(1.0, Math.round((10.5 / labelLen) * 100) / 100));
+		labelStyle.push(`--nah-label-scale: ${scale}`);
+	}
 
 	return `
-		<button ${attributes.join(" ")}>
+		<button ${attributes.join(" ")} data-label-length="${labelLen}">
 			${bgHtml}
 			<div class="nah-btn-content">
 				<span ${labelStyle.length ? `style="${escapeHtml(labelStyle.join("; "))}"` : ""}>${escapeHtml(label)}</span>
@@ -466,6 +496,32 @@ export const buildCategoryButtonsHtml = (ActionMenu) => {
 		}))
 		.map((cat, actionIndex) => buildCategoryButtonHtml(cat, actionIndex, btnConfig))
 		.join("");
+};
+
+export const autoFitCategoryButtonLabels = (container) => {
+	if (!container) return;
+	const buttons = container.querySelectorAll(".nah-action-btn");
+	buttons.forEach((btn) => {
+		const content = btn.querySelector(".nah-btn-content");
+		const span = content?.querySelector("span");
+		if (!content || !span) return;
+
+		const icon = content.querySelector("i, img, svg, .glyph, .nah-cat-btn-img");
+		const iconWidth = icon ? icon.getBoundingClientRect().width : 0;
+		const contentWidth = content.clientWidth;
+		if (contentWidth <= 0) return;
+
+		const computed = window.getComputedStyle(content);
+		const gap = parseFloat(computed.gap) || 8;
+		const availableWidth = contentWidth - iconWidth - gap;
+
+		if (availableWidth > 0 && span.scrollWidth > availableWidth) {
+			const currentScale = parseFloat(span.style.getPropertyValue("--nah-label-scale")) || 1.0;
+			const ratio = (availableWidth - 2) / span.scrollWidth;
+			const targetScale = Math.max(0.55, Math.min(currentScale, Math.round(currentScale * ratio * 100) / 100));
+			span.style.setProperty("--nah-label-scale", String(targetScale));
+		}
+	});
 };
 
 export const buildListItems = (ActionMenu, items) => {
@@ -787,6 +843,18 @@ export const renderMain = (ActionMenu) => {
 	try {
 		const cfg = getRenderConfig(ActionMenu);
 		const config = game.settings.get(MODULE_ID, "configuration") || {};
+		let enableCollapse = config.enableCollapse ?? false;
+		try {
+			if (game.settings.settings.has(`${MODULE_ID}.enableCollapse`)) {
+				enableCollapse = game.settings.get(MODULE_ID, "enableCollapse") ?? enableCollapse;
+			}
+		} catch (_e) {}
+		if (!enableCollapse && ActionMenu.isCollapsed) {
+			ActionMenu.isCollapsed = false;
+			try {
+				sessionStorage.setItem("nah_is_collapsed", "false");
+			} catch (_e) {}
+		}
 		setupTooltip(cfg.theme, cfg.actionMenuFont);
 
 		const headerHtml = buildHeaderHtml(ActionMenu);
@@ -829,7 +897,7 @@ export const renderMain = (ActionMenu) => {
 
 		const fadeClass = cfg.fadeWhenIdle !== false ? "faded-ui" : "";
 		const hasActiveSub = sub?.classList.contains("active") ? "has-active-submenu" : "";
-		root.className = `theme-${cfg.theme} ${fontClass} ${fadeClass} ${hasActiveSub} niks-hide-selected-text niks-wrap-favorites`.trim();
+		root.className = `theme-${cfg.theme} ${fontClass} ${fadeClass} ${hasActiveSub} ${ActionMenu.isCollapsed ? "is-collapsed" : ""} niks-hide-selected-text niks-wrap-favorites`.trim();
 		root.setAttribute("style", `${posStyle} zoom: ${cfg.scale}; --am-scale: ${cfg.scale}; --am-base-scale: ${cfg.baseScale}; --am-auto-scale: ${cfg.autoScale}; ${fontStyle}`);
 		root.dataset.anchorX = cfg.anchor.anchorX;
 		root.dataset.anchorY = cfg.anchor.anchorY;
@@ -865,6 +933,14 @@ export const renderMain = (ActionMenu) => {
 				}
 				menu.dataset.lastHtml = newMenuHtml;
 			}
+			autoFitCategoryButtonLabels(menu);
+		}
+
+		if (document.fonts?.ready) {
+			document.fonts.ready.then(() => {
+				const currentMenu = document.getElementById(ActionMenu.ID);
+				if (currentMenu) autoFitCategoryButtonLabels(currentMenu);
+			}).catch(() => {});
 		}
 
 		if (isNewRoot) {
@@ -885,6 +961,14 @@ export const renderSubMenu = async (ActionMenu, categoryId, renderGeneration = n
 
 	const categories = getActionCategories(ActionMenu, ActionMenu.currentActor) || [];
 	const category = categories.find((c) => String(c.id) === String(categoryId)) || null;
+	if (!category) {
+		ActionMenu._currentSubMenuData = null;
+		container.classList.remove("active");
+		root?.classList.remove("has-active-submenu");
+		delete container.dataset.activeCat;
+		return false;
+	}
+
 	const data = await getSubMenuData(ActionMenu, ActionMenu.currentActor, categoryId, category);
 	if (
 		renderGeneration !== null &&

@@ -107,6 +107,51 @@
 }
 
 /* ==========================================================================
+   2a. Collapsed HUD State
+   ========================================================================== */
+#nah-dock.is-collapsed {
+	pointer-events: none;
+}
+
+#nah-dock.is-collapsed :is(#nah-resize-handle, #niks-resize-handle, .nah-resize-handle) {
+	display: none !important;
+}
+
+#nah-dock.is-collapsed #nah-submenu-container {
+	display: none !important;
+}
+
+#nah-action-menu.is-collapsed {
+	gap: 0 !important;
+	height: auto !important;
+	min-height: 0 !important;
+}
+
+#nah-action-menu.is-collapsed > .nah-action-btn {
+	display: none !important;
+}
+
+#nah-action-menu.is-collapsed .nah-quick-slot-container {
+	display: none !important;
+}
+
+#nah-action-menu.is-collapsed .nah-top-stack {
+	position: relative !important;
+	bottom: auto !important;
+	right: auto !important;
+	width: 100% !important;
+	display: flex !important;
+	justify-content: flex-end !important;
+}
+
+#nah-action-menu.is-collapsed .nah-identity-header {
+	position: relative !important;
+	bottom: auto !important;
+	right: auto !important;
+	margin-bottom: 0 !important;
+}
+
+/* ==========================================================================
    3. Submenu Container & Flyout Placement
    ========================================================================== */
 #nah-submenu-container {
@@ -204,8 +249,28 @@
 }
 
 .nah-collapse-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 18px;
+	min-height: 18px;
 	cursor: pointer;
+	user-select: none;
 	transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.nah-collapse-btn:hover {
+	transform: translateY(-50%) scale(1.2) !important;
+}
+
+.nah-collapse-btn:active {
+	transform: translateY(-50%) scale(0.9) !important;
+}
+
+.nah-collapse-btn:focus-visible {
+	outline: 2px solid #fff;
+	outline-offset: 1px;
+	border-radius: 3px;
 }
 
 .nah-identity-sub {
@@ -397,6 +462,22 @@
 	justify-content: flex-end;
 	gap: 8px;
 	width: 100%;
+	min-width: 0;
+	box-sizing: border-box;
+}
+
+.nah-btn-content span {
+	font-size: calc(1em * var(--nah-label-scale, 1)) !important;
+	white-space: nowrap;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: clip;
+	line-height: 1;
+	transition: font-size 0.15s ease;
+}
+
+.nah-btn-content > :is(i, img, svg, .glyph, .nah-cat-btn-img) {
+	flex-shrink: 0 !important;
 }
 
 .nah-cat-btn-img {
@@ -405,6 +486,7 @@
 	object-fit: contain;
 	display: block;
 	filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.5));
+	flex-shrink: 0 !important;
 }
 
 #nah-action-menu .nah-action-btn.is-custom-btn,
@@ -1010,31 +1092,32 @@
    ========================================================================== */
 #nah-dock.drag-hover {
 	border: 2px dashed #4ecdc4 !important;
-	background: rgba(78, 205, 196, 0.15) !important;
-	box-shadow: 0 0 20px rgba(78, 205, 196, 0.4) !important;
-	transform: scale(1.05) !important;
-	transition: all 0.2s ease;
+	background: rgba(78, 205, 196, 0.12) !important;
+	box-shadow: 0 0 15px rgba(78, 205, 196, 0.35) !important;
+	transition: border-color 0.15s ease, background 0.15s ease;
 }
 
 #nah-dock.drag-hover::after {
-	content: attr(data-drag-text);
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	font-family: "Teko", sans-serif;
-	font-size: 2.5em;
-	font-weight: bold;
-	color: #fff;
-	text-shadow: 0 0 10px #4ecdc4;
-	pointer-events: none;
-	z-index: 1000;
-	white-space: nowrap;
+	display: none !important;
 }
 
 #nah-dock.drag-hover > * {
-	opacity: 0.3;
-	filter: blur(2px);
+	opacity: 1 !important;
+	filter: none !important;
+}
+
+#nah-action-menu .nah-action-btn.drag-target {
+	outline: 2px dashed #4ecdc4 !important;
+	outline-offset: -2px;
+	background: rgba(78, 205, 196, 0.25) !important;
+	box-shadow: 0 0 12px rgba(78, 205, 196, 0.5) !important;
+}
+
+#nah-sub-menu.drag-hover {
+	outline: 2px dashed #4ecdc4 !important;
+	outline-offset: -3px;
+	background: rgba(78, 205, 196, 0.1) !important;
+	box-shadow: inset 0 0 15px rgba(78, 205, 196, 0.25) !important;
 }
 
 #nah-dock.am-custom-font,

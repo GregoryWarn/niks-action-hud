@@ -78,6 +78,7 @@ export class SettingsManager {
 				dnd5eAutoFavoriteNpcActions: true,
 				dnd5eAutoFavoriteNpcMax: 5,
 				hideEmptySubmenus: true,
+				enableCollapse: false,
 				fadeWhenIdle: true,
 				excludedActorTypes: DEFAULT_EXCLUDED_ACTOR_TYPES,
 			},
@@ -197,6 +198,23 @@ export class SettingsManager {
 				const config = game.settings.get(MODULE_ID, "configuration") || {};
 				if (config.hideEmptySubmenus !== val) {
 					config.hideEmptySubmenus = val;
+					game.settings.set(MODULE_ID, "configuration", config);
+				}
+				ActionMenu.refresh();
+			},
+		});
+
+		game.settings.register(MODULE_ID, "enableCollapse", {
+			name: "NAH.Settings.EnableCollapse.Name",
+			hint: "NAH.Settings.EnableCollapse.Hint",
+			scope: "client",
+			config: false,
+			type: Boolean,
+			default: false,
+			onChange: (val) => {
+				const config = game.settings.get(MODULE_ID, "configuration") || {};
+				if (config.enableCollapse !== val) {
+					config.enableCollapse = val;
 					game.settings.set(MODULE_ID, "configuration", config);
 				}
 				ActionMenu.refresh();

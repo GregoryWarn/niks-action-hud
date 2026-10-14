@@ -67,8 +67,8 @@
       "AllFeatures": "Tutti",
       "AllItems": "Tutti",
       "AllAbilities": "Tutte",
-      "DragMacrosHere": "Trascina qui le macro",
-      "DropMacro": "Rilascia macro",
+      "DragMacrosHere": "Trascina qui le azioni",
+      "DropMacro": "Rilascia azione",
       "RightClickRemove": "Clic con il tasto destro per rimuovere"
     },
     "Tooltips": {
@@ -139,7 +139,7 @@
       "Skills": "ABILITÀ",
       "Checks": "PROVE",
       "Rest": "RIPOSO",
-      "Macros": "MACRO",
+      "Macros": "AZIONI",
       "ShortRest": "Riposo Breve",
       "LongRest": "Riposo Lungo",
       "ShortRestDesc": "Recupera risorse e spendi Dadi Vita",
@@ -192,8 +192,9 @@
       "Any": "qualsiasi"
     },
     "Notifications": {
-      "MacroPermissionFailed": "Impossibile ottenere dal GM i permessi per eseguire la macro.",
-      "MacroDeleted": "Macro rimossa dall'HUD Azioni.",
+      "MacroPermissionFailed": "Impossibile ottenere dal GM i permessi per eseguire l'azione.",
+      "MacroDeleted": "Azione rimossa dall'HUD Azioni.",
+      "ActionDeleted": "Azione rimossa dall'HUD Azioni.",
       "UpdateFailed": "Impossibile aggiornare i dati del personaggio.",
       "PresetExportSuccess": "Configurazione preimpostata esportata correttamente.",
       "PresetImportSuccess": "Configurazione preimpostata importata correttamente.",
@@ -204,6 +205,10 @@
       "DisableHud": {
         "Name": "Disabilita HUD delle Azioni",
         "Hint": "Disabilita completamente e nasconde l'HUD delle Azioni per il tuo account utente."
+      },
+      "EnableCollapse": {
+        "Name": "Abilita pulsante per comprimere l'HUD",
+        "Hint": "Mostra un piccolo pulsante triangolare accanto al nome del token per ridurre l'Action HUD a una striscia compatta."
       },
       "ConfigMenu": {
         "Name": "Configurazione HUD Azioni",

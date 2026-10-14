@@ -645,6 +645,26 @@ export class DnD5eAdapter extends BaseSystemAdapter {
 		}
 		return null;
 	}
+
+	_processCustomItem(actor, savedItem, targetArray, isPersonal, meta = {}) {
+		if (!savedItem || !savedItem.id || !savedItem.type) return;
+
+		const item = ActionMenu.resolveItemFromCustomEntry(actor, savedItem);
+		if (item) {
+			const formatted = ActionMenu.formatDnd5eItemForHUD(item, actor, {
+				isPersonal,
+				meta,
+				macroId: savedItem.type === "Macro" ? savedItem.id : null,
+				flavor: savedItem.flavor || "",
+			});
+			if (formatted) {
+				targetArray.push(formatted);
+				return;
+			}
+		}
+
+		super._processCustomItem(actor, savedItem, targetArray, isPersonal, meta);
+	}
 }
 
 // Mix in ActionMenu and Helpers methods

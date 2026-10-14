@@ -3,7 +3,7 @@
  * Exclusively designed for Foundry V14.
  */
 
-import { switchTab } from "./helpers.js";
+import { switchTab, refreshConfigStatus } from "./helpers.js";
 import { captureInputData } from "./capture.js";
 import { triggerPreview } from "./preview.js";
 import { onSave } from "./handlers.js";
@@ -64,24 +64,9 @@ export const bindInputLiveListeners = (app) => {
 		});
 	});
 
-	// Chips / Excluded Actor Types
 	root.querySelectorAll('.hud-chip input[type="checkbox"]').forEach((checkbox) => {
 		checkbox.addEventListener("change", () => {
-			const chip = checkbox.closest(".hud-chip");
-			const isChecked = checkbox.checked;
-			if (chip) {
-				chip.classList.toggle("active", isChecked);
-				const icon = chip.querySelector("i");
-				if (icon) {
-					if (isChecked) {
-						icon.classList.remove("fa-circle");
-						icon.classList.add("fa-check-circle");
-					} else {
-						icon.classList.remove("fa-check-circle");
-						icon.classList.add("fa-circle");
-					}
-				}
-			}
+			checkbox.closest(".hud-chip")?.classList.toggle("active", checkbox.checked);
 			captureInputData(app, root);
 			triggerPreview(app);
 		});
@@ -108,7 +93,7 @@ export const bindFilePickers = (app) => {
 			if (!targetInput) return;
 
 			const current = targetInput.value;
-			const fp = new FilePicker({
+			const fp = new foundry.applications.apps.FilePicker.implementation({
 				type: btn.dataset.type || "image",
 				current: current,
 				callback: (path) => {
@@ -191,7 +176,7 @@ export const bindSettingsLocksListeners = (app) => {
 		const updateIconDom = (lock) => {
 			icon.classList.remove("none", "unlocked", "soft", "hard");
 			const i = icon.querySelector("i");
-			const row = icon.closest(".hud-setting-row");
+			const row = icon.closest(".hud-cfg-row");
 
 			if (!lock) {
 				icon.classList.add("unlocked");
@@ -227,5 +212,15 @@ export const bindSettingsLocksListeners = (app) => {
 			updateIconDom(newLock);
 		});
 	});
+};
+
+export const bindUnsavedChangesTracking = (app) => {
+	const root = app.element;
+	if (!root) return;
+
+	const refresh = () => refreshConfigStatus(app);
+	root.addEventListener("input", refresh);
+	root.addEventListener("change", refresh);
+	root.addEventListener("click", refresh);
 };
 

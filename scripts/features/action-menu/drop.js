@@ -64,7 +64,7 @@ export async function onDrop(ActionMenu, event) {
 	const subContainer = document.getElementById(ActionMenu.SUB_ID) || document.getElementById(DOM_IDS.SUBMENU);
 	subContainer?.classList.remove("drag-hover");
 
-	const dragPayload = TextEditor.getDragEventData ? TextEditor.getDragEventData(event) : null;
+	const dragPayload = foundry.applications.ux.TextEditor.implementation.getDragEventData ? foundry.applications.ux.TextEditor.implementation.getDragEventData(event) : null;
 	if (!dragPayload?.type) return;
 
 	const targetCategory = subContainer?.dataset?.activeCat;

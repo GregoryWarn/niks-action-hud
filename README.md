@@ -46,7 +46,7 @@ A sleek, canvas-docked Action HUD for **Foundry VTT (v14)** and **D&D 5e (6.x)**
 - **Native Activity Choice Dialogs**: Spells, items, and features containing multiple activities (such as *Hunter's Mark* with spell slot casting, moving the mark, and bonus damage) automatically trigger DnD5e's native Activity Choice dialog on click.
 - **Intelligent Resource & Spell Slot Tracking**: Spells, actions, and features with zero remaining daily uses or expended spell slots remain clickable and executable, allowing players and GMs to post chat cards, cast without consuming resources, or trigger DnD5e's native upcast and slot selection prompts.
 - **Direct Sheet Navigation**: Right-click any action, spell, or item to jump directly to its sheet.
-- **Multi-Language Support**: Fully localized out of the box in English, German (Deutsch), French (Français), Spanish (Español), and Italian (Italiano, contributed by [@GregoryWarn](https://github.com/GregoryWarn)).
+- **Multi-Language Support**: Fully localized out of the box in English, German (Deutsch), French (Français), Spanish (Español), Italian (Italiano, contributed by [@GregoryWarn](https://github.com/GregoryWarn)), and Brazilian Portuguese (Português (Brasil), contributed by [@RichardFontoura](https://github.com/RichardFontoura)).
 
 ---
 
@@ -115,6 +115,7 @@ Nik's Action HUD provides out-of-the-box localizations for:
 - 🇩🇪 **Deutsch** (`de`)
 - 🇫🇷 **Français** (`fr`)
 - 🇪🇸 **Español** (`es`)
+- 🇧🇷 **Português (Brasil)** (`pt-BR`) — contributed by [@RichardFontoura](https://github.com/RichardFontoura)
 
 ---
 

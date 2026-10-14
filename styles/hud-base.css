@@ -407,6 +407,11 @@
 	filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.5));
 }
 
+.nah-icon-glyph {
+	font-style: normal;
+	line-height: 1;
+}
+
 #nah-action-menu .nah-action-btn.is-custom-btn,
 #nah-action-menu .nah-action-btn.is-custom-btn:first-of-type {
 	background: transparent !important;

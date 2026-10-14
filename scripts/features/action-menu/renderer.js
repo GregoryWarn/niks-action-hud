@@ -9,6 +9,7 @@ import { prepareFavoriteItems } from "./favorites.js";
 import { resolveSafeTokenImage, handleImageError, DEFAULT_FALLBACK_TOKEN_IMG } from "./image-fallback.js";
 import { isThemeAvailable, getDefaultTheme } from "../../config/constants.js";
 import { localizeCategory } from "../../utils/localization.js";
+import { iconMarkup } from "../../utils/icon-source.js";
 
 const escapeHtml = (value) => String(value ?? "")
 	.replace(/&/g, "&amp;")
@@ -400,16 +401,7 @@ export const buildCategoryButtonHtml = (
 		}
 	}
 
-	let iconHtml = "";
-	if (String(cat.img || "").trim()) {
-		iconHtml = `<img src="${escapeHtml(cat.img)}" class="nah-cat-btn-img" alt="">`;
-	} else {
-		const rawIcon = String(cat.icon || "");
-		const iconClass = rawIcon.startsWith("ra-") && !rawIcon.includes("ra ")
-			? `ra ${rawIcon}`
-			: rawIcon;
-		iconHtml = `<i class="${escapeHtml(iconClass)}"></i>`;
-	}
+	const iconHtml = iconMarkup(String(cat.img || "").trim() || cat.icon, { imageClass: "nah-cat-btn-img" });
 
 	let bgHtml = "";
 	let customClass = "";
@@ -483,9 +475,10 @@ export const buildListItems = (ActionMenu, items) => {
 	return preparedItems
 		.map((item) => {
 			if (item.isHeader) {
-				const iconHtml = item.icon
-					? `<i class="${escapeHtml(item.icon)}" style="margin-right: 6px; font-size: 0.9em; opacity: 0.85;"></i>`
-					: (item.img ? `<img src="${escapeHtml(item.img)}" style="width: 16px; height: 16px; margin-right: 6px; object-fit: contain; vertical-align: middle;">` : "");
+				const iconHtml = iconMarkup(item.icon || item.img, {
+					iconStyle: "margin-right: 6px; font-size: 0.9em; opacity: 0.85;",
+					imageStyle: "width: 16px; height: 16px; margin-right: 6px; object-fit: contain; vertical-align: middle;",
+				});
 				return `
 					<div class="nah-list-header">
 						${iconHtml}<span>${escapeHtml(item.name)}</span>

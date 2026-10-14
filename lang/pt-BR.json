@@ -1,0 +1,318 @@
+{
+  "NAH": {
+    "Title": "Nik's Action HUD",
+    "Categories": {
+      "Attacks": "Ataques",
+      "Attack": "Ataque",
+      "Spells": "Magias",
+      "Magic": "Magia",
+      "Features": "Características",
+      "Feature": "Característica",
+      "Legendary": "Lendárias",
+      "Abilities": "Atributos",
+      "Utility": "Utilitários",
+      "Items": "Itens",
+      "Inventory": "Inventário"
+    },
+    "Tabs": {
+      "All": "Todos",
+      "Cantrips": "Truques",
+      "Level": "Nível {level}",
+      "Actions": "Ações",
+      "BonusActions": "Ações Bônus",
+      "Reactions": "Reações",
+      "Legendary": "Ações Lendárias",
+      "Other": "Outros",
+      "Checks": "Testes de Atributo",
+      "Saves": "Testes de Resistência",
+      "Skills": "Perícias",
+      "Rests": "Descansos",
+      "Initiative": "Iniciativa",
+      "Spells": "Magias"
+    },
+    "Titles": {
+      "Attacks": "Ataques",
+      "Spells": "Magias",
+      "Features": "Características",
+      "Legendary": "Lendárias",
+      "Utility": "Utilitários",
+      "Abilities": "Atributos",
+      "Items": "Itens"
+    },
+    "UI": {
+      "SelectedActor": "Ator Ativo",
+      "EndTurn": "Encerrar Turno",
+      "Settings": "Configurações do Action HUD",
+      "SearchPlaceholder": "Buscar ações, magias, itens...",
+      "Collapse": "Recolher HUD",
+      "Expand": "Expandir HUD",
+      "NoEntries": "Nenhuma entrada disponível.",
+      "Empty": "Vazio",
+      "NoFavoritesInView": "Nenhum favorito na visualização atual.",
+      "AddFavorite": "Adicionar aos favoritos",
+      "RemoveFavorite": "Remover dos favoritos",
+      "SortFavoritesFirst": "Mostrar favoritos primeiro",
+      "ShowFavoritesOnly": "Mostrar apenas favoritos",
+      "NoPermission": "Você não tem permissão para realizar esta ação.",
+      "OpenSheetHint": "Clique com o botão direito para ver a ficha do item",
+      "DragHint": "Arraste para reordenar o favorito",
+      "LivePreview": "Pré-visualização Ativa",
+      "Save": "Salvar",
+      "Cancel": "Cancelar",
+      "Delete": "Excluir",
+      "Reset": "Restaurar Padrões",
+      "Apply": "Aplicar",
+      "All": "Todos",
+      "AllSpells": "Todas",
+      "AllFeatures": "Todas",
+      "AllItems": "Todos",
+      "AllAbilities": "Todos",
+      "DragMacrosHere": "Arraste e solte macros aqui",
+      "DropMacro": "Soltar Macro",
+      "RightClickRemove": "Clique com o botão direito para remover"
+    },
+    "Tooltips": {
+      "AddFavorite": "Adicionar aos favoritos",
+      "RemoveFavorite": "Remover dos favoritos",
+      "FavoriteOptions": "Opções de favorito",
+      "OpenItemSheet": "Abrir ficha do item",
+      "RitualSpell": "Ritual Conhecido (Não Preparado)",
+      "SpellDC": "CD de Resistência de Magia",
+      "SpellAttack": "Modificador de Ataque de Magia",
+      "LegendaryResistance": "Resistência Lendária",
+      "ReorderFavorites": "Arraste para reorganizar os favoritos",
+      "Advantage": "Vantagem",
+      "Disadvantage": "Desvantagem",
+      "Normal": "Normal",
+      "Initiative": "Determina a ordem dos turnos em combate.",
+      "SaveDescriptions": {
+        "str": "Resistir fisicamente a uma força direta.",
+        "dex": "Esquivar-se do perigo.",
+        "con": "Suportar um perigo tóxico, veneno ou doença, ou manter a concentração em uma magia ao sofrer dano.",
+        "int": "Reconhecer uma ilusão como falsa, ou resistir a efeitos psiônicos e psíquicos que atacam seu intelecto e raciocínio.",
+        "wis": "Resistir a um ataque mental.",
+        "cha": "Afirmar sua identidade."
+      },
+      "CheckDescriptions": {
+        "str": "Levantar, empurrar, puxar ou quebrar algo.",
+        "dex": "Mover-se com agilidade, rapidez ou em silêncio.",
+        "con": "Levar o corpo além de seus limites normais.",
+        "int": "Raciocinar ou lembrar.",
+        "wis": "Perceber coisas no ambiente ou no comportamento das criaturas.",
+        "cha": "Influenciar, entreter ou enganar."
+      },
+      "SkillDescriptions": {
+        "acr": "Manter-se de pé em uma situação complicada, ou realizar uma acrobacia.",
+        "ani": "Acalmar ou treinar um animal, ou fazer um animal se comportar de determinada maneira.",
+        "arc": "Lembrar conhecimentos sobre magias, itens mágicos e os planos de existência.",
+        "ath": "Saltar mais longe que o normal, manter-se à tona em águas agitadas ou quebrar algo.",
+        "dec": "Contar uma mentira convincente, ou usar um disfarce de forma convincente.",
+        "his": "Lembrar conhecimentos sobre eventos históricos, pessoas, nações e culturas.",
+        "ins": "Discernir o humor e as intenções de uma pessoa.",
+        "itm": "Impressionar ou ameaçar alguém para que faça o que você quer.",
+        "inv": "Encontrar informações obscuras em livros, ou deduzir como algo funciona.",
+        "med": "Diagnosticar uma doença, ou determinar o que matou alguém que morreu recentemente.",
+        "nat": "Lembrar conhecimentos sobre terrenos, plantas, animais e o clima.",
+        "prc": "Usando uma combinação de sentidos, notar algo que é fácil de passar despercebido.",
+        "prf": "Atuar, contar uma história, tocar música ou dançar.",
+        "per": "Convencer alguém de algo com honestidade e cortesia.",
+        "rel": "Lembrar conhecimentos sobre deuses, rituais religiosos e símbolos sagrados.",
+        "slt": "Bater uma carteira, esconder um objeto que caiba na mão ou realizar um truque de mãos.",
+        "ste": "Passar despercebido movendo-se em silêncio e escondendo-se atrás das coisas.",
+        "sur": "Seguir rastros, coletar alimentos, encontrar uma trilha ou evitar perigos naturais."
+      }
+    },
+    "Config": {
+      "Title": "Configuração do Nik's Action HUD",
+      "Saved": "Configuração do Nik's Action HUD salva.",
+      "ResetSuccess": "Configuração restaurada para os padrões.",
+      "ResetConfirmTitle": "Restaurar Configuração",
+      "ResetConfirmMessage": "Tem certeza de que deseja restaurar as configurações de {scope} para os padrões?",
+      "FontDefault": "Fonte Padrão"
+    },
+    "Presets": {
+      "SystemMismatchTitle": "Sistema Incompatível",
+      "SystemMismatchContent": "Este preset foi criado para {presetSystem}, mas o sistema atual é {currentSystem}. Continuar a importação?"
+    },
+    "Dnd5e": {
+      "Saves": "RESISTÊNCIAS",
+      "Skills": "PERÍCIAS",
+      "Checks": "TESTES",
+      "Rest": "DESCANSO",
+      "Macros": "MACROS",
+      "ShortRest": "Descanso Curto",
+      "LongRest": "Descanso Longo",
+      "ShortRestDesc": "Recupera recursos e gasta Dados de Vida",
+      "LongRestDesc": "Recupera todos os PV, magias e recursos",
+      "Initiative": "Iniciativa",
+      "RollInit": "Rolar Iniciativa",
+      "InvWeapons": "ARMAS",
+      "InvWeaponsDesc": "Armas (Não Equipadas)",
+      "InvGear": "EQUIP.",
+      "InvGearDesc": "Equipamentos e Armaduras",
+      "InvConsum": "CONSUM.",
+      "InvConsumDesc": "Consumíveis",
+      "InvTools": "FERRAM.",
+      "InvToolsDesc": "Ferramentas",
+      "InvLoot": "TESOURO",
+      "InvLootDesc": "Tesouro",
+      "InvContainer": "BOLSAS",
+      "InvContainerDesc": "Recipientes",
+      "ActionEquip": "Equipar",
+      "ActionUnequip": "Desequipar",
+      "ResourceValue": "Valor do Recurso",
+      "ResourceTracked": "Recurso Monitorado",
+      "Ready": "Pronto",
+      "Recharge": "Recarga {val}+",
+      "Cantrip": "TRUQUE",
+      "CantripsDesc": "Truques (À Vontade)",
+      "Pact": "PACTO",
+      "PactDesc": "Magia de Pacto (Nível {level})",
+      "Innate": "INATA",
+      "InnateDesc": "Conjuração Inata",
+      "AtWill": "À VONTADE",
+      "AtWillDesc": "Magias à Vontade",
+      "Level": "NV {level}",
+      "LevelDesc": "Magias de Nível {level}",
+      "ItemSpells": "ITEM",
+      "ItemSpellsDesc": "Magias de Itens",
+      "Uses": "{current} / {max}"
+    },
+    "Spells": {
+      "UnpreparedRitualTitle": "Apenas Ritual (Não Preparada)",
+      "UnpreparedRitualHint": "Ritual Não Preparado",
+      "RitualTag": "Ritual"
+    },
+    "Favorites": {
+      "OpenSheet": "Abrir Ficha do Item",
+      "DeleteFavorite": "Excluir Favorito",
+      "DialogSubtitle": "Ação Favorita"
+    },
+    "Damage": {
+      "Any": "qualquer"
+    },
+    "Notifications": {
+      "MacroPermissionFailed": "Não foi possível obter do Mestre permissão para executar a macro.",
+      "MacroDeleted": "Macro removida do Action HUD.",
+      "UpdateFailed": "Não foi possível atualizar os dados do ator.",
+      "PresetExportSuccess": "Preset exportado com sucesso.",
+      "PresetImportSuccess": "Preset importado com sucesso.",
+      "PresetImportError": "Falha ao importar o preset: formato JSON inválido.",
+      "SectionReset": "Configurações da seção restauradas para os padrões."
+    },
+    "Settings": {
+      "DisableHud": {
+        "Name": "Desativar Action HUD",
+        "Hint": "Desativa e oculta completamente o Action HUD para a sua conta de usuário."
+      },
+      "ConfigMenu": {
+        "Name": "Configuração do Action HUD",
+        "Label": "Configurar Action HUD",
+        "Hint": "Abre o painel visual de configuração do Action HUD para temas, layout, regras e categorias."
+      },
+      "SubmenuSide": {
+        "Name": "Direção de Abertura dos Submenus",
+        "Hint": "Direção em que os submenus abrem em relação à barra. Automático detecta as bordas da tela dinamicamente.",
+        "Auto": "Automático",
+        "Left": "Esquerda",
+        "Right": "Direita"
+      },
+      "TooltipPosition": {
+        "Name": "Posicionamento das Dicas",
+        "Hint": "Escolha como as dicas detalhadas são posicionadas.",
+        "Anchor": "Ancoradas na Barra",
+        "Cursor": "Seguir o Cursor"
+      },
+      "InterfaceFading": {
+        "Name": "Esmaecer quando Inativo (Esmaecimento da Interface)",
+        "Hint": "Escurece o Action HUD quando inativo, respeitando as configurações de Opacidade Inativa e Velocidade de Esmaecimento do Foundry. Restaura a opacidade total ao passar o mouse, focar ou quando um submenu está aberto."
+      },
+      "HideEmptySubmenus": {
+        "Name": "Ocultar Submenus Vazios",
+        "Hint": "Oculta botões de ação e submenus que não têm entradas para o ator ativo (por exemplo, oculta o botão de Magias para personagens que não conjuram)."
+      },
+      "WizardRituals": {
+        "Name": "Mostrar Rituais Não Preparados do Mago",
+        "Hint": "Exibe no Grimório as magias não preparadas com a marcação de ritual para personagens magos, permitindo conjurar magias de ritual diretamente do grimório."
+      },
+      "DamageTypeDisplay": {
+        "Name": "Exibição do Tipo de Dano",
+        "Hint": "Escolha como os tipos de dano são exibidos nos botões de ação: ícones compactos levemente coloridos, ícones com texto ou apenas texto.",
+        "Icons": "Apenas Ícones",
+        "Both": "Ícones e Texto",
+        "Text": "Apenas Texto"
+      },
+      "AutoFavoriteNpc": {
+        "Name": "Favoritar Ações de PdM Automaticamente",
+        "Hint": "Favorita automaticamente atividades de ataque, dano e teste de resistência (ordenadas pelo tempo de ação) quando um token de PdM sem favoritos é colocado na cena."
+      },
+      "AutoFavoriteNpcMax": {
+        "Name": "Máximo de Características para Favoritar",
+        "Hint": "Número máximo de itens ou características elegíveis (com atividades de ataque, dano ou teste de resistência) que um PdM pode ter para acionar o favoritamento automático (padrão 5)."
+      }
+    },
+    "Themes": {
+      "Carolingian": "Carolingian UI",
+      "Arcanum": "Arcanum",
+      "Obsidian": "Obsidian",
+      "Grimoire": "Grimoire",
+      "Eldritch": "Eldritch",
+      "Valiant": "Valiant",
+      "Sylvan": "Sylvan",
+      "Infernal": "Infernal",
+      "Frostborn": "Frostborn",
+      "Clockwork": "Clockwork",
+      "Radiant": "Radiant",
+      "Ossuary": "Ossuary",
+      "ExportPartialWarning": "Exportação concluída com {count} avisos.",
+      "ExportSuccess": "Tema exportado com sucesso.",
+      "ImportNoJsonError": "O arquivo enviado não contém uma configuração de tema válida."
+    },
+    "Keybindings": {
+      "ToggleHUD": {
+        "Name": "Alternar Action HUD",
+        "Hint": "Alterna a visibilidade do HUD."
+      },
+      "ToggleActionMenuVisibility": {
+        "Name": "Alternar Visibilidade do Menu",
+        "Hint": "Alterna o menu de ações."
+      }
+    },
+    "IconPicker": {
+      "Title": "Seletor de ícones",
+      "SearchPlaceholder": "Buscar ícones pelo nome",
+      "ClearSearch": "Limpar busca",
+      "ValuePlaceholder": "Classes do Font Awesome, um emoji ou o caminho de uma imagem",
+      "ValueLabel": "Valor do ícone",
+      "Tab": {
+        "FontAwesome": "Font Awesome",
+        "RpgAwesome": "RPG Awesome",
+        "Emoji": "Emoji",
+        "Image": "Imagem"
+      },
+      "Family": {
+        "Solid": "Sólido",
+        "Regular": "Regular",
+        "Brands": "Marcas",
+        "Color": "Colorido",
+        "File": "Arquivo"
+      },
+      "Count": "{family} · {count} ícones",
+      "CountRpgAwesome": "RPG Awesome · {count} ícones",
+      "CountEmoji": "Emoji · {count}",
+      "CountImage": "Imagem",
+      "Empty": "Nenhum ícone corresponde a “{query}”.",
+      "EmptyAll": "Nenhum ícone disponível.",
+      "Refine": "Mostrando os primeiros resultados. Refine a busca para ver o restante.",
+      "ImageHint": "Qualquer imagem deste mundo funciona como ícone. Ela é desenhada no tamanho do texto ao redor.",
+      "Browse": "Escolher uma imagem",
+      "Clear": "Limpar",
+      "Use": "Usar",
+      "Field": {
+        "Label": "Ícone",
+        "Open": "Abrir o seletor de ícones",
+        "None": "Sem ícone"
+      }
+    }
+  }
+}

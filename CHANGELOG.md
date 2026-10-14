@@ -2,6 +2,27 @@
 
 All notable changes to **Nik's Action HUD (`niks-action-hud`)** will be documented in this file.
 
+## [14.13.0] - 2026-10-14
+
+### Added
+- **Brazilian Portuguese Localization**: Added a complete Brazilian Portuguese (`pt-BR`, Português (Brasil)) translation of the module, contributed by @RichardFontoura. D&D terminology follows the official Portuguese Player's Handbook and the Foundry dnd5e pt-BR system (Truques, Testes de Resistência, Perícias, Ações Bônus, PdM).
+- **Icon Picker**: Category icons are now chosen through a dedicated Icon Picker window opened from the Menu Builder. It offers four sources: Font Awesome (Solid, Regular and Brands, read at runtime from the stylesheets Foundry already loads), RPG Awesome (all 496 icons bundled with the module), Emoji (a curated table searchable in English and Portuguese) and Image (any file from the world through Foundry's FilePicker). Search ignores accents, the grid shows the selected icon, and the footer previews the value and accepts typed classes, pasted emoji or image paths.
+- **Emoji Category Icons**: Category buttons and search result headers on the HUD now render emoji icons, inheriting the size and color each theme gives to regular icons.
+- **Unsaved Changes Indicator**: The configuration footer now shows how many settings differ from the saved configuration (`No unsaved changes · preview is live` / `2 unsaved changes · preview is live`), updating live as you edit.
+- **Icon Picker Localization**: All Icon Picker text is localized under `NAH.IconPicker` in English and Brazilian Portuguese. German, French, Spanish and Italian ship the English strings until they are translated.
+
+### Changed
+- **Configuration Window Redesign**: Rebuilt the look of every tab of the configuration window (General, Appearance, Menu Builder, Presets and Backup) with a denser, flatter layout: a sidebar with an accent bar on the active tab, grouped setting lists with item counts, compact switches, selects and number fields, monospace scope badges (`WORLD` / `CLIENT`), a three-column theme grid, a categories list with inline expand and delete controls, and preset, import, export and reset actions laid out as rows. All existing settings, actions, drag-and-drop reordering, settings locks and the live HUD preview are preserved.
+- **IBM Plex Typography**: The configuration window and the Icon Picker use IBM Plex Sans and IBM Plex Mono, bundled with the module under the SIL Open Font License (`licenses/IBM-Plex-LICENSE.txt`) so no external font service is contacted.
+- **Single Category Icon Field**: The Menu Builder's separate "Icon Class" and "Icon Image Override" fields were merged into one "Icon" field backed by the Icon Picker. Existing categories keep their saved icons and images.
+- **Stylesheet Entry Point**: `module.json` now declares a single `styles/module.css` that imports the base, configuration, Icon Picker and theme stylesheets in the same cascade order as before.
+- **Manifest Authors**: Reordered `module.json` keys and added LoboWerewolf as a module author.
+
+### Fixed
+- **Removed Categories Reappearing**: Deleting a custom category in the Menu Builder no longer brings it back immediately. The live preview was re-reading the form before the window re-rendered and restoring the deleted category from the stale inputs.
+- **Section Resets, Presets and Imports Being Undone**: Resetting a single settings section, loading a configuration or menu layout preset, and importing a JSON configuration or theme ZIP no longer get overwritten by the values that were on screen before the action.
+- **Deprecated Foundry API Warnings**: Replaced the global `saveDataToFile`, `FilePicker`, `loadTemplates` and `TextEditor` references with their namespaced Foundry V13+ equivalents, removing the compatibility warnings logged when exporting, browsing files, enriching tooltips and dropping items, ahead of their removal in Version 15.
+
 ## [14.12.2] - 2026-10-14
 
 ### Fixed

@@ -1,0 +1,422 @@
+.application.niks-icon-picker {
+	background: #0d1117;
+	color: #f0f6fc;
+	font-family: var(--hud-cfg-font-stack);
+	font-size: 12.5px;
+	line-height: 1.45;
+	box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+	border: 1px solid #232a33;
+	border-radius: 8px;
+	overflow: hidden;
+}
+
+.application.niks-icon-picker .window-content {
+	padding: 0;
+	background: transparent;
+	color: inherit;
+	overflow: hidden;
+}
+
+.niks-icon-picker .nah-ip {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	height: 100%;
+	min-height: 0;
+}
+
+.niks-icon-picker .nah-ip-body {
+	flex: 1;
+	min-height: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+	padding: 18px;
+}
+
+.niks-icon-picker .nah-ip-toolbar {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+
+.niks-icon-picker .nah-ip-search {
+	flex: 1;
+	min-width: 0;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	height: 32px;
+	padding: 0 10px;
+	box-sizing: border-box;
+	background: #0a0e13;
+	border: 1px solid #2a323b;
+	border-radius: 6px;
+	transition: border-color 0.2s;
+}
+
+.niks-icon-picker .nah-ip-search:hover {
+	border-color: #3a434d;
+}
+
+.niks-icon-picker .nah-ip-search > i {
+	font-size: 11px;
+	color: #6e7681;
+}
+
+.niks-icon-picker :is(.nah-ip-search-input, .nah-ip-value-input) {
+	flex: 1;
+	min-width: 0;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	border-radius: 0;
+	background: transparent;
+	color: #f0f6fc;
+	outline: none;
+	box-shadow: none;
+}
+
+.niks-icon-picker .nah-ip-search-input {
+	font-family: var(--hud-cfg-font-stack);
+	font-size: 12.5px;
+}
+
+.niks-icon-picker :is(.nah-ip-search-input, .nah-ip-value-input)::placeholder {
+	color: #6e7681;
+}
+
+.niks-icon-picker .nah-ip-search-clear {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: auto;
+	min-width: 0;
+	height: auto;
+	margin: 0;
+	padding: 2px;
+	border: 0;
+	background: transparent;
+	color: #6e7681;
+	font-size: 11px;
+	line-height: 1;
+	cursor: pointer;
+	outline: none;
+	box-shadow: none;
+}
+
+.niks-icon-picker .nah-ip-search-clear:hover {
+	background: transparent;
+	color: #f0f6fc;
+}
+
+.niks-icon-picker .nah-ip-segments {
+	display: flex;
+	flex-shrink: 0;
+	gap: 2px;
+	padding: 2px;
+	background: #0a0e13;
+	border: 1px solid #1e252d;
+	border-radius: 6px;
+}
+
+.niks-icon-picker .nah-ip-segment {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: auto;
+	min-width: 0;
+	height: 26px;
+	margin: 0;
+	padding: 0 12px;
+	border: 0;
+	border-radius: 4px;
+	background: transparent;
+	color: #8b949e;
+	font-family: var(--hud-cfg-font-mono);
+	font-size: 10px;
+	font-weight: 600;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	line-height: normal;
+	white-space: nowrap;
+	cursor: pointer;
+	outline: none;
+	box-shadow: none;
+	transition: background 0.15s, color 0.2s;
+}
+
+.niks-icon-picker .nah-ip-segment-sm {
+	height: 24px;
+	padding: 0 11px;
+}
+
+.niks-icon-picker .nah-ip-segment:hover {
+	background: transparent;
+	color: #f0f6fc;
+}
+
+.niks-icon-picker .nah-ip-segment.is-active {
+	background: rgba(0, 229, 255, 0.08);
+	color: #00e5ff;
+	box-shadow: inset 0 0 0 1px rgba(0, 229, 255, 0.35);
+}
+
+.niks-icon-picker .nah-ip-subbar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	min-height: 30px;
+}
+
+.niks-icon-picker .nah-ip-count {
+	font-family: var(--hud-cfg-font-mono);
+	font-size: 10.5px;
+	letter-spacing: 0.14em;
+	color: #8b949e;
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+
+.niks-icon-picker .nah-ip-results {
+	flex: 1;
+	min-height: 0;
+	overflow-y: auto;
+	padding: 10px;
+	background: #121820;
+	border: 1px solid #1e252d;
+	border-radius: 8px;
+}
+
+.niks-icon-picker .nah-ip-results::-webkit-scrollbar {
+	width: 8px;
+}
+
+.niks-icon-picker .nah-ip-results::-webkit-scrollbar-thumb {
+	background: #2a323b;
+	border-radius: 4px;
+}
+
+.niks-icon-picker .nah-ip-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(56px, 1fr));
+	gap: 6px;
+}
+
+.niks-icon-picker .nah-ip-option {
+	display: grid;
+	place-items: center;
+	width: auto;
+	min-width: 0;
+	height: 44px;
+	margin: 0;
+	padding: 0;
+	border: 1px solid #1a2028;
+	border-radius: 4px;
+	background: #0d1117;
+	color: #c9d1d9;
+	font-size: 17px;
+	line-height: 1;
+	cursor: pointer;
+	outline: none;
+	box-shadow: none;
+	transition: background 0.15s, border-color 0.2s, color 0.2s;
+}
+
+.niks-icon-picker .nah-ip-option:hover {
+	background: #1a2028;
+	border-color: #2a323b;
+	color: #c9d1d9;
+}
+
+.niks-icon-picker .nah-ip-option.is-selected {
+	background: rgba(0, 229, 255, 0.08);
+	border-color: rgba(0, 229, 255, 0.45);
+	color: #00e5ff;
+}
+
+.niks-icon-picker .nah-ip-empty,
+.niks-icon-picker .nah-ip-refine {
+	margin: 0;
+	padding: 24px 0;
+	font-size: 12px;
+	color: #8b949e;
+	text-align: center;
+}
+
+.niks-icon-picker .nah-ip-refine {
+	padding: 12px 0 4px;
+}
+
+.niks-icon-picker .nah-ip-image {
+	height: 100%;
+	min-height: 220px;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 14px;
+	padding: 24px;
+}
+
+.niks-icon-picker .nah-ip-image-drop {
+	display: grid;
+	place-items: center;
+	width: 120px;
+	height: 120px;
+	background: #0a0e13;
+	border: 1px dashed #2a323b;
+	border-radius: 8px;
+	color: #6e7681;
+	font-size: 30px;
+}
+
+.niks-icon-picker .nah-ip-image-drop.has-image {
+	padding: 10px;
+	box-sizing: border-box;
+	border-style: solid;
+	border-color: rgba(0, 229, 255, 0.35);
+}
+
+.niks-icon-picker .nah-ip-image-drop img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	border: 0;
+}
+
+.niks-icon-picker .nah-ip-image p {
+	margin: 0;
+	max-width: 320px;
+	font-size: 12px;
+	color: #8b949e;
+	text-align: center;
+	text-wrap: pretty;
+}
+
+.niks-icon-picker .nah-ip-footer {
+	display: flex;
+	align-items: center;
+	flex-shrink: 0;
+	gap: 10px;
+	height: 56px;
+	box-sizing: border-box;
+	padding: 0 16px 0 18px;
+	background: #11161d;
+	border-top: 1px solid #232a33;
+}
+
+.niks-icon-picker .nah-ip-preview {
+	display: grid;
+	place-items: center;
+	flex-shrink: 0;
+	width: 32px;
+	height: 32px;
+	box-sizing: border-box;
+	border-radius: 6px;
+	background: rgba(0, 229, 255, 0.08);
+	border: 1px solid rgba(0, 229, 255, 0.35);
+	color: #00e5ff;
+	font-size: 15px;
+	line-height: 1;
+	overflow: hidden;
+}
+
+.niks-icon-picker .nah-ip-preview.is-empty {
+	background: #0a0e13;
+	border-color: #2a323b;
+	color: #6e7681;
+}
+
+.niks-icon-picker .nah-ip-preview img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	border: 0;
+}
+
+.niks-icon-picker .nah-ip-value {
+	flex: 1;
+	min-width: 0;
+	display: flex;
+	align-items: center;
+	height: 30px;
+	padding: 0 10px;
+	box-sizing: border-box;
+	background: #0a0e13;
+	border: 1px solid #2a323b;
+	border-radius: 6px;
+	transition: border-color 0.2s;
+}
+
+.niks-icon-picker .nah-ip-value:hover {
+	border-color: #3a434d;
+}
+
+.niks-icon-picker .nah-ip-value-input {
+	font-family: var(--hud-cfg-font-mono);
+	font-size: 11.5px;
+}
+
+.niks-icon-picker .nah-ip-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	width: auto;
+	min-width: 0;
+	height: 30px;
+	margin: 0;
+	padding: 0 14px;
+	border: 1px solid #2a323b;
+	border-radius: 6px;
+	background: transparent;
+	color: #c9d1d9;
+	font-family: var(--hud-cfg-font-mono);
+	font-size: 11px;
+	font-weight: 500;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	line-height: normal;
+	cursor: pointer;
+	outline: none;
+	box-shadow: none;
+	transition: background 0.15s, border-color 0.2s;
+}
+
+.niks-icon-picker .nah-ip-btn:hover {
+	background: #1a2028;
+	border-color: #3a434d;
+	color: #c9d1d9;
+}
+
+.niks-icon-picker .nah-ip-btn-primary {
+	padding: 0 18px;
+	border-color: #00e5ff;
+	background: #00e5ff;
+	color: #0b121e;
+	font-weight: 600;
+}
+
+.niks-icon-picker .nah-ip-btn-primary:hover {
+	background: #5cefff;
+	border-color: #5cefff;
+	color: #0b121e;
+}
+
+.niks-icon-picker .window-content button:focus-visible {
+	outline: 2px solid #00e5ff;
+	outline-offset: 2px;
+}
+
+.niks-icon-picker .window-content :is(.nah-ip-search-input, .nah-ip-value-input):is(:focus, :focus-visible) {
+	outline: none;
+	box-shadow: none;
+}
+
+.niks-icon-picker :is(.nah-ip-search, .nah-ip-value):focus-within {
+	border-color: rgba(0, 229, 255, 0.45);
+}

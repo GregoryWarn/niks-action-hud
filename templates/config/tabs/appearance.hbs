@@ -1,181 +1,171 @@
-<!-- Appearance & Style Tab -->
 <div class="hud-tab-pane {{#if isAppearanceTab}}active{{/if}}" data-tab="appearance">
 
-    <!-- Card 1: Theme Selection -->
-    <div class="hud-card">
-        <div class="hud-card-header">
-            <div class="hud-card-icon"><i class="fas fa-palette"></i></div>
-            <div class="hud-card-titles">
-                <h4>Visual Theme</h4>
-                <p>Choose an artistic aesthetic and color scheme for the entire HUD interface.</p>
-            </div>
+    <section class="hud-cfg-group">
+        <div class="hud-cfg-group-head">
+            <span class="hud-cfg-group-title">Theme</span><span>· {{themeCards.length}}</span>
         </div>
-        <div class="hud-card-body">
-            <input type="hidden" name="theme" value="{{theme}}">
-            <div class="hud-theme-grid">
-                {{#each themeCards}}
-                <div class="hud-theme-card {{#if this.isActive}}active{{/if}}" 
-                     data-action="selectTheme" 
-                     data-theme-id="{{this.id}}"
-                     style="--theme-accent: {{this.colors.accent}}; --theme-border: {{this.colors.border}}; --theme-surface: {{this.colors.surface}};">
-                    <div class="hud-theme-card-preview">
-                        <div class="hud-theme-swatch" style="background: {{this.colors.bg}};">
-                            <i class="{{this.icon}}" style="color: {{this.colors.accent}};"></i>
-                        </div>
-                        <div class="hud-theme-radio">
-                            <i class="fas {{#if this.isActive}}fa-check-circle{{else}}fa-circle{{/if}}"></i>
-                        </div>
-                    </div>
-                    <div class="hud-theme-card-info">
-                        <div class="hud-theme-card-header">
-                            <span class="hud-theme-title">{{this.label}}</span>
-                            {{#if this.badge}}<span class="hud-badge">{{this.badge}}</span>{{/if}}
-                        </div>
-                        <span class="hud-theme-desc">{{this.description}}</span>
-                    </div>
-                </div>
-                {{/each}}
-            </div>
+        <input type="hidden" name="theme" value="{{theme}}">
+        <div class="hud-theme-grid">
+            {{#each themeCards}}
+            <button type="button" class="hud-theme-card {{#if this.isActive}}active{{/if}}" data-action="selectTheme" data-theme-id="{{this.id}}">
+                <span class="hud-theme-swatch" style="background: {{this.colors.bg}}; border-color: {{this.colors.border}}; color: {{this.colors.accent}};">
+                    <i class="{{this.icon}}" aria-hidden="true"></i>
+                </span>
+                <span class="hud-theme-text">
+                    <span class="hud-theme-title">{{this.label}}{{#if this.badge}}<span class="hud-theme-badge">{{this.badge}}</span>{{/if}}</span>
+                    <span class="hud-theme-desc">{{this.description}}</span>
+                </span>
+                <span class="hud-theme-tick" aria-hidden="true"></span>
+            </button>
+            {{/each}}
         </div>
-    </div>
+    </section>
 
-    <!-- Card 2: Interactive Live Preview Sandbox -->
-    <div class="hud-card hud-preview-card">
-        <div class="hud-card-header">
-            <div class="hud-card-icon"><i class="fas fa-desktop"></i></div>
-            <div class="hud-card-titles">
-                <h4>Live HUD Preview</h4>
-                <p>Real-time visual preview of HUD button styling and typography.</p>
+    <section class="hud-cfg-group">
+        <div class="hud-cfg-group-head">
+            <span class="hud-cfg-group-title">Preview</span><span>· <span data-active-theme-name>{{#each themeCards}}{{#if this.isActive}}{{this.label}}{{/if}}{{/each}}</span></span>
+        </div>
+        <div class="hud-preview-container">
+            <div class="hud-preview-sandbox theme-{{theme}} {{#if actionMenuFont}}am-custom-font{{/if}}"
+                 style="transform: scale({{actionMenuScale}}); transform-origin: center center; {{#if actionMenuFont}}--am-font-family: '{{actionMenuFont}}', sans-serif;{{/if}}">
+                <div class="nah-action-buttons-list">
+                    {{#each sampleButtons}}
+                    <button type="button" class="nah-action-btn {{#if @first}}{{#if @root.actionMenuEmphasizeFirstButton}}nah-action-btn-first{{/if}}{{/if}}">
+                        <div class="nah-btn-content">
+                            <span {{#if @root.actionMenuFont}}style="font-family: '{{@root.actionMenuFont}}', sans-serif;"{{/if}}>{{this.label}}</span>
+                            <i class="{{this.icon}}"></i>
+                        </div>
+                    </button>
+                    {{/each}}
+                </div>
             </div>
         </div>
-        <div class="hud-card-body">
-            <div class="hud-preview-container">
-                <div class="hud-preview-sandbox theme-{{theme}} {{#if actionMenuFont}}am-custom-font{{/if}}" 
-                     style="transform: scale({{actionMenuScale}}); transform-origin: center center; {{#if actionMenuFont}}--am-font-family: '{{actionMenuFont}}', sans-serif;{{/if}}">
-                    <div class="nah-action-buttons-list">
-                        {{#each sampleButtons}}
-                        <button type="button" class="nah-action-btn {{#if @first}}{{#if @root.actionMenuEmphasizeFirstButton}}nah-action-btn-first{{/if}}{{/if}}">
-                            <div class="nah-btn-content">
-                                <span {{#if @root.actionMenuFont}}style="font-family: '{{@root.actionMenuFont}}', sans-serif;"{{/if}}>{{this.label}}</span>
-                                <i class="{{this.icon}}"></i>
-                            </div>
-                        </button>
-                        {{/each}}
+    </section>
+
+    <section class="hud-cfg-group">
+        <div class="hud-cfg-group-head">
+            <span class="hud-cfg-group-title">Scaling</span><span data-cfg-count="rows"></span>
+        </div>
+        <div class="hud-cfg-list">
+            <div class="hud-cfg-row">
+                <div class="hud-cfg-info">
+                    <div class="hud-cfg-label-line">
+                        <label class="hud-cfg-label">Base HUD scale</label>
+                    </div>
+                    <span class="hud-cfg-hint">Size multiplier for HUD buttons, text, and submenus.</span>
+                </div>
+                <div class="hud-cfg-control">
+                    <div class="hud-cfg-range">
+                        <input type="range" name="actionMenuScale" min="0.5" max="2.0" step="0.01" value="{{actionMenuScale}}" data-unit="×" aria-label="Base HUD scale">
+                        <span class="hud-range-value">{{actionMenuScale}}×</span>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <!-- Card 3: Scaling & Responsiveness -->
-    <div class="hud-card">
-        <div class="hud-card-header">
-            <div class="hud-card-icon"><i class="fas fa-arrows-alt"></i></div>
-            <div class="hud-card-titles">
-                <h4>HUD Scaling & Responsiveness</h4>
-                <p>Fine-tune size multipliers and automatic resolution scaling.</p>
-            </div>
-        </div>
-        <div class="hud-card-body">
-            <div class="hud-setting-row">
-                <div class="hud-setting-info">
-                    <label>Base HUD Scale</label>
-                    <span class="hud-setting-hint">Size multiplier for HUD buttons, text, and submenus.</span>
+            <div class="hud-cfg-row">
+                <div class="hud-cfg-info">
+                    <div class="hud-cfg-label-line">
+                        <label class="hud-cfg-label">Automatic resolution scaling</label>
+                    </div>
+                    <span class="hud-cfg-hint">Automatically adapt HUD size based on viewport resolution (1080p, 1440p, 4K).</span>
                 </div>
-                <div class="hud-setting-control hud-slider-control">
-                    <input type="range" name="actionMenuScale" min="0.5" max="2.0" step="0.01" value="{{actionMenuScale}}" data-unit="x">
-                    <span class="hud-range-value">{{actionMenuScale}}x</span>
-                </div>
-            </div>
-
-            <div class="hud-setting-row">
-                <div class="hud-setting-info">
-                    <label>Automatic Resolution Scaling</label>
-                    <span class="hud-setting-hint">Automatically adapt HUD size based on viewport resolution (1080p, 1440p, 4K).</span>
-                </div>
-                <div class="hud-setting-control">
-                    <label class="hud-switch">
-                        <input type="checkbox" class="hud-switch-input" name="responsiveEnabled" {{#if responsiveEnabled}}checked{{/if}}>
-                        <span class="hud-switch-slider"></span>
+                <div class="hud-cfg-control">
+                    <label class="hud-cfg-switch">
+                        <input type="checkbox" role="switch" class="hud-switch-input" name="responsiveEnabled" {{#if responsiveEnabled}}checked{{/if}}>
+                        <span class="hud-cfg-switch-track" aria-hidden="true"></span>
+                        <span class="hud-cfg-switch-knob" aria-hidden="true"></span>
                     </label>
                 </div>
             </div>
 
             {{#if responsiveEnabled}}
-            <div class="hud-sub-settings-grid">
-                <div class="hud-field-group">
-                    <label>Base Width (px)</label>
-                    <input type="number" name="responsiveBaseWidth" value="{{responsiveBaseWidth}}" class="hud-input">
-                </div>
-                <div class="hud-field-group">
-                    <label>Base Height (px)</label>
-                    <input type="number" name="responsiveBaseHeight" value="{{responsiveBaseHeight}}" class="hud-input">
-                </div>
-                <div class="hud-field-group">
-                    <label>Min Auto Scale</label>
-                    <input type="number" name="responsiveScaleMin" step="0.05" value="{{responsiveScaleMin}}" class="hud-input">
-                </div>
-                <div class="hud-field-group">
-                    <label>Max Auto Scale</label>
-                    <input type="number" name="responsiveScaleMax" step="0.05" value="{{responsiveScaleMax}}" class="hud-input">
-                </div>
+            <div class="hud-cfg-subgrid">
+                <label class="hud-cfg-field">
+                    <span class="hud-cfg-field-label">Base width</span>
+                    <span class="hud-cfg-unit-input">
+                        <input type="number" name="responsiveBaseWidth" step="1" value="{{responsiveBaseWidth}}">
+                        <span class="hud-cfg-unit">PX</span>
+                    </span>
+                </label>
+                <label class="hud-cfg-field">
+                    <span class="hud-cfg-field-label">Base height</span>
+                    <span class="hud-cfg-unit-input">
+                        <input type="number" name="responsiveBaseHeight" step="1" value="{{responsiveBaseHeight}}">
+                        <span class="hud-cfg-unit">PX</span>
+                    </span>
+                </label>
+                <label class="hud-cfg-field">
+                    <span class="hud-cfg-field-label">Min auto scale</span>
+                    <span class="hud-cfg-unit-input">
+                        <input type="number" name="responsiveScaleMin" step="0.05" value="{{responsiveScaleMin}}">
+                        <span class="hud-cfg-unit">×</span>
+                    </span>
+                </label>
+                <label class="hud-cfg-field">
+                    <span class="hud-cfg-field-label">Max auto scale</span>
+                    <span class="hud-cfg-unit-input">
+                        <input type="number" name="responsiveScaleMax" step="0.05" value="{{responsiveScaleMax}}">
+                        <span class="hud-cfg-unit">×</span>
+                    </span>
+                </label>
             </div>
             {{/if}}
         </div>
-    </div>
+    </section>
 
-    <!-- Card 4: Typography & Elements -->
-    <div class="hud-card">
-        <div class="hud-card-header">
-            <div class="hud-card-icon"><i class="fas fa-font"></i></div>
-            <div class="hud-card-titles">
-                <h4>Typography & Avatars</h4>
-                <p>Customize HUD font family and portrait avatar rendering.</p>
-            </div>
+    <section class="hud-cfg-group">
+        <div class="hud-cfg-group-head">
+            <span class="hud-cfg-group-title">Typography and avatars</span><span data-cfg-count="rows"></span>
         </div>
-        <div class="hud-card-body">
-            <div class="hud-setting-row">
-                <div class="hud-setting-info">
-                    <label>Action HUD Font</label>
-                    <span class="hud-setting-hint">Typography used for button labels, item headers, and submenus.</span>
+        <div class="hud-cfg-list">
+            <div class="hud-cfg-row">
+                <div class="hud-cfg-info">
+                    <div class="hud-cfg-label-line">
+                        <label class="hud-cfg-label">Action HUD font</label>
+                    </div>
+                    <span class="hud-cfg-hint">Typography used for button labels, item headers, and submenus.</span>
                 </div>
-                <div class="hud-setting-control">
-                    <select name="actionMenuFont" class="hud-select">
+                <div class="hud-cfg-control">
+                    <select class="hud-cfg-select" name="actionMenuFont">
                         {{#each fontList}}
-                        <option value="{{this.value}}" {{#if (eq this.value @root.actionMenuFont)}}selected{{/if}} style="font-family: '{{this.value}}';">
-                            {{this.label}}
-                        </option>
+                        <option value="{{this.value}}" {{#if (eq this.value @root.actionMenuFont)}}selected{{/if}} style="font-family: '{{this.value}}';">{{this.label}}</option>
                         {{/each}}
                     </select>
                 </div>
             </div>
 
-            <div class="hud-setting-row">
-                <div class="hud-setting-info">
-                    <label>Use Token Image Instead of Portrait</label>
-                    <span class="hud-setting-hint">Displays active token texture art instead of the actor's character sheet portrait.</span>
+            <div class="hud-cfg-row">
+                <div class="hud-cfg-info">
+                    <div class="hud-cfg-label-line">
+                        <label class="hud-cfg-label">Use token image instead of portrait</label>
+                    </div>
+                    <span class="hud-cfg-hint">Displays active token texture art instead of the actor's character sheet portrait.</span>
                 </div>
-                <div class="hud-setting-control">
-                    <label class="hud-switch">
-                        <input type="checkbox" class="hud-switch-input" name="actionMenuUseTokenImg" {{#if actionMenuUseTokenImg}}checked{{/if}}>
-                        <span class="hud-switch-slider"></span>
+                <div class="hud-cfg-control">
+                    <label class="hud-cfg-switch">
+                        <input type="checkbox" role="switch" class="hud-switch-input" name="actionMenuUseTokenImg" {{#if actionMenuUseTokenImg}}checked{{/if}}>
+                        <span class="hud-cfg-switch-track" aria-hidden="true"></span>
+                        <span class="hud-cfg-switch-knob" aria-hidden="true"></span>
                     </label>
                 </div>
             </div>
 
-            <div class="hud-setting-row">
-                <div class="hud-setting-info">
-                    <label>Emphasize First Action Button</label>
-                    <span class="hud-setting-hint">Applies primary glow and larger geometry to the first action category button.</span>
+            <div class="hud-cfg-row">
+                <div class="hud-cfg-info">
+                    <div class="hud-cfg-label-line">
+                        <label class="hud-cfg-label">Emphasize first action button</label>
+                    </div>
+                    <span class="hud-cfg-hint">Applies primary glow and larger geometry to the first action category button.</span>
                 </div>
-                <div class="hud-setting-control">
-                    <label class="hud-switch">
-                        <input type="checkbox" class="hud-switch-input" name="actionMenuEmphasizeFirstButton" {{#if actionMenuEmphasizeFirstButton}}checked{{/if}}>
-                        <span class="hud-switch-slider"></span>
+                <div class="hud-cfg-control">
+                    <label class="hud-cfg-switch">
+                        <input type="checkbox" role="switch" class="hud-switch-input" name="actionMenuEmphasizeFirstButton" {{#if actionMenuEmphasizeFirstButton}}checked{{/if}}>
+                        <span class="hud-cfg-switch-track" aria-hidden="true"></span>
+                        <span class="hud-cfg-switch-knob" aria-hidden="true"></span>
                     </label>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
 </div>

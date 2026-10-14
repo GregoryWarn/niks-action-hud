@@ -84,7 +84,7 @@ export function resolveTooltipName(tooltipItem, item) {
 export async function renderTooltip(ActionMenu, tooltipItem, item, desc = "", options = {}) {
 	let enriched = "";
 	if (desc && typeof desc === "string" && desc.trim()) {
-		enriched = await TextEditor.enrichHTML(desc, {
+		enriched = await foundry.applications.ux.TextEditor.implementation.enrichHTML(desc, {
 			async: true,
 			relativeTo: item || ActionMenu.currentActor,
 			rollData: item?.getRollData
